@@ -2,7 +2,10 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
 
 const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL!,
+  ssl: {
+    ca: Buffer.from(process.env.SUPABASE_SSL_CERT!, 'base64').toString('utf-8')
+  }
 })
 
 const prismaClientSingleton = () => {

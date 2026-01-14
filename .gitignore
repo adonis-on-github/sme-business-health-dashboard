@@ -46,9 +46,8 @@ pnpm-debug.log*
 *.sw?
 next-env.d.ts
 *.pem
-
-/utils/prisma/generated
 prod-ca-2021.crt
+
 .env
 .env.local
 tsconfig.tsbuildinfo
