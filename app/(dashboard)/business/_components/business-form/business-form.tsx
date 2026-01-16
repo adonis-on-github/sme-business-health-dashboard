@@ -13,9 +13,9 @@ import { setServerErrors } from '@lib/error-utils'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 
-import { IdentitySection } from '../sections/identity-section'
-import { LocationSection } from '../sections/location-section'
-import { SalesSection } from '../sections/sales-section'
+import { IdentitySection } from './sections/identity-section'
+import { LocationSection } from './sections/location-section'
+import { SalesSection } from './sections/sales-section'
 
 type BusinessFormProps = {
   initialData: BusinessFormValues | null
