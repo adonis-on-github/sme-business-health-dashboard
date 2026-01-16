@@ -8,8 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { businessSchema, type BusinessFormValues } from '@/app/(onboarding)/business/_lib/schema'
 import { createBusiness } from '@/app/(onboarding)/business/_lib/actions'
-
-import { setServerErrors } from '@/lib/form-utils'
+import { setServerErrors } from '@/lib/error-utils'
 
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
@@ -18,19 +17,26 @@ import { IdentitySection } from '../sections/identity-section'
 import { LocationSection } from '../sections/location-section'
 import { SalesSection } from '../sections/sales-section'
 
-const BusinessForm = () => {
-  const [isPending, startTransition] = useTransition()
+type BusinessFormProps = {
+  initialData: BusinessFormValues | null
+}
+
+const BusinessForm = ({ initialData }: BusinessFormProps) => {
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
+  const defaultValues: BusinessFormValues = {
+    name: '',
+    type: 'Retail',
+    currency: 'INR',
+    city: '',
+    salesRange: 'Under 50,000',
+    ...initialData
+  }
 
   const form = useForm<BusinessFormValues>({
     resolver: zodResolver(businessSchema),
-    defaultValues: {
-      name: '',
-      type: 'Retail',
-      currency: 'INR',
-      city: '',
-      salesRange: 'Under 50,000',
-    }
+    defaultValues: { ...defaultValues }
   })
 
   const onSubmit = async (data: BusinessFormValues) => {
@@ -47,7 +53,6 @@ const BusinessForm = () => {
         return
       }
 
-      // TODO: Show success toast
       router.push('/metrics')
     })
   }

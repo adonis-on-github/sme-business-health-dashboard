@@ -1,13 +1,16 @@
 import type { Metadata } from 'next'
 
 import BusinessForm from './_components/business-form/business-form'
+import { getBusiness } from './_lib/services'
 
 export const metadata: Metadata = {
   title: 'Business Health - Onboarding',
   description: 'Business Health - Business Details',
 }
 
-export default function BusinessPage() {
+export default async function BusinessPage() {
+  const business = await getBusiness()
+
   return (
     <main className='max-w-xl mx-auto py-10 px-4'>
       <div className='mb-8 space-y-2'>
@@ -20,7 +23,7 @@ export default function BusinessPage() {
         </p>
       </div>
 
-      <BusinessForm />
+      <BusinessForm initialData={business} />
     </main >
   )
 }

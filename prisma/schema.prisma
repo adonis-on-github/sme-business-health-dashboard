@@ -20,6 +20,9 @@ model Business {
   salesRange String
   currency   String @default("INR") @db.Char(3)
 
+  // Link to Supabase User ID
+  userId String @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   metrics   Metric[]

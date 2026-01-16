@@ -1,5 +1,5 @@
 'use client'
-
+import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import {
   FormField,
@@ -21,7 +21,14 @@ import {
 import { BUSINESS_TYPES, type BusinessFormValues } from '@/app/(onboarding)/business/_lib/schema'
 
 export function IdentitySection() {
-  const { control } = useFormContext<BusinessFormValues>()
+  const { control, watch, setValue } = useFormContext<BusinessFormValues>()
+  const businessType = watch('type')
+
+  useEffect(() => {
+    if (businessType !== 'Other') {
+      setValue('customBusinessType', '')
+    }
+  }, [businessType, setValue])
 
   return (
     <div className='space-y-4'>
@@ -36,9 +43,11 @@ export function IdentitySection() {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Legal Business Name</FormLabel>
+
             <FormControl>
               <Input placeholder='e.g. Sharma Textiles' {...field} />
             </FormControl>
+
             <FormMessage />
           </FormItem>
         )}
@@ -72,6 +81,25 @@ export function IdentitySection() {
           </FormItem>
         )}
       />
+
+      {/* Custom Business Type Field */}
+      {businessType === 'Other' && (
+        <FormField
+          control={control}
+          name='customBusinessType'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Custom Industry Type</FormLabel>
+
+              <FormControl>
+                <Input placeholder='e.g. Consultancy, Education' {...field} className='bg-transparent' />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
     </div>
   )
 }

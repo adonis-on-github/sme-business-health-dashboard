@@ -1,10 +1,11 @@
 'use server'
 
+import { redirect } from 'next/navigation'
+
 import prisma from '@/db/prisma/client'
 import { businessSchema, type BusinessFormValues } from './schema'
-import { redirect } from 'next/navigation'
-import { getErrorMessage } from '@/lib/action-utils'
-import { getFieldErrors } from '@/lib/getZodFieldErrors'
+import { getErrorMessage, getFieldErrors } from '@/lib/error-utils'
+import { getUser } from '@/lib/supabase/server'
 
 export type ActionResponse = {
   success: boolean;
@@ -14,6 +15,15 @@ export type ActionResponse = {
 }
 
 export async function createBusiness(values: BusinessFormValues): Promise<ActionResponse> {
+  const user = await getUser()
+
+  if (!user) {
+    return {
+      success: false,
+      message: 'User must be authenticated'
+    }
+  }
+
   const validatedFields = businessSchema.safeParse(values)
 
   if (!validatedFields.success) {
@@ -24,14 +34,23 @@ export async function createBusiness(values: BusinessFormValues): Promise<Action
     }
   }
 
+  const { customBusinessType, customSalesRange, ...data } = validatedFields.data
+
+  const businessData = {
+    ...data,
+    type: data.type === 'Other' ? customBusinessType! : data.type,
+    salesRange: data.salesRange === 'Other' ? customSalesRange! : data.salesRange,
+  }
+
   try {
-    const result = await prisma.business.create({
-      data: {
-        name: validatedFields.data.name,
-        type: validatedFields.data.type,
-        city: validatedFields.data.city,
-        salesRange: validatedFields.data.salesRange,
-        currency: validatedFields.data.currency
+    await prisma.business.upsert({
+      where: {
+        userId: user.id
+      },
+      update: businessData,
+      create: {
+        ...businessData,
+        userId: user.id
       },
     })
 
@@ -44,5 +63,4 @@ export async function createBusiness(values: BusinessFormValues): Promise<Action
 
     return { success: false, message: errorMessage }
   }
-
 }

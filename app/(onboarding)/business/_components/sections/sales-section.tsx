@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 import {
@@ -9,6 +10,8 @@ import {
   FormControl,
   FormMessage,
 } from '@/components/ui/form'
+
+import { Input } from '@/components/ui/input'
 
 import {
   Select,
@@ -20,7 +23,14 @@ import {
 import { SALES_RANGES, type BusinessFormValues } from '@/app/(onboarding)/business/_lib/schema'
 
 export function SalesSection() {
-  const { control } = useFormContext<BusinessFormValues>()
+  const { control, watch, setValue } = useFormContext<BusinessFormValues>()
+  const salesRange = watch('salesRange')
+
+  useEffect(() => {
+    if (salesRange !== 'Other') {
+      setValue('customSalesRange', '')
+    }
+  }, [salesRange, setValue])
 
   return (
     <div className='space-y-4 w-full'>
@@ -58,6 +68,25 @@ export function SalesSection() {
           </FormItem>
         )}
       />
+
+      {/* Custom Sales Range Field */}
+      {salesRange === 'Other' && (
+        <FormField
+          control={control}
+          name='customSalesRange'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Custom Sales Range</FormLabel>
+
+              <FormControl>
+                <Input placeholder='e.g. 5M - 10M' {...field} className='bg-transparent' />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      )}
     </div>
   )
 }
