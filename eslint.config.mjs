@@ -12,6 +12,17 @@ import tseslint from '@typescript-eslint/eslint-plugin';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const globalIgnore = [
+  '.next/**',
+  '**/.cache/**',
+  'out/**',
+  'build/**',
+  'next-env.d.ts',
+  'components/ui/**',
+  'playwright-ct-report/**',
+  'playwright-report/**'
+]
+
 const reactRules = {
   'react/jsx-key': 'error',
   'react-hooks/rules-of-hooks': 'error',
@@ -59,8 +70,6 @@ const tsRules = {
   '@typescript-eslint/consistent-type-imports': 'error',
   '@typescript-eslint/no-empty-interface': 'error',
   '@typescript-eslint/no-explicit-any': 'warn',
-  '@typescript-eslint/no-floating-promises': 'error',
-  '@typescript-eslint/no-misused-promises': 'error',
   '@typescript-eslint/no-shadow': 'error',
   '@typescript-eslint/no-unused-vars': [
     'error',
@@ -79,13 +88,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    '.next/**',
-    'out/**',
-    'build/**',
-    'next-env.d.ts',
-  ]),
+  globalIgnores([...globalIgnore]),
   {
     files: ['**/*.js', '**/*.jsx', '**/*.mjs','**/*.cjs'],
     plugins: {

@@ -27,6 +27,7 @@ export const normalizedProfitMargin = (revenue: number, expenses: number) => {
 
 export const normalizedCashRunway = (cashInBank: number, expenses: number) => {
   if (expenses === 0) {
+    // Zero expenses return 0 because it implies a suspended or erroneous state
     return 0
   }
 
@@ -43,6 +44,12 @@ export const normalizedCustomerConcentration = (topCustomerPct: number) => {
   return 1 - Math.min(Math.max(ratio, 0), 1)
 }
 
+/**
+ * Calculates the overall business health score
+ *
+ * TODO: Extend to return both partial scores (revenue, liquidity, etc.)
+ * and the total score to allow for more detailed AI analysis.
+ */
 export const businessHealthScore = (metrics: BusinessMetric): number => {
   const profit = normalizedProfitMargin(metrics.revenue, metrics.expenses) * scoreCoefficients.revenue
 

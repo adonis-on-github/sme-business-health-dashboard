@@ -5,6 +5,12 @@ const nextConfig: NextConfig = {
   typescript: {
     tsconfigPath: './tsconfig.build.json',
   },
+  experimental: {
+    testProxy: true, // Enables server-side interception
+  },
+  env: {
+    NEXT_PUBLIC_API_MOCKING: process.env.NEXT_PUBLIC_API_MOCKING ?? 'disabled'
+  },
 }
 
 export default nextConfig

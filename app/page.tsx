@@ -1,13 +1,52 @@
-import Image from 'next/image'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { getUser } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
-export default function Home() {
+const Home = async () => {
+  const user = await getUser()
+
+  if (user) {
+    redirect('/business')
+  }
+
   return (
-    <div className='flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
-      <main className='flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
-        <h1 className='text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-5xl'>
-          SME Business Health
-        </h1>
+    <div className='flex min-h-[calc(100vh-64px)] flex-col items-center justify-center bg-zinc-50 font-sans dark:bg-zinc-950 text-center px-4'>
+      <main className='max-w-3xl space-y-10'>
+        <div className='space-y-4'>
+          <h1 className='text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-7xl'>
+            SME <span className='text-indigo-600'>Business</span> Health
+          </h1>
+          <p className='text-xl text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto'>
+            The all-in-one dashboard to track, analyze, and optimize your business performance with AI-driven insights.
+          </p>
+        </div>
+
+        <div className='flex justify-center'>
+          <Button asChild size='lg' className='bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-6 text-xl rounded-xl shadow-lg shadow-indigo-500/25'>
+            <Link href={user ? '/business' : '/login'}>
+              {user ? 'Go to Dashboard' : 'Get Started'}
+            </Link>
+          </Button>
+        </div>
+
+        <div className='grid grid-cols-1 sm:grid-cols-3 gap-8 pt-10 border-t border-zinc-200 dark:border-zinc-800'>
+          <div className='space-y-2'>
+            <h3 className='font-bold'>Real-time Tracking</h3>
+            <p className='text-sm text-zinc-500'>Monitor your cashflow and revenue instantly.</p>
+          </div>
+          <div className='space-y-2'>
+            <h3 className='font-bold'>Health Scoring</h3>
+            <p className='text-sm text-zinc-500'>Get a 0-100 score of your business health.</p>
+          </div>
+          <div className='space-y-2'>
+            <h3 className='font-bold'>AI Advice</h3>
+            <p className='text-sm text-zinc-500'>Custom step-by-step actions to grow faster.</p>
+          </div>
+        </div>
       </main>
     </div>
   )
 }
+
+export default Home

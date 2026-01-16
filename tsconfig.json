@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2022",
     "lib": [
       "dom",
       "dom.iterable",
@@ -24,11 +24,27 @@
     ],
     "types": [
       "vitest/globals",
-      "@testing-library/jest-dom"
+      "@testing-library/dom",
+      "@playwright/test"
     ],
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "@auth/*": [
+        "./app/(auth)/*"
+      ],
+      "@business/*": [
+        "./app/(dashboard)/business/*"
+      ],
+      "@components/*": [
+        "./components/*"
+      ],
+      "@dashboard/*": [
+        "./app/(dashboard)/*"
+      ],
+      "@lib/*": [
+        "./lib/*"
       ]
     }
   },
@@ -38,7 +54,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "playwright.config.ts"
   ],
   "exclude": [
     "node_modules"

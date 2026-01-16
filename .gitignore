@@ -52,4 +52,10 @@ prod-ca-2021.crt
 .env.local
 tsconfig.tsbuildinfo
 
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
 

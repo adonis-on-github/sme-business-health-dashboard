@@ -1,4 +1,4 @@
-import prisma from '@/db/prisma/client'
+import prisma from '@/lib/prisma/client'
 import { seedData } from './data'
 
 async function main() {

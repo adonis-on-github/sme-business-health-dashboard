@@ -1,6 +1,6 @@
 import type { Business, Metric } from '@prisma/client'
 
-type SeedBusiness = Omit<Business, 'createdAt' | 'updatedAt'>
+type SeedBusiness = Omit<Business, 'createdAt' | 'updatedAt' | 'currency'>
 
 type SeedMetric = Omit<Metric, 'id' | 'createdAt' | 'updatedAt' | 'businessId'>
 
@@ -17,6 +17,7 @@ export const seedData: SeedItem[] = [
       type: 'IT Services',
       city: 'Bangalore',
       salesRange: '10L - 25L',
+      userId: 'user-green-001',
     },
     metrics: [
       {
@@ -37,6 +38,7 @@ export const seedData: SeedItem[] = [
       type: 'Manufacturing',
       city: 'Pune',
       salesRange: '25L - 50L',
+      userId: 'user-yellow-002',
     },
     metrics: [
       {
@@ -57,6 +59,7 @@ export const seedData: SeedItem[] = [
       type: 'Retail',
       city: 'Indore',
       salesRange: '5L - 10L',
+      userId: 'user-red-003',
     },
     metrics: [
       {
