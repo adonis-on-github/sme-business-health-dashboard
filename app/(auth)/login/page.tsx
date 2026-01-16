@@ -9,8 +9,16 @@ import {
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { getUser } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const user = await getUser()
+
+  if (user) {
+    redirect('/business')
+  }
+
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-zinc-50 dark:bg-zinc-950 px-4'>
       <Card className='w-full max-w-md shadow-xl border-zinc-200 dark:border-zinc-800'>

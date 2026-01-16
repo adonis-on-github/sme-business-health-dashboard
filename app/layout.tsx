@@ -17,15 +17,14 @@ export const metadata: Metadata = {
   description: 'SME Business Health Dashboard application',
 }
 import { Header } from '@/app/_components/header'
-import { createClient } from '@/lib/supabase/server'
+import { getUser } from '@/lib/supabase/server'
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getUser()
 
   return (
     <html lang='en' className='light'>

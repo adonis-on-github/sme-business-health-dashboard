@@ -19,7 +19,7 @@ export const login = async (formData: FormData) => {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/business')
 }
 
 export const signup = async (formData: FormData) => {
@@ -37,7 +37,7 @@ export const signup = async (formData: FormData) => {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/business')
 }
 
 export const logout = async () => {
@@ -45,5 +45,5 @@ export const logout = async () => {
 
   await supabase.auth.signOut()
   revalidatePath('/', 'layout')
-  redirect('/login')
+  redirect('/')
 }
