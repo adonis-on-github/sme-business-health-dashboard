@@ -18,7 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { BUSINESS_TYPES, type BusinessFormValues } from '@/app/(onboarding)/business/_lib/schema'
+import { BUSINESS_TYPES, type BusinessFormValues } from '@business/_lib/schema'
 
 export function IdentitySection() {
   const { control, watch, setValue } = useFormContext<BusinessFormValues>()

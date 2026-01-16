@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { businessSchema, type BusinessFormValues } from '@/app/(onboarding)/business/_lib/schema'
-import { createBusiness } from '@/app/(onboarding)/business/_lib/actions'
-import { setServerErrors } from '@/lib/error-utils'
+import { businessSchema, type BusinessFormValues } from '@business/_lib/schema'
+import { createBusiness } from '@business/_lib/actions'
+import { setServerErrors } from '@lib/error-utils'
 
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'

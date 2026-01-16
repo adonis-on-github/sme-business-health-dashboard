@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { SALES_RANGES, type BusinessFormValues } from '@/app/(onboarding)/business/_lib/schema'
+import { SALES_RANGES, type BusinessFormValues } from '@business/_lib/schema'
 
 export function SalesSection() {
   const { control, watch, setValue } = useFormContext<BusinessFormValues>()

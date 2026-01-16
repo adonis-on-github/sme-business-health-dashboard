@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { type BusinessFormValues } from '@/app/(onboarding)/business/_lib/schema'
+import { type BusinessFormValues } from '@business/_lib/schema'
 
 export function LocationSection() {
   const { control } = useFormContext<BusinessFormValues>()

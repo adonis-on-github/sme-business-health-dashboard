@@ -29,7 +29,19 @@
     "paths": {
       "@/*": [
         "./*"
-      ]
+      ],
+      "@auth/*": [
+        "./app/auth/*"
+      ],
+      "@business/*": [
+        "./app/(dashboard)/business/*"
+      ],
+      "@dashboard/*": [
+        "./app/(dashboard)/*"
+      ],
+      "@lib/*": [
+        "./lib/*"
+      ],
     }
   },
   "include": [
