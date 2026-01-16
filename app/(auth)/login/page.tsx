@@ -12,11 +12,14 @@ import { Label } from '@/components/ui/label'
 import { getUser } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
-export default async function LoginPage() {
+export default async function LoginPage(props: {
+  searchParams: Promise<{ next?: string }>
+}) {
+  const searchParams = await props.searchParams
   const user = await getUser()
 
   if (user) {
-    redirect('/business')
+    redirect(searchParams.next || '/business')
   }
 
   return (
@@ -34,6 +37,7 @@ export default async function LoginPage() {
 
         <CardContent>
           <form className='space-y-6'>
+            <input type='hidden' name='next' value={searchParams.next || ''} />
             <div className='space-y-4'>
               <div className='space-y-2'>
                 <Label htmlFor='email'>Email Address</Label>

@@ -18,8 +18,10 @@ export const login = async (formData: FormData) => {
     redirect('/error')
   }
 
+  const next = formData.get('next') as string
+
   revalidatePath('/', 'layout')
-  redirect('/business')
+  redirect(next || '/business')
 }
 
 export const signup = async (formData: FormData) => {
@@ -36,8 +38,10 @@ export const signup = async (formData: FormData) => {
     redirect('/error')
   }
 
+  const next = formData.get('next') as string
+
   revalidatePath('/', 'layout')
-  redirect('/business')
+  redirect(next || '/business')
 }
 
 export const logout = async () => {
