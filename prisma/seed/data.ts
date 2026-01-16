@@ -1,6 +1,6 @@
 import type { Business, Metric } from '@prisma/client'
 
-type SeedBusiness = Omit<Business, 'createdAt' | 'updatedAt'>
+type SeedBusiness = Omit<Business, 'createdAt' | 'updatedAt' | 'currency'>
 
 type SeedMetric = Omit<Metric, 'id' | 'createdAt' | 'updatedAt' | 'businessId'>
 
