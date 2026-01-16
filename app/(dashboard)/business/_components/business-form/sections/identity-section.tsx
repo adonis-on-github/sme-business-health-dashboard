@@ -92,7 +92,7 @@ export function IdentitySection() {
               <FormLabel>Custom Industry Type</FormLabel>
 
               <FormControl>
-                <Input placeholder='e.g. Consultancy, Education' {...field} className='bg-transparent' />
+                <Input placeholder='e.g. Consultancy, Education' {...field} />
               </FormControl>
 
               <FormMessage />

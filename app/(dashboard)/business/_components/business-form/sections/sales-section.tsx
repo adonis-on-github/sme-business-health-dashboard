@@ -79,7 +79,7 @@ export function SalesSection() {
               <FormLabel>Custom Sales Range</FormLabel>
 
               <FormControl>
-                <Input placeholder='e.g. 5M - 10M' {...field} className='bg-transparent' />
+                <Input placeholder='e.g. 5M - 10M' {...field} />
               </FormControl>
 
               <FormMessage />
