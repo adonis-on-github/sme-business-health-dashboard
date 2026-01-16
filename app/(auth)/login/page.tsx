@@ -1,64 +1,74 @@
 import { login, signup } from '../actions'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 export default function LoginPage() {
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-zinc-50 dark:bg-zinc-950 px-4'>
-      <div className='w-full max-w-md p-8 space-y-8 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl border border-zinc-200 dark:border-zinc-800'>
-        <div className='text-center'>
-          <h1 className='text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100'>
+      <Card className='w-full max-w-md shadow-xl border-zinc-200 dark:border-zinc-800'>
+        <CardHeader className='space-y-1 text-center'>
+          <CardTitle className='text-3xl font-bold tracking-tight'>
             Welcome Back
-          </h1>
-          <p className='mt-2 text-zinc-500 dark:text-zinc-400'>
+          </CardTitle>
+
+          <CardDescription className='text-zinc-500 dark:text-zinc-400'>
             Sign in to your account to continue
-          </p>
-        </div>
+          </CardDescription>
+        </CardHeader>
 
-        <form className='mt-8 space-y-6'>
-          <div className='space-y-4'>
-            <div>
-              <label htmlFor='email' className='block text-sm font-medium text-zinc-700 dark:text-zinc-300'>
-                Email Address
-              </label>
-              <input
-                id='email'
-                name='email'
-                type='email'
-                required
-                className='mt-1 block w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200'
-                placeholder='you@example.com'
-              />
-            </div>
-            <div>
-              <label htmlFor='password' className='block text-sm font-medium text-zinc-700 dark:text-zinc-300'>
-                Password
-              </label>
-              <input
-                id='password'
-                name='password'
-                type='password'
-                required
-                className='mt-1 block w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-xl text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200'
-                placeholder='••••••••'
-              />
-            </div>
-          </div>
+        <CardContent>
+          <form className='space-y-6'>
+            <div className='space-y-4'>
+              <div className='space-y-2'>
+                <Label htmlFor='email'>Email Address</Label>
+                <Input
+                  id='email'
+                  name='email'
+                  type='email'
+                  placeholder='you@example.com'
+                  required
+                />
+              </div>
 
-          <div className='flex flex-col space-y-4'>
-            <button
-              formAction={login}
-              className='w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-indigo-500/25 active:transform active:scale-[0.98]'
-            >
-              Log In
-            </button>
-            <button
-              formAction={signup}
-              className='w-full py-3 px-4 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 font-semibold rounded-xl transition-all duration-200 active:transform active:scale-[0.98]'
-            >
-              Sign Up
-            </button>
-          </div>
-        </form>
-      </div>
+              <div className='space-y-2'>
+                <Label htmlFor='password'>Password</Label>
+                <Input
+                  id='password'
+                  name='password'
+                  type='password'
+                  placeholder='••••••••'
+                  required
+                />
+              </div>
+            </div>
+
+            <div className='flex flex-col space-y-4 pt-2'>
+              <Button
+                formAction={login}
+                className='w-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/25'
+              >
+                Log In
+              </Button>
+
+              <Button
+                formAction={signup}
+                variant='outline'
+                className='w-full'
+              >
+                Sign Up
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
-export async function login(formData: FormData) {
+export const login = async (formData: FormData) => {
   const supabase = await createClient()
 
   const data = {
@@ -22,7 +22,7 @@ export async function login(formData: FormData) {
   redirect('/')
 }
 
-export async function signup(formData: FormData) {
+export const signup = async (formData: FormData) => {
   const supabase = await createClient()
 
   const data = {
@@ -40,7 +40,7 @@ export async function signup(formData: FormData) {
   redirect('/')
 }
 
-export async function logout() {
+export const logout = async () => {
   const supabase = await createClient()
 
   await supabase.auth.signOut()
