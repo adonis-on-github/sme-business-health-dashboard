@@ -8,12 +8,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { businessSchema, type BusinessFormValues } from '@business/_lib/schema'
 import { SALES_RANGES, CURRENCIES, BUSINESS_TYPES } from '@business/_lib/constants'
+
 import { BusinessFormTestID } from '@business/_lib/test.ids'
 import { createBusiness } from '@business/_lib/actions'
+import { routes } from '@dashboard/_lib/routes'
 import { setServerErrors } from '@lib/error-utils'
 
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
+import { toast } from 'sonner'
 
 import { IdentitySection } from './sections/identity-section'
 import { LocationSection } from './sections/location-section'
@@ -43,14 +46,19 @@ const BusinessForm = ({ initialData }: BusinessFormProps) => {
   })
 
   const onSubmit = (values: BusinessFormValues) => {
-    console.log(values)
     startTransition(async () => {
       const result = await createBusiness(values)
 
       if (result.success) {
-        router.push('/metrics')
+        toast.success(result.message)
+
+        router.push(routes.createMetric)
+
       } else if (result.errors) {
         setServerErrors(result.errors, form.setError)
+
+      } else {
+        toast.error(result.message)
       }
     })
   }

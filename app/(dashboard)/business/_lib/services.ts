@@ -1,5 +1,6 @@
-import prisma from '@/lib/prisma/client'
-import { getUser } from '@/lib/supabase/server'
+import type { Business } from '@prisma/client'
+
+import { getUserBusiness } from '@/lib/prisma/services/business'
 
 import  type { BusinessFormValues } from './schema'
 import { BUSINESS_TYPES, SALES_RANGES } from './constants'
@@ -23,25 +24,23 @@ const normalizeSalesRange = (inputSalesRange: string) => {
 
 export class PrismaBusinessService implements IBusinessService {
   async getBusiness(): Promise<BusinessFormValues | null> {
-    const user = await getUser()
+    let userBusiness: Business | null = null
 
-    if (!user) {
+    try {
+      userBusiness = await getUserBusiness()
+    } catch (error) {
+      console.error(error)
+
       return null
     }
 
-    const result = await prisma.business.findUnique({
-      where: {
-        userId: user.id
-      }
-    })
-
-    if (!result) {
+    if (!userBusiness) {
       return null
     }
 
-    const { name, city, currency } = result
-    const { type, customBusinessType } = normalizeBusinessType(result.type)
-    const { salesRange, customSalesRange } = normalizeSalesRange(result.salesRange)
+    const { name, city, currency } = userBusiness
+    const { type, customBusinessType } = normalizeBusinessType(userBusiness.type)
+    const { salesRange, customSalesRange } = normalizeSalesRange(userBusiness.salesRange)
 
     return {
       name,

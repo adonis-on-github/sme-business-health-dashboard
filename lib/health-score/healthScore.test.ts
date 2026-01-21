@@ -5,7 +5,6 @@ import {
   scoreStatus,
   normalizedCustomerConcentration,
 } from './healthScore'
-import type { BusinessMetric } from './types'
 
 describe('healthScore', () => {
   describe('normalizedProfitMargin', () => {
@@ -71,14 +70,12 @@ describe('healthScore', () => {
 
   describe('businessHealthScore', () => {
     it('calculate weighted health score correctly', () => {
-      const metrics: BusinessMetric = {
-        revenue: 100,
-        expenses: 50,
-        cashInBank: 200,
-        topCustomerPct: 10,
-      }
+      const revenue = 100
+      const expenses = 50
+      const cashInBank = 200
+      const topCustomerPct = 10
 
-      expect(businessHealthScore(metrics)).toBeCloseTo(55.333)
+      expect(businessHealthScore(revenue, expenses, cashInBank, topCustomerPct)).toBe(55)
     })
   })
 

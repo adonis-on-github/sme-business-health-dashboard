@@ -1,5 +1,4 @@
 import type {
-  BusinessMetric,
   ScoreCoefficients,
   ScoreStatus
 } from './types'
@@ -46,18 +45,15 @@ export const normalizedCustomerConcentration = (topCustomerPct: number) => {
 
 /**
  * Calculates the overall business health score
- *
- * TODO: Extend to return both partial scores (revenue, liquidity, etc.)
- * and the total score to allow for more detailed AI analysis.
  */
-export const businessHealthScore = (metrics: BusinessMetric): number => {
-  const profit = normalizedProfitMargin(metrics.revenue, metrics.expenses) * scoreCoefficients.revenue
+export const businessHealthScore = (revenue: number, expenses: number, cashInBank: number, topCustomerPct: number): number => {
+  const profit = normalizedProfitMargin(revenue, expenses) * scoreCoefficients.revenue
 
-  const liquidity = normalizedCashRunway(metrics.cashInBank, metrics.expenses) * scoreCoefficients.liquidity
+  const liquidity = normalizedCashRunway(cashInBank, expenses) * scoreCoefficients.liquidity
 
-  const customerConcentration = normalizedCustomerConcentration(metrics.topCustomerPct) * scoreCoefficients.customerConcentration
+  const customerConcentration = normalizedCustomerConcentration(topCustomerPct) * scoreCoefficients.customerConcentration
 
-  return (profit + liquidity + customerConcentration) * 100
+  return Math.round((profit + liquidity + customerConcentration) * 100)
 }
 
 export const scoreStatus = (score: number): ScoreStatus => {

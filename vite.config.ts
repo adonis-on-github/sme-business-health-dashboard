@@ -13,6 +13,7 @@ export default defineConfig({
       '@': path.resolve(__dirname),
       '@auth': path.resolve(__dirname, 'app/(auth)'),
       '@business': path.resolve(__dirname, 'app/(dashboard)/business'),
+      '@metrics': path.resolve(__dirname, 'app/(dashboard)/metrics'),
       '@dashboard': path.resolve(__dirname, 'app/(dashboard)'),
       '@lib': path.resolve(__dirname, 'lib'),
     },

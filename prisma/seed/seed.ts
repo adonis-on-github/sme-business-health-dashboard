@@ -5,11 +5,23 @@ async function main() {
   for (const item of seedData) {
     await prisma.business.upsert({
       where: { id: item.business.id },
-      update: {},
+      update: {
+        ...item.business,
+        monthlyMetrics: {
+          deleteMany: {},
+          create: item.metrics.map(metric => ({
+            businessId: item.business.id,
+            ...metric
+          })),
+        }
+      },
       create: {
         ...item.business,
-        metrics: {
-          create: item.metrics,
+        monthlyMetrics: {
+          create: item.metrics.map(metric => ({
+            businessId: item.business.id,
+            ...metric
+          })),
         },
       }
     })

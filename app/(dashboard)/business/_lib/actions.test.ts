@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation'
-
 import type { Business } from '@prisma/client'
 import prisma from '@/lib/prisma/client'
 import { getUser } from '@/lib/supabase/server'
@@ -9,11 +7,6 @@ import { createBusiness } from './actions'
 
 import { businessValuesMock, businessOtherValuesMock } from './schema.mocks'
 
-// Mock next/navigation
-vi.mock('next/navigation', () => ({
-  redirect: vi.fn(),
-}))
-
 vi.mock('@/lib/prisma/client', () => ({
   default: {
     business: {
@@ -22,7 +15,6 @@ vi.mock('@/lib/prisma/client', () => ({
   },
 }))
 
-// Mock getUser
 vi.mock('@/lib/supabase/server', () => ({
   getUser: vi.fn(),
 }))
@@ -88,7 +80,6 @@ describe('createBusiness', () => {
       },
     })
 
-    expect(redirect).toHaveBeenCalledWith('/metrics')
     })
 
   describe('when business type or sales range is "Other"', () => {

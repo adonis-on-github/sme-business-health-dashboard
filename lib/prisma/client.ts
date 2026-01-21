@@ -1,5 +1,7 @@
 import { PrismaPg } from '@prisma/adapter-pg'
+import type { Metric } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
+import { decimalToNumber } from './middleware-conversions'
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
@@ -9,7 +11,18 @@ const adapter = new PrismaPg({
 })
 
 const prismaClientSingleton = () => {
-  return new PrismaClient({ adapter })
+  return new PrismaClient({ adapter }).$extends({
+    result: {
+      metric: {
+        ...decimalToNumber<Metric, 'revenue' | 'expenses' | 'cashInBank' | 'topCustomerPct'>([
+          'revenue',
+          'expenses',
+          'cashInBank',
+          'topCustomerPct'
+        ])
+      }
+    }
+  })
 }
 
 declare const globalThis: {

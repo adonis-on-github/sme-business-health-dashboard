@@ -1,6 +1,4 @@
 'use server'
-
-import { redirect } from 'next/navigation'
 import { getErrorMessage, getFieldErrors } from '@/lib/error-utils'
 import prisma from '@/lib/prisma/client'
 
@@ -47,8 +45,6 @@ export const createBusiness = async (values: BusinessFormValues): Promise<Action
         userId: user.id
       },
     })
-
-    redirect('/metrics')
 
     return { success: true, message: 'Business created successfully' }
   } catch (error: unknown) {

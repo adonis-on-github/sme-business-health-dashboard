@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 }
 import { Header } from '@/app/_components/header'
 import { getUser } from '@/lib/supabase/server'
+import { Toaster } from '@/components/ui/sonner'
 
 const RootLayout = async ({
   children,
@@ -36,6 +37,8 @@ const RootLayout = async ({
         <main className='flex-1'>
           {children}
         </main>
+
+        <Toaster position='bottom-right' richColors />
       </body>
     </html>
   )

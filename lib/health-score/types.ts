@@ -1,7 +1,3 @@
-import type { Metric } from '@prisma/client'
-
-export type BusinessMetric = Pick<Metric, 'expenses' | 'revenue' | 'cashInBank' | 'topCustomerPct'>
-
 /**
  * Coefficients for the business health score
  *

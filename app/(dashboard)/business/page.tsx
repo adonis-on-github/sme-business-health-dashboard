@@ -16,7 +16,7 @@ const BusinessPage = async () => {
   return (
     <>
       <article className='max-w-xl mx-auto py-10 px-4'>
-        <div className='mb-8 space-y-2'>
+        <header className='mb-8 space-y-2'>
           <h1 className='text-3xl font-bold tracking-tight text-slate-900'>
             Tell us about your business
           </h1>
@@ -24,7 +24,7 @@ const BusinessPage = async () => {
           <p className='text-sm text-slate-500'>
             Fill in the details of your business and location
           </p>
-        </div>
+        </header>
 
         <BusinessForm initialData={business} />
       </article>
