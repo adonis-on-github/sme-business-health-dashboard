@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import type { BusinessFormValues } from './schema'
 import { MockBusinessService } from './services.mocks'
 
-export async function setupBusinessMock(payload: FormData) {
+export const setupBusinessMock = async (payload: FormData) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     const mockData = JSON.parse(payload.get('data') as string) as BusinessFormValues | null
 
@@ -14,7 +14,7 @@ export async function setupBusinessMock(payload: FormData) {
   }
 }
 
-export async function resetBusinessMock() {
+export const resetBusinessMock = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 
     MockBusinessService.reset()

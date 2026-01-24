@@ -1,7 +1,6 @@
-import type {
-  ScoreCoefficients,
-  ScoreStatus
-} from './types'
+
+import type { ScoreCoefficients } from './types'
+import type { ScoreStatus } from '@prisma/client'
 
 /**
  * Default coefficients for the business health score
@@ -46,7 +45,7 @@ export const normalizedCustomerConcentration = (topCustomerPct: number) => {
 /**
  * Calculates the overall business health score
  */
-export const businessHealthScore = (revenue: number, expenses: number, cashInBank: number, topCustomerPct: number): number => {
+export const metricHealthScore = (revenue: number, expenses: number, cashInBank: number, topCustomerPct: number): number => {
   const profit = normalizedProfitMargin(revenue, expenses) * scoreCoefficients.revenue
 
   const liquidity = normalizedCashRunway(cashInBank, expenses) * scoreCoefficients.liquidity
@@ -56,12 +55,12 @@ export const businessHealthScore = (revenue: number, expenses: number, cashInBan
   return Math.round((profit + liquidity + customerConcentration) * 100)
 }
 
-export const scoreStatus = (score: number): ScoreStatus => {
+export const metricScoreStatus = (score: number): ScoreStatus  => {
   if (score >= 85) {
-    return 'Green'
+    return 'GREEN'
   } else if (score >= 60 && score < 85) {
-    return 'Yellow'
+    return 'YELLOW'
   }
 
-  return 'Red'
+  return 'RED'
 }

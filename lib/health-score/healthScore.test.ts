@@ -1,8 +1,8 @@
 import {
   normalizedProfitMargin,
   normalizedCashRunway,
-  businessHealthScore,
-  scoreStatus,
+  metricHealthScore,
+  metricScoreStatus,
   normalizedCustomerConcentration,
 } from './healthScore'
 
@@ -68,33 +68,33 @@ describe('healthScore', () => {
     })
   })
 
-  describe('businessHealthScore', () => {
+  describe('metricHealthScore', () => {
     it('calculate weighted health score correctly', () => {
       const revenue = 100
       const expenses = 50
       const cashInBank = 200
       const topCustomerPct = 10
 
-      expect(businessHealthScore(revenue, expenses, cashInBank, topCustomerPct)).toBe(55)
+      expect(metricHealthScore(revenue, expenses, cashInBank, topCustomerPct)).toBe(55)
     })
   })
 
-  describe('scoreStatus', () => {
+  describe('metricScoreStatus', () => {
     it('return Green for scores >= 85', () => {
-      expect(scoreStatus(85)).toBe('Green')
-      expect(scoreStatus(90)).toBe('Green')
+      expect(metricScoreStatus(85)).toBe('GREEN')
+      expect(metricScoreStatus(90)).toBe('GREEN')
     })
 
     it('return Yellow for scores between 60 and 85', () => {
-      expect(scoreStatus(60)).toBe('Yellow')
-      expect(scoreStatus(70)).toBe('Yellow')
-      expect(scoreStatus(84.9)).toBe('Yellow')
+      expect(metricScoreStatus(60)).toBe('YELLOW')
+      expect(metricScoreStatus(70)).toBe('YELLOW')
+      expect(metricScoreStatus(84.9)).toBe('YELLOW')
     })
 
     it('return Red for scores < 60', () => {
-      expect(scoreStatus(59.9)).toBe('Red')
-      expect(scoreStatus(30)).toBe('Red')
-      expect(scoreStatus(0)).toBe('Red')
+      expect(metricScoreStatus(59.9)).toBe('RED')
+      expect(metricScoreStatus(30)).toBe('RED')
+      expect(metricScoreStatus(0)).toBe('RED')
     })
   })
 })

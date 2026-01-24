@@ -7,10 +7,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 
-import { routes } from '@dashboard/_lib/routes'
+import { routes } from '@/app/_lib/routes'
 
 import {
   CashInBankGroup,
@@ -24,6 +23,7 @@ import type { MetricInput } from '@dashboard/create-metric/_lib/schema'
 import { MetricSchema } from '@dashboard/create-metric/_lib/schema'
 import type { CreateMetric } from '@dashboard/create-metric/_lib/types'
 import { MetricFormTestID } from '@dashboard/create-metric/_lib/test.ids'
+import { ActionButton } from '@/components/custom/action-button'
 
 type CreateMetricFormProps = {
   businessId: string,
@@ -83,19 +83,14 @@ const CreateMetricForm = ({ businessId, onCreateMetric, currency }: CreateMetric
           <TopCustomerPctGroup />
         </div>
 
-        <div className='flex justify-end pt-6 border-t'>
-          <Button
-            type='submit'
-            size='lg'
-            className='px-10 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-lg shadow-indigo-500/20'
-            data-testid={MetricFormTestID.button}
-            disabled={isPending}
-          >
-            {isPending ? 'Creating ...' : 'Create Metric'}
-          </Button>
-        </div>
+        <ActionButton
+          text='Create Metric'
+          isPending={isPending}
+          data-testid={MetricFormTestID.button}
+          pendingText='Creating ...'
+        />
       </form>
-    </Form>
+    </Form >
   )
 }
 

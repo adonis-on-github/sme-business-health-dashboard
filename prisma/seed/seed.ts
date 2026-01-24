@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma/client'
 import { seedData } from './data'
 
-async function main() {
+const main = async () => {
   for (const item of seedData) {
     await prisma.business.upsert({
       where: { id: item.business.id },

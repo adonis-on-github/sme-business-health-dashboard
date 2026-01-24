@@ -10,9 +10,9 @@ import {
   FormMessage
 } from '@/components/ui/form'
 
-import { NumberInput } from '@/components/custom/NumberInput'
+import { NumberInput } from '@/components/custom/number-input'
 
-import { MetricFormTestID } from '@/app/(dashboard)/create-metric/_lib/test.ids'
+import { MetricFormTestID } from '@dashboard/create-metric/_lib/test.ids'
 
 type GroupPorps = {
   formatOptions: Intl.NumberFormatOptions

@@ -16,9 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { type BusinessFormValues } from '@business/_lib/schema'
-import { CURRENCIES } from '@business/_lib/constants'
-import { BusinessFormTestID } from '@business/_lib/test.ids'
+import { type BusinessFormValues } from '@dashboard/business/_lib/schema'
+import { CURRENCIES } from '@dashboard/business/_lib/constants'
+import { BusinessFormTestID } from '@dashboard/business/_lib/test.ids'
 
 export const LocationSection = () => {
   const { control } = useFormContext<BusinessFormValues>()

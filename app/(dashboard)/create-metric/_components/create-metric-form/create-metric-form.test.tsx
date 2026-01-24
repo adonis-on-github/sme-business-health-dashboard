@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event'
 
 import { toast } from 'sonner'
 
-import { routes } from '@dashboard/_lib/routes'
+import { routes } from '@/app/_lib/routes'
 import CreateMetricForm from './create-metric-form'
 
 import { MetricFormTestID } from '@dashboard/create-metric/_lib/test.ids'

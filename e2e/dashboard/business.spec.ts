@@ -2,13 +2,13 @@ import type { Page } from '@playwright/test'
 
 import { test, expect } from '@playwright/test'
 
-import { BusinessFormTestID } from '@business/_lib/test.ids'
-import { BUSINESS_TYPES, CURRENCIES, SALES_RANGES } from '@business/_lib/constants'
+import { BusinessFormTestID } from '@dashboard/business/_lib/test.ids'
+import { BUSINESS_TYPES, CURRENCIES, SALES_RANGES } from '@dashboard/business/_lib/constants'
 import { businessMock } from '@/lib/prisma/prisma.mocks'
 
 import { setupActionMock } from '@/e2e/util/mock-actions'
 
-import { BusinessTest } from '@business/_lib/test.ids'
+import { BusinessTest } from '@dashboard/business/_lib/test.ids'
 
 const selectOtherOption = async (page: Page, testId: string) => {
   await page.getByTestId(testId).click()

@@ -22,8 +22,9 @@ describe('MetricSchema', () => {
         revenue: -1000,
         expenses: -500,
         cashInBank: -200,
-        topCustomerPct: -50
+        topCustomerPct: -50,
       }
+
       const result = MetricSchema.safeParse(metric)
 
       expect(result.success).toBe(false)
@@ -43,7 +44,7 @@ describe('MetricSchema', () => {
         revenue: 1000,
         expenses: 500,
         cashInBank: 200,
-        topCustomerPct: 150
+        topCustomerPct: 150,
       }
 
       const result = MetricSchema.safeParse(metric)
@@ -62,7 +63,7 @@ describe('MetricSchema', () => {
         revenue: 1000.123,
         expenses: 500.123,
         cashInBank: 200.123,
-        topCustomerPct: 50.123
+        topCustomerPct: 50.123,
       }
 
       const result = MetricSchema.safeParse(metric)
@@ -84,7 +85,7 @@ describe('MetricSchema', () => {
         revenue: undefined,
         expenses: NaN,
         cashInBank: null,
-        topCustomerPct: 'abc'
+        topCustomerPct: 'abc',
       } as unknown as MetricInput
 
       const result = MetricSchema.safeParse(metric)

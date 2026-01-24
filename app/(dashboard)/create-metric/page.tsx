@@ -8,7 +8,7 @@ import { createMetric } from './_lib/actions'
 
 import BusinessNotCreated from './_components/busines-not-created'
 import CreateMetricForm from './_components/create-metric-form'
-import MetricHeader from './_components/metric-header'
+import PageHeader from '@/components/custom/page-header'
 
 export const metadata: Metadata = {
   title: 'Business Health - Create Metric',
@@ -26,7 +26,10 @@ const MetricsPage = async () => {
 
   return (
     <article className='max-w-xl mx-auto py-10 px-4'>
-      <MetricHeader />
+      <PageHeader
+        title='Create Metric'
+        description='Fill in the details for the metric'
+      />
 
       {!userBusiness ? (
         <BusinessNotCreated />

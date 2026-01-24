@@ -2,9 +2,9 @@
 
 import { MockActionBridge } from '@components/utils/MockActionBridge'
 
-import { setupBusinessMock, resetBusinessMock } from '@business/_lib/actions.mocks'
+import { setupBusinessMock, resetBusinessMock } from '@dashboard/business/_lib/actions.mocks'
 
-import { BusinessTest } from '@business/_lib/test.ids'
+import { BusinessTest } from '@dashboard/business/_lib/test.ids'
 
 const TestBridgeWrapper = () => (
   <div aria-hidden='true' className='opacity-0 absolute top-[100vh]'>

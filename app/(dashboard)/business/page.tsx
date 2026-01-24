@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import PageHeader from '@/components/custom/page-header'
 import BusinessForm from './_components/business-form/business-form'
 import TestBridgeWrapper from './_components/test-bridge-wrapper'
 import { getBusinessService } from './_lib/registry'
@@ -16,15 +17,10 @@ const BusinessPage = async () => {
   return (
     <>
       <article className='max-w-xl mx-auto py-10 px-4'>
-        <header className='mb-8 space-y-2'>
-          <h1 className='text-3xl font-bold tracking-tight text-slate-900'>
-            Tell us about your business
-          </h1>
-
-          <p className='text-sm text-slate-500'>
-            Fill in the details of your business and location
-          </p>
-        </header>
+        <PageHeader
+          title='Tell us about your business'
+          description='Fill in the details of your business and location'
+        />
 
         <BusinessForm initialData={business} />
       </article>

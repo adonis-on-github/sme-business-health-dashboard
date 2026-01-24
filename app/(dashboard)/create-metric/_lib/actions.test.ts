@@ -2,7 +2,7 @@ import { getUser } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma/client'
 import { userMock } from '@/lib/supabase/supabase.mocks'
 import { businessMock, metricMock } from '@/lib/prisma/prisma.mocks'
-import { businessHealthScore } from '@/lib/health-score/healthScore'
+import { metricHealthScore, metricScoreStatus } from '@/lib/health-score/healthScore'
 
 import { createMetric } from './actions'
 import type { BusinessMetric } from './schema'
@@ -30,7 +30,8 @@ vi.mock('@/lib/prisma/client', () => ({
 }))
 
 vi.mock('@/lib/health-score/healthScore', () => ({
-  businessHealthScore: vi.fn(),
+  metricHealthScore: vi.fn(),
+  metricScoreStatus: vi.fn(),
 }))
 
 describe('createMetric', () => {
@@ -72,7 +73,7 @@ describe('createMetric', () => {
       vi.mocked(getUser).mockResolvedValue(userMock)
       vi.mocked(prisma.business.findUnique).mockResolvedValue(businessMock)
       vi.mocked(prisma.metric.create).mockResolvedValue(metricMock)
-      vi.mocked(businessHealthScore).mockReturnValue(1)
+      vi.mocked(metricHealthScore).mockReturnValue(1)
 
       const result = await createMetric(businessId, {
         ...metricDataMock,
@@ -92,11 +93,13 @@ describe('createMetric', () => {
   it('create metric successfully', async () => {
     const businessId = '1'
     const score = 80
+    const scoreStatus = 'GREEN'
 
     vi.mocked(getUser).mockResolvedValue(userMock)
     vi.mocked(prisma.business.findUnique).mockResolvedValue(businessMock)
     vi.mocked(prisma.metric.create).mockResolvedValue(metricMock)
-    vi.mocked(businessHealthScore).mockReturnValue(score)
+    vi.mocked(metricHealthScore).mockReturnValue(score)
+    vi.mocked(metricScoreStatus).mockReturnValue('GREEN')
 
     const result = await createMetric(businessId, metricDataMock)
 
@@ -107,7 +110,8 @@ describe('createMetric', () => {
         expenses: metricDataMock.expenses,
         cashInBank: metricDataMock.cashInBank,
         topCustomerPct: metricDataMock.topCustomerPct,
-        score
+        score,
+        scoreStatus
       }
     })
 

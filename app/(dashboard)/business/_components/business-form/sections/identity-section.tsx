@@ -11,9 +11,9 @@ import {
 import { Input } from '@/components/ui/input'
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { type BusinessFormValues } from '@business/_lib/schema'
-import { BUSINESS_TYPES } from '@business/_lib/constants'
-import { BusinessFormTestID } from '@business/_lib/test.ids'
+import { type BusinessFormValues } from '@dashboard/business/_lib/schema'
+import { BUSINESS_TYPES } from '@dashboard/business/_lib/constants'
+import { BusinessFormTestID } from '@dashboard/business/_lib/test.ids'
 
 export const IdentitySection = () => {
   const { control, watch, setValue } = useFormContext<BusinessFormValues>()

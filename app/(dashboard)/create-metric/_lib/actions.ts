@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma/client'
 import { getUser } from '@/lib/supabase/server'
 import { getErrorMessage, getFieldErrors } from '@/lib/error-utils'
 
-import { businessHealthScore } from '@/lib/health-score/healthScore'
+import { metricHealthScore, metricScoreStatus } from '@/lib/health-score/healthScore'
 import type { CreateMetric } from './types'
 
 import type { BusinessMetric } from './schema'
@@ -45,7 +45,8 @@ export const createMetric: CreateMetric = async (businessId: string, metricData:
   }
 
   const { revenue, expenses, cashInBank, topCustomerPct } = validatedInput.data
-  const score = businessHealthScore(revenue, expenses, cashInBank, topCustomerPct)
+  const score = metricHealthScore(revenue, expenses, cashInBank, topCustomerPct)
+  const scoreStatus = metricScoreStatus(score)
 
   try {
     await prisma.metric.create({
@@ -55,7 +56,8 @@ export const createMetric: CreateMetric = async (businessId: string, metricData:
         expenses,
         cashInBank,
         topCustomerPct,
-        score
+        score,
+        scoreStatus
       }
     })
 
@@ -72,3 +74,4 @@ export const createMetric: CreateMetric = async (businessId: string, metricData:
       return { success: false, message: errorMessage }
   }
 }
+

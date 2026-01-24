@@ -34,9 +34,6 @@
       "@auth/*": [
         "./app/(auth)/*"
       ],
-      "@business/*": [
-        "./app/(dashboard)/business/*"
-      ],
       "@components/*": [
         "./components/*"
       ],

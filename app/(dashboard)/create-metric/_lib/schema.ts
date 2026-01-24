@@ -29,7 +29,7 @@ export const MetricSchema = z.object({
   topCustomerPct: numberSchema('Top customer percentage').refine(
     value => value <= 100,
     'Top customer percentage must be less than or equal to 100'
-  )
+  ),
 }) satisfies z.ZodType<BusinessMetric>
 
 export type MetricInput = z.infer<typeof MetricSchema>

@@ -1,6 +1,7 @@
 import type { ComponentProps } from 'react'
 import { useMemo, useState } from 'react'
-import { Input } from '../ui/input'
+import { Input } from '@/components/ui/input'
+import { formatValue, parseFormattedInput } from '@/lib/formatting'
 
 type NumberInputProps = {
   value: number | undefined,
@@ -30,7 +31,7 @@ export const NumberInput = ({
     [locale, formatOptions])
 
   const handleInputChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    const cleanedValue = parseFromattedInput(target.value, formatOptions.minimumFractionDigits, maxValue)
+    const cleanedValue = parseFormattedInput(target.value, formatOptions.minimumFractionDigits, maxValue)
 
     setLocalValue(cleanedValue)
 
@@ -63,26 +64,3 @@ export const NumberInput = ({
   )
 }
 
-export const formatValue = (value: number | undefined, formatter: Intl.NumberFormat) => {
-  if (value === undefined || value === null) {
-    return ''
-  }
-
-  return formatter.format(value)
-}
-
-export const parseFromattedInput = (value: string, precision?: number, maxValue?: string) => {
-  let clean = value.replace(/[^0-9.]/g, '')
-
-  const parts = clean.split('.')
-
-  if (parts.length >= 2) {
-    clean = parts[0] + '.' + parts.slice(1).join('').slice(0, precision)
-  }
-
-  if (maxValue) {
-    clean = Number(maxValue) < Number(clean) ? maxValue : clean
-  }
-
-  return clean
-}

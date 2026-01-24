@@ -1,7 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function updateSession(request: NextRequest) {
+export const updateSession = async (request: NextRequest) => {
   const bypassKey = process.env.TEST_AUTH_BYPASS_KEY
   const clientKey = request.headers.get('x-test-bypass-key')
 

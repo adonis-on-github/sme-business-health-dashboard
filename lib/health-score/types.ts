@@ -11,11 +11,3 @@ export type ScoreCoefficients = {
   revenue: number
 }
 
-/**
- * Status of the business health score
- *
- * @property Red - The business is in danger
- * @property Yellow - The business is at risk
- * @property Green - The business is healthy
- */
-export type ScoreStatus = 'Red' | 'Yellow' | 'Green'

@@ -23,6 +23,7 @@ export const metricMock: NonNullable<ExtendedMetric> = {
   topCustomerPct: 10,
   createdAt: new Date('2026-01-01'),
   updatedAt: new Date('2026-01-01'),
+  scoreStatus: 'GREEN',
   score: 1,
   aiStatus: 'NOT_GENERATED',
   aiExplanation: null,

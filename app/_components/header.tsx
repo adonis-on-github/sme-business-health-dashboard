@@ -1,6 +1,7 @@
 import type { User } from '@supabase/supabase-js'
 import { logout } from '@auth/actions'
 import { Button } from '@/components/ui/button'
+import { Sections } from './sections'
 
 type HeaderProps = {
   user: User | null
@@ -19,6 +20,8 @@ export const Header = ({ user }: HeaderProps) => {
         </div>
 
         <span className='font-semibold tracking-tight'>SME Business Health</span>
+
+        <Sections />
       </div>
 
       <div className='flex items-center space-x-4'>

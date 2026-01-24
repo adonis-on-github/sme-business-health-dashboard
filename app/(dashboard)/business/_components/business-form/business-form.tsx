@@ -6,21 +6,21 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { businessSchema, type BusinessFormValues } from '@business/_lib/schema'
-import { SALES_RANGES, CURRENCIES, BUSINESS_TYPES } from '@business/_lib/constants'
+import { businessSchema, type BusinessFormValues } from '@dashboard/business/_lib/schema'
+import { SALES_RANGES, CURRENCIES, BUSINESS_TYPES } from '@dashboard/business/_lib/constants'
 
-import { BusinessFormTestID } from '@business/_lib/test.ids'
-import { createBusiness } from '@business/_lib/actions'
-import { routes } from '@dashboard/_lib/routes'
+import { BusinessFormTestID } from '@dashboard/business/_lib/test.ids'
+import { createBusiness } from '@dashboard/business/_lib/actions'
+import { routes } from '@/app/_lib/routes'
 import { setServerErrors } from '@lib/error-utils'
 
-import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
 import { toast } from 'sonner'
 
 import { IdentitySection } from './sections/identity-section'
 import { LocationSection } from './sections/location-section'
 import { SalesSection } from './sections/sales-section'
+import { ActionButton } from '@/components/custom/action-button'
 
 type BusinessFormProps = {
   initialData: BusinessFormValues | null
@@ -75,17 +75,13 @@ const BusinessForm = ({ initialData }: BusinessFormProps) => {
 
         <SalesSection />
 
-        <div className='flex justify-end pt-6 border-t'>
-          <Button
-            data-testid={BusinessFormTestID.button}
-            type='submit'
-            size='lg'
-            className='px-10 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-lg shadow-indigo-500/20'
-            disabled={isPending}
-          >
-            {isPending ? 'Saving...' : 'Save'}
-          </Button>
-        </div>
+        <ActionButton
+          text='Save'
+          pendingText='Saving...'
+          data-testid={BusinessFormTestID.button}
+          type='submit'
+          isPending={isPending}
+        />
       </form>
     </Form>
   )

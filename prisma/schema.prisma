@@ -29,14 +29,15 @@ model Business {
 }
 
 model Metric {
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  revenue        Decimal  @db.Decimal(16, 2)
-  expenses       Decimal  @db.Decimal(16, 2)
-  cashInBank     Decimal  @db.Decimal(16, 2)
-  topCustomerPct Decimal  @db.Decimal(5, 2)
+  id             String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  revenue        Decimal     @db.Decimal(16, 2)
+  expenses       Decimal     @db.Decimal(16, 2)
+  cashInBank     Decimal     @db.Decimal(16, 2)
+  topCustomerPct Decimal     @db.Decimal(5, 2)
   score          Int
-  aiStatus       AiStatus @default(NOT_GENERATED)
-  aiExplanation  String?  @db.Text // for long AI explanations
+  scoreStatus    ScoreStatus @default(GREEN)
+  aiStatus       AiStatus    @default(NOT_GENERATED)
+  aiExplanation  String?     @db.Text // for long AI explanations
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -52,4 +53,10 @@ enum AiStatus {
   GENERATING
   GENERATED
   ERROR
+}
+
+enum ScoreStatus {
+  GREEN
+  YELLOW
+  RED
 }
