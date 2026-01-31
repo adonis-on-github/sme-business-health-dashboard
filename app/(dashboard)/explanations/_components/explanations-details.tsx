@@ -95,6 +95,7 @@ const GenerateButton = ({ status, isPending, onClick }: ButtonContentProps) => (
     text={labels[status]}
     onClick={onClick}
     isPending={isPending}
+    pendingText='Generating...'
     data-testid={ExplanationIds.generateButton} />
 )
 
