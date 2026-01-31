@@ -15,11 +15,14 @@ export const getLatestMetric = async () => {
     select: {
       name: true,
       currency: true,
+      type: true,
+      city: true,
       monthlyMetrics: {
         orderBy: {
           createdAt: 'desc',
         },
         select: {
+          id: true,
           revenue: true,
           expenses: true,
           cashInBank: true,
@@ -28,8 +31,6 @@ export const getLatestMetric = async () => {
           scoreStatus: true,
           createdAt: true,
           updatedAt: true,
-          aiStatus: true,
-          aiExplanation: true,
         },
         take: 1,
       },
@@ -40,10 +41,12 @@ export const getLatestMetric = async () => {
     return null
   }
 
-  const { name, currency, monthlyMetrics } = business
+  const { name, currency, monthlyMetrics, type, city } = business
 
   return {
     businessName: name,
+    type,
+    city,
     currency,
     ...monthlyMetrics[0]
   }

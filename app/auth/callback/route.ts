@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server'
-// The client you created from the Server-Side Auth instructions
 import { createClient } from '@/lib/supabase/server'
 
 export const GET = async (request: Request) => {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  // if "next" is in search params, use it as the redirection URL
+
   const next = searchParams.get('next') ?? '/'
 
   if (code) {
@@ -13,11 +12,10 @@ export const GET = async (request: Request) => {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host') // Hello, login from the server!
+      const forwardedHost = request.headers.get('x-forwarded-host')
       const isLocalEnv = process.env.NODE_ENV === 'development'
 
       if (isLocalEnv) {
-        // we can be sure that there is no proxy in between in local env, so we can use the origin as it is
         return NextResponse.redirect(`${origin}${next}`)
       } else if (forwardedHost) {
         return NextResponse.redirect(`https://${forwardedHost}${next}`)
@@ -27,6 +25,5 @@ export const GET = async (request: Request) => {
     }
   }
 
-  // return the user to an error page with instructions
   return NextResponse.redirect(`${origin}/auth/auth-code-error`)
 }

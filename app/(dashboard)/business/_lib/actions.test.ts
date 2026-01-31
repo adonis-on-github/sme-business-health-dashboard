@@ -54,7 +54,7 @@ describe('createBusiness', () => {
     })
   })
 
-    it('successfully creates a business and redirects', async () => {
+  it('successfully creates a business and redirects', async () => {
       vi.mocked(getUser).mockResolvedValue(userMock)
 
       vi.mocked(prisma.business.upsert).mockResolvedValue({} as Business)
@@ -80,7 +80,7 @@ describe('createBusiness', () => {
       },
     })
 
-    })
+  })
 
   describe('when business type or sales range is "Other"', () => {
     it('uses custom values instead of default ones', async () => {
@@ -99,16 +99,24 @@ describe('createBusiness', () => {
 
   describe('when database error occurs', () => {
     it('returns an error message', async () => {
+      const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => { })
+
+      const error = 'Database connection failed'
+
       vi.mocked(getUser).mockResolvedValue(userMock)
 
-      vi.mocked(prisma.business.upsert).mockRejectedValue(new Error('Database connection failed'))
+      vi.mocked(prisma.business.upsert).mockRejectedValue(error)
 
       const result = await createBusiness(businessValuesMock)
 
       expect(result).toEqual({
         success: false,
-        message: 'Database connection failed',
+        message: error,
       })
+
+      expect(consoleSpy).toHaveBeenCalledWith(error)
+
+      consoleSpy.mockRestore()
     })
   })
 })

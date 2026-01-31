@@ -27,9 +27,7 @@ export const seedData: SeedItem[] = [
         cashInBank: 1500000,
         topCustomerPct: 15,
         score: 95,
-        scoreStatus: 'GREEN',
-        aiStatus: 'GENERATED',
-        aiExplanation: 'Profitable but risky. 65% revenue from one client creates a dangerous dependency.'
+        scoreStatus: 'GREEN'
       },
     ],
   },
@@ -50,8 +48,6 @@ export const seedData: SeedItem[] = [
         topCustomerPct: 65,
         score: 65,
         scoreStatus: 'YELLOW',
-        aiStatus: 'GENERATED',
-        aiExplanation: 'Profitable but risky. 65% revenue from one client creates a dangerous dependency.'
       }
     ]
   },
@@ -72,8 +68,6 @@ export const seedData: SeedItem[] = [
         topCustomerPct: 5,
         score: 25,
         scoreStatus: 'RED',
-        aiStatus: 'GENERATED',
-        aiExplanation: 'Immediate action required. You are currently operating at a loss, and your cash reserves cover less than 15 days of expenses. You need to reduce fixed costs and improve collections immediately.'
       }
     ],
   },

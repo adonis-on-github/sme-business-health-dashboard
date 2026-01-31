@@ -37,6 +37,18 @@ describe('error-utils', () => {
     it('return default message for empty object', () => {
       expect(getErrorMessage({})).toBe('An unknown error occurred')
     })
+
+    describe('when fallback message is provided', () => {
+      it('return fallback message', () => {
+        expect(getErrorMessage(null, 'Custom error message')).toBe('Custom error message')
+      })
+    })
+
+    describe('when fallback message is not provided', () => {
+      it('return default message', () => {
+        expect(getErrorMessage(null)).toBe('An unknown error occurred')
+      })
+    })
   })
 
   describe('getFieldErrors', () => {

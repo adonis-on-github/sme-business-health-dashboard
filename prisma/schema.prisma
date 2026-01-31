@@ -36,21 +36,30 @@ model Metric {
   topCustomerPct Decimal     @db.Decimal(5, 2)
   score          Int
   scoreStatus    ScoreStatus @default(GREEN)
-  aiStatus       AiStatus    @default(NOT_GENERATED)
-  aiExplanation  String?     @db.Text // for long AI explanations
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  businessId String   @db.Uuid
+  business     Business         @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  businessId   String           @db.Uuid
+  explanations LLMExplanation[]
 
   @@index([businessId, createdAt(sort: Desc)])
 }
 
-enum AiStatus {
-  NOT_GENERATED
-  GENERATING
+model LLMExplanation {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  explanationMarkdown String?   @db.Text
+  error               String?
+  llmStatus           LLMStatus
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  metric   Metric @relation(fields: [metricId], references: [id], onDelete: Cascade)
+  metricId String @db.Uuid
+}
+
+enum LLMStatus {
   GENERATED
   ERROR
 }

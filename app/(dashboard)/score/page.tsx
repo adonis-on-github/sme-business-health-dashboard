@@ -5,7 +5,7 @@ import PrerequisiteMissing from '@/components/custom/prerequisite-missing'
 
 import { routes } from '@/app/_lib/routes'
 
-import { getLatestMetric } from './_lib/service'
+import { getLatestMetric } from '../_lib/service'
 import MetricScore from './_components/metric-score/metric-score'
 
 export const metadata: Metadata = {

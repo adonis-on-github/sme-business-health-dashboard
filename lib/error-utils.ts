@@ -1,7 +1,7 @@
 import type { FieldValues, Path, UseFormSetError } from 'react-hook-form'
 import type { z } from 'zod'
 
-export const getErrorMessage = (error: unknown): string => {
+export const getErrorMessage = (error: unknown, defaultMessage?: string): string => {
   if (error instanceof Error) {
     return error.message
   }
@@ -14,7 +14,7 @@ export const getErrorMessage = (error: unknown): string => {
     return error
   }
 
-  return 'An unknown error occurred'
+  return defaultMessage ?? 'An unknown error occurred'
 }
 
 export const getFieldErrors = <T>(error: z.ZodError<T>): Record<string, string[]> => {

@@ -1,6 +1,7 @@
-import { formatDate, formatNumber } from '@/lib/formatting'
-import type { LatestMetric } from '@dashboard/score/_lib/service'
+import { formatNumber } from '@/lib/formatting'
+import type { LatestMetric } from '@/app/(dashboard)/_lib/service'
 import type { ScoreStatus } from '@prisma/client'
+import Timestamp from '@/components/custom/timestamp'
 
 type ScoreDetailsProps = Omit<NonNullable<LatestMetric>, 'score' | 'aiExplanation' | 'businessName'>
 
@@ -40,9 +41,8 @@ type ScoreDateProps = {
 const ScoreDate = ({ label, value }: ScoreDateProps) => (
   <div className='flex gap-2 justify-between'>
     <span className='font-semibold'>{label}:</span>
-    <time dateTime={value.toISOString()}>
-      {formatDate(value)}
-    </time>
+
+    <Timestamp timestamp={value} />
   </div>
 )
 

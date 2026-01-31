@@ -1,5 +1,5 @@
 
-import type { LatestMetric } from '@dashboard/score/_lib/service'
+import type { LatestMetric } from '@/app/(dashboard)/_lib/service'
 import { ScoreDetails } from './score-sections'
 import { ScoreSummary } from './score-sections'
 import { ActionButtons } from './action-buttons'

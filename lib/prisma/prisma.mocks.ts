@@ -1,6 +1,5 @@
-import type { Business, Metric } from '@prisma/client'
+import type { Business, LLMExplanation } from '@prisma/client'
 import type { ExtendedMetric } from './types'
-import { Decimal } from '@prisma/client/runtime/client'
 
 export const businessMock: Business = {
   id: '1',
@@ -25,6 +24,14 @@ export const metricMock: NonNullable<ExtendedMetric> = {
   updatedAt: new Date('2026-01-01'),
   scoreStatus: 'GREEN',
   score: 1,
-  aiStatus: 'NOT_GENERATED',
-  aiExplanation: null,
+}
+
+export const llmExplanationMock: LLMExplanation = {
+  id: '1',
+  metricId: '1',
+  llmStatus: 'GENERATED',
+  error: null,
+  explanationMarkdown: 'Explanation',
+  createdAt: new Date('2026-01-01'),
+  updatedAt: new Date('2026-01-01'),
 }

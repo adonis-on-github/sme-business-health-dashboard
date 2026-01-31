@@ -2,7 +2,7 @@ import { MetricSchema } from './schema'
 import type { MetricInput } from './schema'
 
 describe('MetricSchema', () => {
-  describe.only('when input is valid', () => {
+  describe('when input is valid', () => {
     it('parses without errors', () => {
       const metric: MetricInput = {
         revenue: 1000,
