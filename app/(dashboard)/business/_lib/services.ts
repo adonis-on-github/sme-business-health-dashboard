@@ -1,3 +1,5 @@
+import { cache } from 'react'
+
 import type { Business } from '@prisma/client'
 
 import { getUserBusiness } from '@/lib/prisma/services/business'
@@ -23,7 +25,7 @@ const normalizeSalesRange = (inputSalesRange: string) => {
 }
 
 export class PrismaBusinessService implements IBusinessService {
-  async getBusiness(): Promise<BusinessFormValues | null> {
+  getBusiness = cache(async (): Promise<BusinessFormValues | null> => {
     let userBusiness: Business | null = null
 
     try {
@@ -51,5 +53,5 @@ export class PrismaBusinessService implements IBusinessService {
       customSalesRange,
       currency
     } satisfies BusinessFormValues
-  }
+  })
 }

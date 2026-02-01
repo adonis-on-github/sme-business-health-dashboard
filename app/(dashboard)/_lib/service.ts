@@ -1,7 +1,8 @@
+import { cache } from 'react'
 import prisma from '@/lib/prisma/client'
 import { getUser } from '@/lib/supabase/server'
 
-export const getLatestMetric = async () => {
+export const getLatestMetric = cache(async () => {
   const user = await getUser()
 
   if (user === null) {
@@ -50,6 +51,6 @@ export const getLatestMetric = async () => {
     currency,
     ...monthlyMetrics[0]
   }
-}
+})
 
 export type LatestMetric = Awaited<ReturnType<typeof getLatestMetric>>

@@ -1,5 +1,7 @@
 'use server'
 
+import { cache } from 'react'
+
 import { getErrorMessage } from '@/lib/error-utils'
 import { runLLM } from '@/lib/openrouter/openrouter'
 import { buildMessages } from '@/lib/prompts/messages'
@@ -25,7 +27,7 @@ export type GetInitialAnalysisResponse =
       timestamp: Date
     }
 
-export const getInitialAnalysis = async (): Promise<GetInitialAnalysisResponse> => {
+export const getInitialAnalysis = cache(async (): Promise<GetInitialAnalysisResponse> => {
   const latestMetric = await getLatestMetric()
 
   if (latestMetric === null) {
@@ -55,7 +57,7 @@ export const getInitialAnalysis = async (): Promise<GetInitialAnalysisResponse> 
     data: latestExplanation.explanationMarkdown ?? 'Empty explanation',
     timestamp: latestExplanation.createdAt,
   }
-}
+})
 
 export const generateAnalysis = async (): Promise<GetInitialAnalysisResponse> => {
   const latestMetric = await getLatestMetric()
@@ -101,7 +103,7 @@ export const generateAnalysis = async (): Promise<GetInitialAnalysisResponse> =>
   }
 }
 
-const getLatestExplanation = async (metricId: string) => {
+const getLatestExplanation = cache(async (metricId: string) => {
   const latestExplanation = await prisma.lLMExplanation.findFirst({
     where: {
       metricId,
@@ -113,7 +115,7 @@ const getLatestExplanation = async (metricId: string) => {
   })
 
   return latestExplanation
-}
+})
 
 type LLMExplanationArgs =
   | {

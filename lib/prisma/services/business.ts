@@ -1,9 +1,11 @@
+import { cache } from 'react'
+
 import type { Business } from '@prisma/client'
 
 import { getUser } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma/client'
 
-export const getUserBusiness = async (): Promise<Business | null> => {
+export const getUserBusiness = cache(async (): Promise<Business | null> => {
   const user = await getUser()
 
   if (!user) {
@@ -17,4 +19,4 @@ export const getUserBusiness = async (): Promise<Business | null> => {
   })
 
   return result
-}
+})
