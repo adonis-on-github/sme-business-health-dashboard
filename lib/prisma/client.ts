@@ -3,12 +3,24 @@ import type { Metric } from '@prisma/client'
 import { PrismaClient } from '@prisma/client'
 import { decimalToNumber } from './middleware-conversions'
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-  ssl: {
-    ca: Buffer.from(process.env.SUPABASE_SSL_CERT!, 'base64').toString('utf-8')
+import { env } from '@/lib/env/env'
+
+const getPrismaConfig = () => {
+  if (env.APP_ENV === 'production') {
+    return {
+      connectionString: env.DATABASE_URL!,
+      ssl: {
+        ca: Buffer.from(env.SUPABASE_SSL_CERT!, 'base64').toString('utf-8')
+      }
+    }
   }
-})
+
+  return {
+    connectionString: env.DATABASE_URL!,
+  }
+}
+
+const adapter = new PrismaPg(getPrismaConfig())
 
 const prismaClientSingleton = () => {
   return new PrismaClient({ adapter }).$extends({

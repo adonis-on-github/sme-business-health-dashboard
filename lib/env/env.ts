@@ -13,6 +13,7 @@ const directUrlKey = `DIRECT_URL_${suffix}` as const
 
 export const env = createEnv({
   server: {
+    APP_ENV: z.enum(['development', 'test', 'production']).default('development'),
     DATABASE_URL: z.url({
       message: `${dbUrlKey} is required`,
     }),
@@ -31,6 +32,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
   },
   runtimeEnv: {
+    APP_ENV: appEnv.APP_ENV,
     DATABASE_URL: process.env[dbUrlKey],
     DIRECT_URL: process.env[directUrlKey],
 

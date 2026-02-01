@@ -15,6 +15,8 @@
     "test:e2e": "APP_ENV=test playwright test -c playwright.config.ts",
     "test:e2e:ui": "APP_ENV=test playwright test -c playwright.config.ts --ui",
     "test:e2e:report": "APP_ENV=test playwright test -c playwright.config.ts --reporter html",
+    "dk:up": "docker compose -f docker/docker-compose.yml up -d",
+    "dk:down": "docker compose -f docker/docker-compose.yml down",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",

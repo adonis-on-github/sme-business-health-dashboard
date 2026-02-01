@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## Supabase SSL Connection
+
+To get a working solution with incomming SSL connection to supabase cloud:
+1. Download the CA certificate from supabase cloud
+2. Encode the certificate in base64 string and save it in .env file as SUPABASE_SSL_CERT
+3. Read use the content of SUPABASE_SSL_CERT in the prisma client and pass it as string to ssl option in config object. For more information, see lib/prisma/client.ts file.
+4. O vercel add a secret with name SUPABASE_SSL_CERT and value of the base64 encoded certificate.
+
