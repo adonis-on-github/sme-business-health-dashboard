@@ -1,15 +1,12 @@
 'use client'
 
 import { useMemo, useTransition } from 'react'
-import { useRouter } from 'next/navigation'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Form } from '@/components/ui/form'
 import { toast } from 'sonner'
-
-import { routes } from '@/app/_lib/routes'
 
 import {
   CashInBankGroup,
@@ -34,8 +31,6 @@ type CreateMetricFormProps = {
 const CreateMetricForm = ({ businessId, onCreateMetric, currency }: CreateMetricFormProps) => {
   const [isPending, startTransition] = useTransition()
 
-  const router = useRouter()
-
   const currencyOptions = useMemo(() => ({
     style: 'currency',
     currency,
@@ -53,15 +48,9 @@ const CreateMetricForm = ({ businessId, onCreateMetric, currency }: CreateMetric
 
       const result = await onCreateMetric(businessId, values)
 
-      if (result.success) {
-        toast.success(result.message)
-
-        form.reset()
-
-        router.push(routes.metricScore)
-      } else if (result.errors) {
+      if (result?.errors) {
         setServerErrors(result.errors, form.setError)
-      } else {
+      } else if (result?.message) {
         toast.error(result.message)
       }
     })

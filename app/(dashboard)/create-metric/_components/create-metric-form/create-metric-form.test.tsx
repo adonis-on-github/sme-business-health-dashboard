@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event'
 
 import { toast } from 'sonner'
 
-import { routes } from '@/app/_lib/routes'
 import CreateMetricForm from './create-metric-form'
 
 import { MetricFormTestID } from '@dashboard/create-metric/_lib/test.ids'
@@ -100,76 +99,6 @@ describe('CreateMetricForm', () => {
       await user.click(submitButton)
 
       expect(createMetricMock).toHaveBeenCalledWith('1', input)
-    })
-
-    describe('when creation is successful', () => {
-      it('a toast with success message is shown', async () => {
-        const user = userEvent.setup()
-
-        toast.error = vi.fn()
-
-        createMetricMock.mockResolvedValue({
-          success: true,
-          message: 'Metric created successfully',
-        })
-
-        render(<CreateMetricForm businessId='1' onCreateMetric={createMetricMock} currency='USD' />)
-
-        const revenueInput = screen.getByTestId(MetricFormTestID.revenue)
-
-        await user.type(revenueInput, input.revenue.toString())
-
-        const expensesInput = screen.getByTestId(MetricFormTestID.expenses)
-
-        await user.type(expensesInput, input.expenses.toString())
-
-        const cashInBankInput = screen.getByTestId(MetricFormTestID.cashInBank)
-
-        await user.type(cashInBankInput, input.cashInBank.toString())
-
-        const topCustomerPctInput = screen.getByTestId(MetricFormTestID.topCustomerPct)
-
-        await user.type(topCustomerPctInput, input.topCustomerPct.toString())
-
-        const submitButton = screen.getByTestId(MetricFormTestID.button)
-
-        await user.click(submitButton)
-
-        expect(toast.success).toHaveBeenCalledWith('Metric created successfully')
-      })
-
-      it('redirects to metric score', async () => {
-        const user = userEvent.setup()
-
-        createMetricMock.mockResolvedValue({
-          success: true,
-          message: 'Metric created successfully',
-        })
-
-        render(<CreateMetricForm businessId='1' onCreateMetric={createMetricMock} currency='USD' />)
-
-        const revenueInput = screen.getByTestId(MetricFormTestID.revenue)
-
-        await user.type(revenueInput, input.revenue.toString())
-
-        const expensesInput = screen.getByTestId(MetricFormTestID.expenses)
-
-        await user.type(expensesInput, input.expenses.toString())
-
-        const cashInBankInput = screen.getByTestId(MetricFormTestID.cashInBank)
-
-        await user.type(cashInBankInput, input.cashInBank.toString())
-
-        const topCustomerPctInput = screen.getByTestId(MetricFormTestID.topCustomerPct)
-
-        await user.type(topCustomerPctInput, input.topCustomerPct.toString())
-
-        const submitButton = screen.getByTestId(MetricFormTestID.button)
-
-        await user.click(submitButton)
-
-        expect(pushMock).toHaveBeenCalledWith(routes.metricScore)
-      })
     })
 
     describe('when creation fails', () => {

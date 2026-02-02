@@ -10,6 +10,10 @@ import { businessOtherValuesMock, businessValuesMock } from './schema.mocks'
 import { BUSINESS_TYPES, SALES_RANGES } from './constants'
 import type { IBusinessService } from './types'
 
+vi.mock('next/navigation', () => ({
+  redirect: vi.fn(),
+}))
+
 vi.mock('@/lib/prisma/client', () => ({
   default: {
     business: {

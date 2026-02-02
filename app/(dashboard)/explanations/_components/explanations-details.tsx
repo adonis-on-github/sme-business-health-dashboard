@@ -86,7 +86,6 @@ const labels: Record<GetInitialAnalysisResponse['type'], string> = {
   GENERATED: 'Regenerate',
   ERROR: 'Try again',
   NO_EXPLANATION: 'Generate',
-  NO_METRIC: 'Generate'
 }
 
 const GenerateButton = ({ status, isPending, onClick }: ButtonContentProps) => (

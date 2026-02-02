@@ -56,18 +56,6 @@ describe('getInitialAnalysis', () => {
     })
   })
 
-  describe('when latest metric is not available', () => {
-    it('returns an error message', async () => {
-      vi.mocked(getLatestMetric).mockResolvedValue(null)
-
-      const result = await getInitialAnalysis()
-
-      expect(result).toEqual({
-        type: 'NO_METRIC',
-      })
-    })
-  })
-
   describe('when latest explanation had error', () => {
     it('returns an error message', async () => {
       vi.mocked(getLatestMetric).mockResolvedValue(latestMetricMock)
@@ -187,18 +175,6 @@ describe('generateAnalysis', () => {
             error: mockErrorMessage,
           }
         })
-      })
-    })
-  })
-
-  describe('when latest metric is not available', () => {
-    it('returns the LLM error message', async () => {
-      vi.mocked(getLatestMetric).mockResolvedValue(null)
-
-      const result = await generateAnalysis()
-
-      expect(result).toEqual({
-        type: 'NO_METRIC',
       })
     })
   })

@@ -7,12 +7,11 @@ import { runLLM } from '@/lib/openrouter/openrouter'
 import { buildMessages } from '@/lib/prompts/messages'
 import prisma from '@/lib/prisma/client'
 
+import { redirect } from 'next/navigation'
 import { getLatestMetric } from '@dashboard/_lib/service'
+import { routes } from '@/app/_lib/routes'
 
 export type GetInitialAnalysisResponse =
-| {
-      type: 'NO_METRIC'
-    }
   | {
       type: 'NO_EXPLANATION'
     }
@@ -31,9 +30,7 @@ export const getInitialAnalysis = cache(async (): Promise<GetInitialAnalysisResp
   const latestMetric = await getLatestMetric()
 
   if (latestMetric === null) {
-    return {
-      type: 'NO_METRIC',
-    }
+    redirect(routes.createMetric)
   }
 
   const latestExplanation = await getLatestExplanation(latestMetric.id)
@@ -63,9 +60,7 @@ export const generateAnalysis = async (): Promise<GetInitialAnalysisResponse> =>
   const latestMetric = await getLatestMetric()
 
   if (latestMetric === null) {
-    return {
-      type: 'NO_METRIC',
-    }
+    redirect(routes.createMetric)
   }
 
   try {

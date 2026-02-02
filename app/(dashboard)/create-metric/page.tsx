@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 
+import { redirect } from 'next/navigation'
 import type { Business } from '@prisma/client'
 
-import { getUserBusiness } from '@/lib/prisma/services/business'
+import { routes } from '@/app/_lib/routes'
+import { getUserBusiness } from '@/app/_lib/services'
 
 import { createMetric } from './_lib/actions'
 
-import BusinessNotCreated from './_components/busines-not-created'
 import CreateMetricForm from './_components/create-metric-form'
 import PageHeader from '@/components/custom/page-header'
 
@@ -24,6 +25,10 @@ const MetricsPage = async () => {
     console.error(error)
   }
 
+  if (!userBusiness) {
+    return redirect(routes.business)
+  }
+
   return (
     <article className='max-w-xl mx-auto py-10 px-4'>
       <PageHeader
@@ -31,15 +36,11 @@ const MetricsPage = async () => {
         description='Fill in the details for the metric'
       />
 
-      {!userBusiness ? (
-        <BusinessNotCreated />
-      ) : (
-        <CreateMetricForm
-          businessId={userBusiness.id}
-          onCreateMetric={createMetric}
-          currency={userBusiness.currency}
-        />
-      )}
+      <CreateMetricForm
+        businessId={userBusiness.id}
+        onCreateMetric={createMetric}
+        currency={userBusiness.currency}
+      />
     </article >
   )
 }

@@ -1,3 +1,5 @@
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { getUser } from '@/lib/supabase/server'
 import prisma from '@/lib/prisma/client'
 import { userMock } from '@/lib/supabase/supabase.mocks'
@@ -6,6 +8,7 @@ import { metricHealthScore, metricScoreStatus } from '@/lib/health-score/healthS
 
 import { createMetric } from './actions'
 import type { BusinessMetric } from './schema'
+import { routes } from '@/app/_lib/routes'
 
 export const metricDataMock: BusinessMetric = {
   revenue: 100,
@@ -13,6 +16,14 @@ export const metricDataMock: BusinessMetric = {
   cashInBank: 50,
   topCustomerPct: 50
 }
+
+vi.mock('next/navigation', () => ({
+  redirect: vi.fn(),
+}))
+
+vi.mock('next/cache', () => ({
+  revalidatePath: vi.fn(),
+}))
 
 vi.mock('@/lib/supabase/server', () => ({
   getUser: vi.fn(),
@@ -101,7 +112,7 @@ describe('createMetric', () => {
     vi.mocked(metricHealthScore).mockReturnValue(score)
     vi.mocked(metricScoreStatus).mockReturnValue('GREEN')
 
-    const result = await createMetric(businessId, metricDataMock)
+    await createMetric(businessId, metricDataMock)
 
     expect(prisma.metric.create).toHaveBeenCalledWith({
       data: {
@@ -115,9 +126,7 @@ describe('createMetric', () => {
       }
     })
 
-    expect(result).toEqual(expect.objectContaining({
-      success: true,
-      message: 'Metric created successfully'
-    }))
+    expect(revalidatePath).toHaveBeenCalledWith(routes.metricScore)
+    expect(redirect).toHaveBeenCalledWith(routes.metricScore)
   })
 })

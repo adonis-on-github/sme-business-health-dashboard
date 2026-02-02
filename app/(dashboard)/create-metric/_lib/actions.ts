@@ -1,5 +1,8 @@
 'use server'
 
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+
 import prisma from '@/lib/prisma/client'
 
 import { getUser } from '@/lib/supabase/server'
@@ -10,6 +13,7 @@ import type { CreateMetric } from './types'
 
 import type { BusinessMetric } from './schema'
 import { MetricSchema } from './schema'
+import { routes } from '@/app/_lib/routes'
 
 export const createMetric: CreateMetric = async (businessId: string, metricData: BusinessMetric) => {
   const user = await getUser()
@@ -61,11 +65,6 @@ export const createMetric: CreateMetric = async (businessId: string, metricData:
       }
     })
 
-    return {
-      success: true,
-      message: 'Metric created successfully',
-    }
-
   } catch (error) {
       const errorMessage = getErrorMessage(error)
 
@@ -73,5 +72,9 @@ export const createMetric: CreateMetric = async (businessId: string, metricData:
 
       return { success: false, message: errorMessage }
   }
+
+  revalidatePath(routes.metricScore)
+
+  redirect(routes.metricScore)
 }
 
