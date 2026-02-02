@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
-import { routes } from '@/app/_lib/routes'
+import { routes } from '@/lib/routes'
 
 import { Button } from '@/components/ui/button'
 const BusinessNotCreated = () => {

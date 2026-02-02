@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button'
 import { getUser } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
+import { routes } from '@/lib/routes'
+
 const Home = async () => {
   const user = await getUser()
 
   if (user) {
-    redirect('/business')
+    redirect(routes.business)
   }
 
   return (
@@ -24,21 +26,25 @@ const Home = async () => {
 
         <div className='flex justify-center'>
           <Button asChild size='lg' className='bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-6 text-xl rounded-xl shadow-lg shadow-indigo-500/25'>
-            <Link href={user ? '/business' : '/login'}>
-              {user ? 'Go to Dashboard' : 'Get Started'}
-            </Link>
+
+            <Link href={routes.login}>Login</Link>
+
           </Button>
         </div>
 
         <div className='grid grid-cols-1 sm:grid-cols-3 gap-8 pt-10 border-t border-zinc-200 dark:border-zinc-800'>
           <div className='space-y-2'>
             <h3 className='font-bold'>Real-time Tracking</h3>
+
             <p className='text-sm text-zinc-500'>Monitor your cashflow and revenue instantly.</p>
           </div>
+
           <div className='space-y-2'>
             <h3 className='font-bold'>Health Scoring</h3>
+
             <p className='text-sm text-zinc-500'>Get a 0-100 score of your business health.</p>
           </div>
+
           <div className='space-y-2'>
             <h3 className='font-bold'>AI Advice</h3>
             <p className='text-sm text-zinc-500'>Custom step-by-step actions to grow faster.</p>

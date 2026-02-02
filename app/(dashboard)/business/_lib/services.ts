@@ -2,7 +2,7 @@ import { cache } from 'react'
 
 import type { Business } from '@prisma/client'
 
-import { getUserBusiness } from '@/app/_lib/services'
+import { getUserBusiness } from '@/lib/prisma/services'
 
 import  type { BusinessFormValues } from './schema'
 import { BUSINESS_TYPES, SALES_RANGES } from './constants'

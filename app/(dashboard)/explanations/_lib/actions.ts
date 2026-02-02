@@ -9,7 +9,7 @@ import prisma from '@/lib/prisma/client'
 
 import { redirect } from 'next/navigation'
 import { getLatestMetric } from '@dashboard/_lib/service'
-import { routes } from '@/app/_lib/routes'
+import { routes } from '@/lib/routes'
 
 export type GetInitialAnalysisResponse =
   | {

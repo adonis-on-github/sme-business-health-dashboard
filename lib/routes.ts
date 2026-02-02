@@ -1,5 +1,7 @@
 export const routes = {
-  signin: '/signin',
+  home: '/',
+  login: '/login',
+  signup: '/signup',
   business: '/business',
   createMetric: '/create-metric',
   metricScore: '/score',

@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { ActionButton } from '@/components/custom/action-button'
 
-import { routes } from '@/app/_lib/routes'
+import { routes } from '@/lib/routes'
 
 export const ActionButtons = () => {
   const router = useRouter()

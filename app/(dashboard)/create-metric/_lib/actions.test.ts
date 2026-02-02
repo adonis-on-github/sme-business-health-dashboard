@@ -8,7 +8,7 @@ import { metricHealthScore, metricScoreStatus } from '@/lib/health-score/healthS
 
 import { createMetric } from './actions'
 import type { BusinessMetric } from './schema'
-import { routes } from '@/app/_lib/routes'
+import { routes } from '@/lib/routes'
 
 export const metricDataMock: BusinessMetric = {
   revenue: 100,

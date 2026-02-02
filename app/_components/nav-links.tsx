@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { routes } from '../_lib/routes'
+import { routes } from '@/lib/routes'
 
 const links = [
   { name: 'Business', href: routes.business },
@@ -11,7 +11,7 @@ const links = [
   { name: 'Explanations', href: routes.explanations }
 ]
 
-export const Sections = () => {
+export const NavLinks = () => {
   const pathname = usePathname()
 
   return (

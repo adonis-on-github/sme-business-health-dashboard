@@ -13,7 +13,7 @@ import type { CreateMetric } from './types'
 
 import type { BusinessMetric } from './schema'
 import { MetricSchema } from './schema'
-import { routes } from '@/app/_lib/routes'
+import { routes } from '@/lib/routes'
 
 export const createMetric: CreateMetric = async (businessId: string, metricData: BusinessMetric) => {
   const user = await getUser()

@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import type { Business } from '@prisma/client'
 
-import { routes } from '@/app/_lib/routes'
-import { getUserBusiness } from '@/app/_lib/services'
+import { routes } from '@/lib/routes'
+import { getUserBusiness } from '@/lib/prisma/services'
 
 import { createMetric } from './_lib/actions'
 

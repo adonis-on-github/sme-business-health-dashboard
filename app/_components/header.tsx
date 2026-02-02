@@ -1,13 +1,13 @@
 import type { User } from '@supabase/supabase-js'
-import { logout } from '@auth/actions'
+import { logout } from '@/lib/auth/actions'
 import { Button } from '@/components/ui/button'
-import { Sections } from './sections'
+import { NavLinks } from './nav-links'
 
 type HeaderProps = {
   user: User | null
 }
 
-export const Header = ({ user }: HeaderProps) => {
+export const Header = async ({ user }: HeaderProps) => {
   if (!user) {
     return null
   }
@@ -21,10 +21,10 @@ export const Header = ({ user }: HeaderProps) => {
 
         <span className='font-semibold tracking-tight'>SME Business Health</span>
 
-        <Sections />
+        <NavLinks />
       </div>
 
-      <div className='flex items-center space-x-4'>
+      <nav className='flex items-center space-x-4'>
         <span className='text-sm text-zinc-500 dark:text-zinc-400 hidden sm:inline-block'>
           {user.email}
         </span>
@@ -38,7 +38,7 @@ export const Header = ({ user }: HeaderProps) => {
             Logout
           </Button>
         </form>
-      </div>
+      </nav>
     </header>
   )
 }

@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation'
 
 import { routes } from '@/lib/routes'
-
 import { getUser } from '@/lib/supabase/server'
 
 import {
@@ -11,10 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { LoginForm } from '@auth/_components/login-form'
-import { login } from '@/lib/auth/actions'
 
-const LoginPage = async (props: {
+import { signup } from '@/lib/auth/actions'
+import { SignupForm } from '@auth/_components/signup-form'
+
+const SignupPage = async (props: {
   searchParams: Promise<{ next?: string }>
 }) => {
   const searchParams = await props.searchParams
@@ -29,20 +29,20 @@ const LoginPage = async (props: {
       <Card className='w-full max-w-md shadow-xl border-zinc-200 dark:border-zinc-800'>
         <CardHeader className='space-y-1 text-center'>
           <CardTitle className='text-3xl font-bold tracking-tight'>
-            Welcome Back
+            Welcome
           </CardTitle>
 
           <CardDescription className='text-zinc-500 dark:text-zinc-400'>
-            Sign in to your account to continue
+            Create your account to continue
           </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <LoginForm nextPath={searchParams.next} action={login} />
+          <SignupForm nextPath={searchParams.next} action={signup} />
         </CardContent>
       </Card>
     </div>
   )
 }
 
-export default LoginPage
+export default SignupPage

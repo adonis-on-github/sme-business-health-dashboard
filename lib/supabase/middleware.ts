@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { routes } from '@/lib/routes'
 
 export const updateSession = async (request: NextRequest) => {
   const bypassKey = process.env.TEST_AUTH_BYPASS_KEY
@@ -43,14 +44,14 @@ export const updateSession = async (request: NextRequest) => {
 
   if (
     !user &&
-    request.nextUrl.pathname !== '/' &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    request.nextUrl.pathname !== routes.home &&
+    !request.nextUrl.pathname.startsWith(routes.login) &&
+    !request.nextUrl.pathname.startsWith(routes.signup)
   ) {
     const url = request.nextUrl.clone()
     const next = request.nextUrl.pathname + request.nextUrl.search
 
-    url.pathname = '/login'
+    url.pathname = routes.login
     url.searchParams.set('next', next)
 
     return NextResponse.redirect(url)
