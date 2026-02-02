@@ -34,6 +34,10 @@ const ExplanationsDetails = ({ initialAnalysis }: Props) => {
 
   return (
     <div className='explanation-content flex flex-col gap-4 mt-4 mx-auto text-slate-600' data-testid={ExplanationIds.content}>
+      {analysis.type === 'NO_EXPLANATION' && (
+        <p data-testid={ExplanationIds.noExplanation}>No explanations available</p>
+      )}
+
       {error && <ErrorContent error={error} />}
 
       {explanation && <ExplanationContent explanation={explanation} />}

@@ -62,6 +62,8 @@ describe('ExplanationsDetails', () => {
 
         render(<ExplanationsDetails initialAnalysis={mockNoExplanationAnalysis} />)
 
+        expect(screen.getByTestId(ExplanationIds.noExplanation)).toHaveTextContent('No explanations available')
+
         expect(screen.queryByTestId(ExplanationIds.explanation)).not.toBeInTheDocument()
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
