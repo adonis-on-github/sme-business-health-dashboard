@@ -1,8 +1,14 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+const envValue = z.enum(['development', 'test', 'production']).default('development')
+
+const dynamicURL = (key: string) => z.url({
+  message: `${key} is required`,
+})
+
 const appEnv = z.object({
-   APP_ENV: z.enum(['development', 'test', 'production']).default('development'),
+   APP_ENV: envValue,
 }).parse(process.env)
 
 const suffix = appEnv.APP_ENV.toUpperCase()
@@ -13,14 +19,9 @@ const directUrlKey = `DIRECT_URL_${suffix}` as const
 
 export const env = createEnv({
   server: {
-    APP_ENV: z.enum(['development', 'test', 'production']).default('development'),
-    DATABASE_URL: z.url({
-      message: `${dbUrlKey} is required`,
-    }),
-
-    DIRECT_URL: z.url({
-      message: `${directUrlKey} is required`,
-    }),
+    APP_ENV: envValue,
+    DATABASE_URL: dynamicURL(dbUrlKey),
+    DIRECT_URL: dynamicURL(directUrlKey),
 
     TEST_AUTH_BYPASS_KEY: z.string().optional(),
 
