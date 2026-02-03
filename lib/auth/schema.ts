@@ -1,17 +1,12 @@
 import { z } from 'zod'
 
-export const loginSchema = z.object({
+const MIN_PASSWORD_LENGTH = 6
+
+export const authSchema = z.object({
   email: z.email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters long'),
+  password: z.string().min(MIN_PASSWORD_LENGTH, `Password must be at least ${MIN_PASSWORD_LENGTH} characters long`),
   nextPath: z.string().optional(),
 })
 
-export const signupSchema = loginSchema.extend({
-  confirmPassword: z.string().min(6, 'Confirm password must be at least 6 characters long'),
-}).refine(data => data.password === data.confirmPassword, {
-  message: 'Passwords do not match',
-  path: ['confirmPassword'],
-})
+export type AuthSchema = z.infer<typeof authSchema>
 
-export type LoginSchema = z.infer<typeof loginSchema>
-export type SignupSchema = z.infer<typeof signupSchema>

@@ -15,7 +15,7 @@ import {
   TopCustomerPctGroup
 } from './form-groups'
 
-import { setServerErrors } from '@/lib/error-utils'
+import { setServerErrors } from '@/lib/zod/error-utils'
 import type { MetricInput } from '@dashboard/create-metric/_lib/schema'
 import { MetricSchema } from '@dashboard/create-metric/_lib/schema'
 import type { CreateMetric } from '@dashboard/create-metric/_lib/types'

@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 import prisma from '@/lib/prisma/client'
 
 import { getUser } from '@/lib/supabase/server'
-import { getErrorMessage, getFieldErrors } from '@/lib/error-utils'
+import { getErrorMessage, getFieldErrors } from '@/lib/zod/error-utils'
 
 import { metricHealthScore, metricScoreStatus } from '@/lib/health-score/healthScore'
 import type { CreateMetric } from './types'

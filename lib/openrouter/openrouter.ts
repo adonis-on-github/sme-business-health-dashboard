@@ -1,6 +1,6 @@
 import { OpenRouter } from '@openrouter/sdk'
 import type { ChatGenerationParams } from '@openrouter/sdk/models'
-import { getErrorMessage } from '../error-utils'
+import { getErrorMessage } from '../zod/error-utils'
 
 const MODEL_NAME = 'openai/gpt-oss-120b:free'
 // 'openai/gpt-oss-120b:free'

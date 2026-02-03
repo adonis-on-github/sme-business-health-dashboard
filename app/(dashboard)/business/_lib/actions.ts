@@ -1,5 +1,5 @@
 'use server'
-import { getErrorMessage, getFieldErrors } from '@/lib/error-utils'
+import { getErrorMessage, getFieldErrors } from '@/lib/zod/error-utils'
 import prisma from '@/lib/prisma/client'
 
 import { businessSchema, type BusinessFormValues } from './schema'

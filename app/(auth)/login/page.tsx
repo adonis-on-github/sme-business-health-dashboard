@@ -1,8 +1,3 @@
-import { redirect } from 'next/navigation'
-
-import { routes } from '@/lib/routes'
-
-import { getUser } from '@/lib/supabase/server'
 
 import {
   Card,
@@ -11,18 +6,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { LoginForm } from '@auth/_components/login-form'
-import { login } from '@/lib/auth/actions'
+import { AuthForm } from './_components/auth-form'
 
 const LoginPage = async (props: {
   searchParams: Promise<{ next?: string }>
 }) => {
   const searchParams = await props.searchParams
-  const user = await getUser()
-
-  if (user) {
-    redirect(searchParams.next || routes.business)
-  }
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen bg-zinc-50 dark:bg-zinc-950 px-4'>
@@ -38,7 +27,7 @@ const LoginPage = async (props: {
         </CardHeader>
 
         <CardContent>
-          <LoginForm nextPath={searchParams.next} action={login} />
+          <AuthForm nextPath={searchParams.next} />
         </CardContent>
       </Card>
     </div>

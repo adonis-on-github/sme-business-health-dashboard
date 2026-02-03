@@ -12,7 +12,7 @@ import { SALES_RANGES, CURRENCIES, BUSINESS_TYPES } from '@dashboard/business/_l
 import { BusinessFormTestID } from '@dashboard/business/_lib/test.ids'
 import { createBusiness } from '@dashboard/business/_lib/actions'
 import { routes } from '@/lib/routes'
-import { setServerErrors } from '@lib/error-utils'
+import { setServerErrors } from '@/lib/zod/error-utils'
 
 import { Form } from '@/components/ui/form'
 import { toast } from 'sonner'

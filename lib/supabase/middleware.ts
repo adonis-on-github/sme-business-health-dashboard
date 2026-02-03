@@ -45,14 +45,28 @@ export const updateSession = async (request: NextRequest) => {
   if (
     !user &&
     request.nextUrl.pathname !== routes.home &&
-    !request.nextUrl.pathname.startsWith(routes.login) &&
-    !request.nextUrl.pathname.startsWith(routes.signup)
+    !request.nextUrl.pathname.startsWith(routes.login)
   ) {
     const url = request.nextUrl.clone()
     const next = request.nextUrl.pathname + request.nextUrl.search
 
     url.pathname = routes.login
     url.searchParams.set('next', next)
+
+    return NextResponse.redirect(url)
+  }
+
+  if (
+    user &&
+    (
+      request.nextUrl.pathname.startsWith(routes.home) ||
+      request.nextUrl.pathname.startsWith(routes.login)
+    )
+  ) {
+    const url = request.nextUrl.clone()
+
+    url.pathname = routes.business
+    url.searchParams.delete('next')
 
     return NextResponse.redirect(url)
   }

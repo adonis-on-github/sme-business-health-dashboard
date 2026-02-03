@@ -2,7 +2,7 @@
 
 import { cache } from 'react'
 
-import { getErrorMessage } from '@/lib/error-utils'
+import { getErrorMessage } from '@/lib/zod/error-utils'
 import { runLLM } from '@/lib/openrouter/openrouter'
 import { buildMessages } from '@/lib/prompts/messages'
 import prisma from '@/lib/prisma/client'
