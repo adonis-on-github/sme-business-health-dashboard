@@ -27,7 +27,7 @@ const Home = async () => {
         <div className='flex justify-center'>
           <Button asChild size='lg' className='bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-6 text-xl rounded-xl shadow-lg shadow-indigo-500/25'>
 
-            <Link href={routes.login}>Login</Link>
+            <Link href={routes.login}>Get Started</Link>
 
           </Button>
         </div>
