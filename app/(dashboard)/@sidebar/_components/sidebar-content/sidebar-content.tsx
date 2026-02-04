@@ -19,7 +19,7 @@ import {
   Gauge,
   BookOpen
 } from 'lucide-react'
-import { cn } from '@/lib/shadcn/utils'
+import { CollapsibleContent } from '../collapsible-content'
 
 type LinkItem = {
   name: string
@@ -60,27 +60,19 @@ type SindebarItemProps = {
   open: boolean
 }
 
-const SidebarItem = ({ linkItem, isActive, open }: SindebarItemProps) => {
-
-  return (
-    <SidebarMenuItem className='px-1'>
-      <SidebarMenuButton asChild className='transition-all duration-200 data-[active=true]:text-blue-700' isActive={isActive}>
-        <Link
-          href={linkItem.href}
-          className='flex gap-2 items-center gap-2'
-        >
-          <div className='flex-shrink-0'>
-            {linkItem.icon}
-          </div>
-
-          <span className={cn('transition-all duration-300 truncate',
-            open ? 'opacity-100 translate-x-0' : 'opacity-0 translate-w-0 overflow-hidden'
-          )}>
-            {linkItem.name}
-          </span>
-        </Link>
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  )
-}
+const SidebarItem = ({ linkItem, isActive, open }: SindebarItemProps) => (
+  <SidebarMenuItem className='px-1'>
+    <SidebarMenuButton asChild className='transition-all duration-200 data-[active=true]:text-blue-700' isActive={isActive}>
+      <Link
+        href={linkItem.href}
+        className='flex gap-2 items-center gap-2'
+      >
+        <CollapsibleContent
+          open={open}
+          collapsedContent={linkItem.icon}
+          expandedContent={linkItem.name} />
+      </Link>
+    </SidebarMenuButton>
+  </SidebarMenuItem>
+)
 

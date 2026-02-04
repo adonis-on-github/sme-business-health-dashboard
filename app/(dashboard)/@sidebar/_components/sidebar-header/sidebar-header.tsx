@@ -1,18 +1,16 @@
 'use client'
 
-import { User } from 'lucide-react'
+import { LogOut, PanelLeftClose, PanelLeftOpen, User } from 'lucide-react'
 
 import {
   SidebarHeader as ScnSidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
   useSidebar
 } from '@/components/ui/sidebar'
-import { cn } from '@/lib/shadcn/utils'
 
-import type { } from 'lucide-react'
+import { CollapsibleContent } from '@sidebar/_components/collapsible-content'
 
 type SidebarHeaderProps = {
   userEmail?: string
@@ -22,38 +20,48 @@ export const SidebarHeader = ({ userEmail }: SidebarHeaderProps) => {
   const { open } = useSidebar()
 
   return (
-    <ScnSidebarHeader className='mb-2 border-b border-slate-200 bg-slate-150'>
+    <ScnSidebarHeader className='mb-4 border-b border-slate-200'>
       <SidebarMenu>
-        <SidebarMenuItem className='flex gap-2 justify-start items-center overflow-hidden'>
-          <div className='flex-shrink-0'>
-            <SidebarTrigger size='icon' />
-          </div>
-
-          <SidebarMenuButton
-            className={cn('whitespace-nowrap transition-all duration-200 ease-in-out text-slate-700 text-sm font-semibold',
-              open ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 pointer-events-none'
-            )}
-          >
-            <span className='text-indigo-600'>SME</span> Business Health
-          </SidebarMenuButton>
+        <SidebarMenuItem>
+          <SidebarTriggerButton />
         </SidebarMenuItem>
 
         <SidebarMenuItem>
-          <SidebarMenuButton className='flex gap-2 items-center'>
-            <div className='flex-shrink-0'>
-              <User size={18} />
-            </div>
-
-            <div className={cn('whitespace-nowrap transition-all duration-200 ease-in-out text-slate-700 text-sm font-semibold',
-              open ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 pointer-events-none'
-            )}>
-              {userEmail}
-            </div>
-
+          <SidebarMenuButton className='flex gap-1 items-center text-indigo-600'>
+            <CollapsibleContent
+              open={open}
+              collapsedContent={<User size={18} />}
+              expandedContent={<span className='text-indigo-600 font-normal'>{userEmail}</span>}
+            />
           </SidebarMenuButton>
         </SidebarMenuItem>
 
+        <SidebarMenuButton
+          className='text-indigo-600 hover:text-indigo-700 w-full'          >
+          <LogOut size={18} />
+
+          Logout
+        </SidebarMenuButton>
       </SidebarMenu>
     </ScnSidebarHeader>
+  )
+}
+
+const SidebarTriggerButton = () => {
+  const { open, toggleSidebar } = useSidebar()
+
+  return (
+    <SidebarMenuButton
+      onClick={toggleSidebar}
+    >
+      <CollapsibleContent
+        open={open}
+        collapsedContent={open ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+      >
+        <span className='text-emerald-600'>SME</span>{' '}
+        <span className='text-blue-600'>Business</span>{' '}
+        <span className='text-orange-600'>Health</span>
+      </CollapsibleContent>
+    </SidebarMenuButton>
   )
 }

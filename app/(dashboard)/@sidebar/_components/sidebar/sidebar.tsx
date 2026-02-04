@@ -1,3 +1,4 @@
+'use client'
 
 import {
   Sidebar as ScnSidebar,
@@ -5,19 +6,21 @@ import {
 
 import { SidebarHeader } from '@sidebar/_components/sidebar-header'
 import { SidebarContent } from '@sidebar/_components/sidebar-content'
-import { SidebarFooter } from '@sidebar/_components/sidebar-footer'
-import { getUser } from '@/lib/supabase/server'
 
-export const Sidebar = async () => {
-  const user = await getUser()
-
+type SidebarProps = {
+  userEmail?: string
+}
+export const Sidebar = ({ userEmail }: SidebarProps) => {
   return (
-    <ScnSidebar side='left' variant='sidebar' collapsible='icon' >
-      <SidebarHeader userEmail={user?.email} />
+    <ScnSidebar
+      side='left'
+      variant='sidebar'
+      collapsible='icon'
+    >
+      <SidebarHeader userEmail={userEmail} />
 
       <SidebarContent />
 
-      <SidebarFooter />
     </ScnSidebar >
   )
 }
