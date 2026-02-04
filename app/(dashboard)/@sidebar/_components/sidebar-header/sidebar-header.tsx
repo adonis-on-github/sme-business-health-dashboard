@@ -1,6 +1,11 @@
 'use client'
 
-import { LogOut, PanelLeftClose, PanelLeftOpen, User } from 'lucide-react'
+import {
+  LogOut,
+  PanelLeftClose,
+  PanelLeftOpen,
+  User
+} from 'lucide-react'
 
 import {
   SidebarHeader as ScnSidebarHeader,
@@ -11,11 +16,12 @@ import {
 } from '@/components/ui/sidebar'
 
 import { CollapsibleContent } from '@sidebar/_components/collapsible-content'
+import { logout } from '@/lib/auth/actions'
+import { useIsMobile } from '@/lib/shadcn/hooks/use-mobile'
 
 type SidebarHeaderProps = {
   userEmail?: string
 }
-
 export const SidebarHeader = ({ userEmail }: SidebarHeaderProps) => {
   const { open } = useSidebar()
 
@@ -23,7 +29,7 @@ export const SidebarHeader = ({ userEmail }: SidebarHeaderProps) => {
     <ScnSidebarHeader className='mb-4 border-b border-slate-200'>
       <SidebarMenu>
         <SidebarMenuItem>
-          <SidebarTriggerButton />
+          <CollapsibleTriggerButton />
         </SidebarMenuItem>
 
         <SidebarMenuItem>
@@ -37,31 +43,53 @@ export const SidebarHeader = ({ userEmail }: SidebarHeaderProps) => {
         </SidebarMenuItem>
 
         <SidebarMenuButton
+          onClick={logout}
           className='text-indigo-600 hover:text-indigo-700 w-full'          >
           <LogOut size={18} />
 
           Logout
         </SidebarMenuButton>
       </SidebarMenu>
-    </ScnSidebarHeader>
+    </ScnSidebarHeader >
   )
 }
 
-const SidebarTriggerButton = () => {
+export const CollapsibleTriggerButton = () => {
   const { open, toggleSidebar } = useSidebar()
+  const isMobile = useIsMobile()
+
+  const icon = open ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />
+
+  if (isMobile) {
+    return (
+      <SidebarMenuButton
+        onClick={toggleSidebar}
+      >
+        <SidebarTitle />
+      </SidebarMenuButton>
+    )
+  }
 
   return (
     <SidebarMenuButton
       onClick={toggleSidebar}
     >
+
       <CollapsibleContent
         open={open}
-        collapsedContent={open ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
+        collapsedContent={icon}
       >
-        <span className='text-emerald-600'>SME</span>{' '}
-        <span className='text-blue-600'>Business</span>{' '}
-        <span className='text-orange-600'>Health</span>
+        <SidebarTitle />
       </CollapsibleContent>
+
     </SidebarMenuButton>
   )
 }
+
+const SidebarTitle = () => (
+  <div className='text-slate-700 text-sm font-semibold'>
+    <span className='text-emerald-600'>SME</span>{' '}
+    <span className='text-blue-600'>Business</span>{' '}
+    <span className='text-orange-600'>Health</span>
+  </div>
+)
