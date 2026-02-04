@@ -16,27 +16,22 @@ export const metadata: Metadata = {
   title: 'SME Business Health Dashboard',
   description: 'SME Business Health Dashboard application',
 }
-import { Header } from '@/app/_components/header'
-import { getUser } from '@/lib/supabase/server'
 import { Toaster } from '@/components/ui/sonner'
+
+const CLASS_NAMES = `${geistSans.className}, ${geistMono.className}
+antialiased bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen flex flex-col`
 
 const RootLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const user = await getUser()
-
   return (
     <html lang='en' className='light'>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen flex flex-col`}
+        className={CLASS_NAMES}
       >
-        <Header user={user} />
-
-        <main className='flex-1'>
-          {children}
-        </main>
+        {children}
 
         <Toaster position='bottom-right' richColors />
       </body>

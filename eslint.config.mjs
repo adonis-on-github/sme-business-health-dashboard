@@ -19,6 +19,7 @@ const globalIgnore = [
   'build/**',
   'next-env.d.ts',
   'components/ui/**',
+  'lib/shadcn/**',
   'playwright-ct-report/**',
   'playwright-report/**'
 ]

@@ -42,6 +42,9 @@
       "@dashboard/*": [
         "./app/(dashboard)/*"
       ],
+      "@sidebar/*": [
+        "./app/(dashboard)/@sidebar/*"
+      ],
       "@lib/*": [
         "./lib/*"
       ]
