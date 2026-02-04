@@ -37,18 +37,22 @@ export const SidebarHeader = ({ userEmail }: SidebarHeaderProps) => {
             <CollapsibleContent
               open={open}
               collapsedContent={<User size={18} />}
-              expandedContent={<span className='text-indigo-600 font-normal'>{userEmail}</span>}
+              expandedContent={
+                <span className='text-indigo-600 font-normal'>{userEmail}</span>
+              }
             />
           </SidebarMenuButton>
         </SidebarMenuItem>
 
-        <SidebarMenuButton
-          onClick={logout}
-          className='text-indigo-600 hover:text-indigo-700 w-full'          >
-          <LogOut size={18} />
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            onClick={logout}
+            className='text-indigo-600 hover:text-indigo-700 w-full'          >
+            <LogOut size={18} />
 
-          Logout
-        </SidebarMenuButton>
+            Logout
+          </SidebarMenuButton>
+        </SidebarMenuItem>
       </SidebarMenu>
     </ScnSidebarHeader >
   )
@@ -64,6 +68,7 @@ export const CollapsibleTriggerButton = () => {
     return (
       <SidebarMenuButton
         onClick={toggleSidebar}
+        aria-label={open ? 'Collapse sidebar' : 'Expand sidebar'}
       >
         <SidebarTitle />
       </SidebarMenuButton>
@@ -73,6 +78,7 @@ export const CollapsibleTriggerButton = () => {
   return (
     <SidebarMenuButton
       onClick={toggleSidebar}
+      aria-label={open ? 'Collapse sidebar' : 'Expand sidebar'}
     >
 
       <CollapsibleContent

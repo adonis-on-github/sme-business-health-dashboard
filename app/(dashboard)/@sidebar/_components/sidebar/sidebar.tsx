@@ -29,7 +29,7 @@ export const Sidebar = ({ userEmail }: SidebarProps) => {
     >
       <SidebarHeader userEmail={userEmail} />
 
-      <SidebarContent />
+      <SidebarContent onNavigate={() => setOpenMobile(false)} />
 
     </ScnSidebar >
   )

@@ -34,7 +34,10 @@ const links: LinkItem[] = [
   { name: 'Explanations', href: routes.explanations, icon: <BookOpen size={18} /> }
 ]
 
-export const SidebarContent = () => {
+type SidebarContentProps = {
+  onNavigate?: () => void
+}
+export const SidebarContent = ({ onNavigate }: SidebarContentProps) => {
   const pathname = usePathname()
   const { open } = useSidebar()
 
@@ -47,6 +50,7 @@ export const SidebarContent = () => {
             linkItem={link}
             isActive={pathname === link.href}
             open={open}
+            onNavigate={onNavigate}
           />
         ))}
       </SidebarMenu>
@@ -58,14 +62,17 @@ type SindebarItemProps = {
   linkItem: LinkItem
   isActive: boolean
   open: boolean
+  onNavigate?: () => void
 }
 
-const SidebarItem = ({ linkItem, isActive, open }: SindebarItemProps) => (
+const SidebarItem = ({ linkItem, isActive, open, onNavigate }: SindebarItemProps) => (
   <SidebarMenuItem className='px-1'>
     <SidebarMenuButton asChild className='transition-all duration-200 data-[active=true]:text-blue-700' isActive={isActive}>
       <Link
         href={linkItem.href}
-        className='flex gap-2 items-center gap-2'
+        aria-current={isActive ? 'page' : undefined}
+        className='flex gap-2 items-center'
+        onClick={onNavigate}
       >
         <CollapsibleContent
           open={open}

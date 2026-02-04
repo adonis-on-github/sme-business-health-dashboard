@@ -15,7 +15,7 @@ export const TriggerButton = ({ className }: TriggerButtonProps) => {
   return (
     <Button
       variant='secondary'
-
+      aria-label='Toggle sidebar'
       onClick={toggleSidebar}
       className={className}
     >
