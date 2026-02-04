@@ -3,6 +3,7 @@ import type { LatestMetric } from '@/app/(dashboard)/_lib/service'
 import { ScoreDetails } from './score-sections'
 import { ScoreSummary } from './score-sections'
 import { ActionButtons } from './action-buttons'
+import Timestamp from '@/components/custom/timestamp'
 
 type MetricScoreProps = {
   metric: LatestMetric
