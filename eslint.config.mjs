@@ -105,7 +105,9 @@ const eslintConfig = defineConfig([
     files: ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'],
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        projectService: {
+          defaultProject: 'tsconfig.json',
+        },
         tsconfigRootDir: __dirname
       },
     },

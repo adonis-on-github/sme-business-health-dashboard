@@ -15,27 +15,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+import { UserMenuID } from '@header/_lib/test.ids'
 
 export const UserMenu = async () => {
   const user = await getUser()
   const fallback = user?.email?.substring(0, 2).toUpperCase() ?? 'U'
 
   return (
-    <DropdownMenu>
+    <DropdownMenu data-testid={UserMenuID.root}>
       <DropdownMenuTrigger asChild>
-        <Avatar className='cursor-pointer'>
-          <AvatarFallback className='font-semibold'>
+        <Avatar className='cursor-pointer' data-testid={UserMenuID.avatar}>
+          <AvatarFallback className='font-semibold' data-testid={UserMenuID.avatarFallback}>
             {fallback}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className='mr-4'>
-        <DropdownMenuLabel className='text-xs text-indigo-600'>{user?.email}</DropdownMenuLabel>
+      <DropdownMenuContent className='mr-4' data-testid={UserMenuID.menuContent}>
+        <DropdownMenuLabel className='text-xs text-indigo-600' data-testid={UserMenuID.menuLabel}>
+          {user?.email}
+        </DropdownMenuLabel>
 
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator data-testid={UserMenuID.menuSeparator} />
 
-        <DropdownMenuItem onClick={logout} className='cursor-pointer'>
+        <DropdownMenuItem
+          onClick={logout}
+          className='cursor-pointer'
+          data-testid={UserMenuID.menuLogout}
+        >
           <LogOut />
 
           Logout

@@ -10,15 +10,17 @@ import { Button } from '@/components/ui/button'
 import { useSidebar } from '@/components/ui/sidebar'
 import { useIsMobile } from '@/lib/shadcn/hooks/use-mobile'
 
+import { SidebarTriggerID } from '@header/_lib/test.ids'
+
 export const SidebarTrigger = () => {
   const { toggleSidebar, open } = useSidebar()
   const isMobile = useIsMobile()
 
   const icon = isMobile
-    ? <Menu />
+    ? <Menu data-testid={SidebarTriggerID.menuIcon} />
     : open
-      ? <PanelLeftClose />
-      : <PanelLeftOpen />
+      ? <PanelLeftClose data-testid={SidebarTriggerID.closeIcon} />
+      : <PanelLeftOpen data-testid={SidebarTriggerID.openIcon} />
 
   return (
     <Button
@@ -26,6 +28,7 @@ export const SidebarTrigger = () => {
       variant='secondary'
       aria-label='Toggle sidebar'
       onClick={toggleSidebar}
+      data-testid={SidebarTriggerID.trigger}
     >
       {icon}
     </Button>
