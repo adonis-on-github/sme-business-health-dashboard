@@ -42,7 +42,7 @@ export const AuthForm = ({ nextPath }: Props) => {
     },
   })
 
-  const handleAuth = (values: AuthSchema, type: AuthType) => {
+  const handleAuth = (values: AuthSchema, type: AuthType = 'login') => {
     const authAction = type === 'login' ? login : signup
 
     startTransition(async () => {
@@ -64,6 +64,7 @@ export const AuthForm = ({ nextPath }: Props) => {
         className='space-y-6'
         onChange={() => setAuthError(null)}
         autoComplete='off'
+        onSubmit={form.handleSubmit(values => handleAuth(values))}
         data-testid={AuthFormIds.form}
       >
         <FormField
@@ -74,7 +75,7 @@ export const AuthForm = ({ nextPath }: Props) => {
               <FormLabel>Email</FormLabel>
 
               <FormControl>
-                <Input placeholder='Enter your email' {...field} data-testid={AuthFormIds.email} />
+                <Input placeholder='Enter your email' {...field} data-testid={AuthFormIds.email} autoFocus />
               </FormControl>
 
               <FormMessage data-testid={AuthFormIds.emailError} />
@@ -108,9 +109,10 @@ export const AuthForm = ({ nextPath }: Props) => {
         <div className='flex flex-col space-y-4 pt-2'>
           <Button
             disabled={isPending}
-            type='button'
+            // type='button'
+            type='submit'
             className='w-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/25'
-            onClick={form.handleSubmit(values => handleAuth(values, 'login'))}
+            // onClick={form.handleSubmit(values => handleAuth(values, 'login'))}
             data-testid={AuthFormIds.login}
           >
             Log In
