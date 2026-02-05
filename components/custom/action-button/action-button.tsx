@@ -18,19 +18,17 @@ export const ActionButton = ({
   text,
   pendingText,
   onClick,
-  'data-testid': dataTestId }: ActionButtonProps) => {
-  return (
-    <div className='flex justify-end pt-6 border-t'>
-      <Button
-        type={type}
-        size='lg'
-        className='px-10 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-lg shadow-indigo-500/20'
-        data-testid={dataTestId}
-        disabled={isPending}
-        onClick={onClick}
-      >
-        {isPending ? pendingText : text}
-      </Button>
-    </div>
-  )
-}
+  'data-testid': dataTestId }: ActionButtonProps) => (
+  <div className='flex w-full sm:justify-end pt-6 border-t'>
+    <Button
+      type={type}
+      size='lg'
+      className='w-full sm:w-auto px-10 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-lg shadow-indigo-500/20'
+      data-testid={dataTestId}
+      disabled={isPending}
+      onClick={onClick}
+    >
+      {isPending ? pendingText : text}
+    </Button>
+  </div>
+)

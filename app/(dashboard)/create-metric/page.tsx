@@ -30,7 +30,7 @@ const MetricsPage = async () => {
   }
 
   return (
-    <article className='max-w-xl mx-auto py-10 px-4'>
+    <>
       <PageHeader
         title='Create Metric'
         description='Fill in the details for the metric'
@@ -41,7 +41,7 @@ const MetricsPage = async () => {
         onCreateMetric={createMetric}
         currency={userBusiness.currency}
       />
-    </article >
+    </>
   )
 }
 

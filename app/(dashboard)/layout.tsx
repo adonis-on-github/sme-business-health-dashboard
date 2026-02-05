@@ -1,21 +1,30 @@
-import { SidebarProvider } from '@/components/ui/sidebar'
 import type { ReactNode } from 'react'
-import { TriggerButton } from './@sidebar/_components/sidebar-trigger'
+import { SidebarProvider } from '@/components/ui/sidebar'
 
-const DashboardLayout = ({ children, sidebar }: { children: ReactNode; sidebar?: ReactNode }) => (
-  <div className='flex min-h-screen'>
-    <SidebarProvider>
-      <aside>
-        {sidebar}
-      </aside>
+type DashboardLayoutProps = {
+  children: ReactNode
+  sidebar: ReactNode
+  header: ReactNode
+}
 
-      <main className='flex-1 overflow-auto'>
-        <TriggerButton className='md:hidden' />
+const DashboardLayout = ({ children, sidebar, header }: DashboardLayoutProps) => (
+  <SidebarProvider>
+    <div className='flex flex-col w-full'>
+      {header}
 
-        {children}
-      </main>
-    </SidebarProvider>
-  </div>
+      <div className='flex w-full'>
+        <aside>
+          {sidebar}
+        </aside>
+
+        <main className='flex-1 overflow-auto'>
+          <article className='max-w-xl mx-auto py-10 px-4'>
+            {children}
+          </article>
+        </main>
+      </div>
+    </div>
+  </SidebarProvider>
 )
 
 export default DashboardLayout

@@ -16,14 +16,12 @@ const BusinessPage = async () => {
 
   return (
     <>
-      <article className='max-w-xl mx-auto py-10 px-4'>
-        <PageHeader
-          title='Tell us about your business'
-          description='Fill in the details of your business and location'
-        />
+      <PageHeader
+        title='Business Details'
+        description='Fill in the details of your business and location'
+      />
 
-        <BusinessForm initialData={business} />
-      </article>
+      <BusinessForm initialData={business} />
 
       {process.env.NEXT_PUBLIC_API_MOCKING === 'enabled' && <TestBridgeWrapper />}
     </>

@@ -6,3 +6,4 @@ export const routes = {
   metricScore: '/score',
   explanations: '/explanations',
 } as const
+

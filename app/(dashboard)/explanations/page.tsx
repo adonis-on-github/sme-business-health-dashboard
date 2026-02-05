@@ -13,11 +13,11 @@ const Explanations = async () => {
   const initialAnalysis = await getInitialAnalysis()
 
   return (
-    <article className='max-w-xl mx-auto py-10 px-4'>
+    <>
       <PageHeader title='Explanations' description='AI explanations and actions' />
 
       <ExplanationsDetails initialAnalysis={initialAnalysis} />
-    </article>
+    </>
   )
 }
 

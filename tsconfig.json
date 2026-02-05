@@ -42,6 +42,9 @@
       "@dashboard/*": [
         "./app/(dashboard)/*"
       ],
+      "@header/*": [
+        "./app/(dashboard)/@header/*"
+      ],
       "@sidebar/*": [
         "./app/(dashboard)/@sidebar/*"
       ],

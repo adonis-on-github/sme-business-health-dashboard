@@ -21,10 +21,10 @@ export default async function ScorePage() {
   }
 
   return (
-    <article className='max-w-xl mx-auto py-10 px-4'>
+    <>
       <PageHeader title='Score' />
 
       <MetricScore metric={latestMetric} />
-    </article>
+    </>
   )
 }

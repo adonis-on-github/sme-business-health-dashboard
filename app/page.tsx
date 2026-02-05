@@ -4,6 +4,7 @@ import { getUser } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
 import { routes } from '@/lib/routes'
+import { Logo } from '@/components/custom/logo'
 
 const Home = async () => {
   const user = await getUser()
@@ -17,13 +18,13 @@ const Home = async () => {
       className='flex min-h-[calc(100vh-64px)] flex-col items-center justify-center bg-zinc-50 dark:bg-zinc-950 text-center gap-6'
     >
       <header>
-        <h1 className='text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100 '>
-          <span className='text-emerald-700'>SME</span> <span className='text-indigo-600'>Business</span> <span className='text-orange-500'>Health</span>
+        <h1 className='text-2xl sm:text-4xl font-extrabold tracking-tight text-zinc-900 dark:text-zinc-100 pt-4'>
+          <Logo />
         </h1>
       </header>
 
-      <main className='max-w-3xl space-y-10 mt-4'>
-        <p className='text-justify text-xl text-zinc-500 mt-4 dark:text-zinc-400 max-w-xl mx-4  sm:mx-auto'>
+      <main className='w-full space-y-10 mt-4'>
+        <p className='text-justify sm:w-6xl text-xl text-zinc-500 mt-4 dark:text-zinc-400  mx-4  sm:mx-auto'>
           The all-in-one dashboard to track, analyze, and optimize your business performance with AI-driven insights.
         </p>
 
@@ -36,7 +37,7 @@ const Home = async () => {
 
       </main>
 
-      <footer className='grid grid-cols-1 sm:grid-cols-3 gap-8 pt-10 border-zinc-200 dark:border-zinc-800'>
+      <footer className='grid grid-cols-1 sm:w-6xl sm:grid-cols-3 gap-8 pt-10 border-zinc-200 dark:border-zinc-800'>
         <div className='space-y-2'>
           <h3 className='font-bold'>Real-time Tracking</h3>
 
