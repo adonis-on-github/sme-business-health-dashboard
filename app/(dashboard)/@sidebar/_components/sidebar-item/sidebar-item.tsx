@@ -9,7 +9,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 
-import { CollapsibleContent } from '@sidebar/_components/collapsible-content'
+import { CollapsibleContent } from '@/components/custom/collapsible-content'
 import type { LinkItem } from '@sidebar/_lib/types'
 
 type SindebarItemProps = {
@@ -35,7 +35,8 @@ export const SidebarItem = ({ linkItem }: SindebarItemProps) => {
           <CollapsibleContent
             open={open}
             collapsedContent={linkItem.icon}
-            expandedContent={linkItem.name} />
+            expandedContent={linkItem.name}
+          />
         </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
