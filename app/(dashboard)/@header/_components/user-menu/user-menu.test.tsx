@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react'
 
-import { userEvent } from '@testing-library/user-event'
 import { UserMenuID } from '@header/_lib/test.ids'
 
 import { logout } from '@/lib/auth/actions'

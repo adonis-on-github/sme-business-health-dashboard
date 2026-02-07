@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/react'
 import { ExplanationIds } from '@dashboard/explanations/_lib/test.ids'
 import type { GetInitialAnalysisResponse } from '@dashboard/explanations/_lib/actions'
 import { generateAnalysis } from '@dashboard/explanations/_lib/actions'
-import userEvent from '@testing-library/user-event'
 
 vi.mock('@dashboard/explanations/_lib/actions', () => ({
   generateAnalysis: vi.fn()
