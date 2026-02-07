@@ -29,6 +29,7 @@
       "@testing-library/dom",
       "@playwright/test"
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
@@ -50,17 +51,25 @@
       ],
       "@lib/*": [
         "./lib/*"
+      ],
+      "@testing-library/react": [
+        "lib/testing-library/test-utils.ts"
+      ],
+      "rtl-original": [
+        "node_modules/@testing-library/react"
       ]
     }
   },
   "include": [
     "next-env.d.ts",
+    "lib/testing-library/types.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "vitest.setup.ts"
   ],
   "exclude": [
     "node_modules",

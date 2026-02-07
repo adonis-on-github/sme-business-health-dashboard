@@ -121,6 +121,20 @@ const eslintConfig = defineConfig([
       ...tsRules,
       ...reactRules,
     }
+  },
+  {
+    files: ['**/*.d.ts', '**/*.d.tsx'],
+    rules: {
+      '@typescript-eslint/no-namespace': 'off',
+      '@typescript-eslint/consistent-type-definitions': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-empty-interface': 'off',
+      '@typescript-eslint/triple-slash-reference': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-var': 'off',
+      'vars-on-top': 'off',
+    }
   }
 ]);
 
