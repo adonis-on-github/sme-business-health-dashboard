@@ -19,7 +19,7 @@ import { routes } from '@/lib/routes'
 
 import { SidebarItem } from '@sidebar/_components/sidebar-item'
 
-const links: LinkItem[] = [
+export const links: LinkItem[] = [
   { name: 'Business', href: routes.business, icon: <Briefcase size={18} /> },
   { name: 'Create Metric', href: routes.createMetric, icon: <ChartLine size={18} /> },
   { name: 'Score', href: routes.metricScore, icon: <Gauge size={18} /> },
