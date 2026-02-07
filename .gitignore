@@ -14,6 +14,7 @@ out
 
 # Next.js
 .next/
+.next-e2e/
 .vercel
 
 # Debug logs

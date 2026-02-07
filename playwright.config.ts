@@ -12,7 +12,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'list',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: `http://localhost:${process.env.TEST_PORT}`,
     trace: 'on-first-retry',
     extraHTTPHeaders: {
       'x-test-bypass-key': process.env.TEST_AUTH_BYPASS_KEY ?? '',
@@ -25,11 +25,14 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    command: `npm run dev:e2e -- --port ${process.env.TEST_PORT}`,
+    url: `http://localhost:${process.env.TEST_PORT}`,
+    // it should be a separate process from the dev server
+    reuseExistingServer: false, // !process.env.CI,
     env: {
       NEXT_PUBLIC_API_MOCKING: 'enabled',
+      NEXT_DIST_DIR: '.next-e2e',
+      TEST_PORT: process.env.TEST_PORT ?? '3001',
     },
   },
 })

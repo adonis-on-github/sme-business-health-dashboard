@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "dev:e2e": "NEXT_DIST_DIR=.next-e2e next dev --port ${TEST_PORT}",
     "postinstall": "prisma generate",
     "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
