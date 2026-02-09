@@ -25,9 +25,9 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "shadcn:add": "npx shadcn@latest add",
-    "supabase:init": "npx supabase init",
-    "supabase:start": "npx supabase start",
-    "supabase:stop": "npx supabase stop"
+    "supabase:dev": "npx supabase",
+    "supabase:e2e": "npx supabase --workdir e2e",
+    "supabase:e2e:stop": "npx supabase --no-backup --workdir e2e stop"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

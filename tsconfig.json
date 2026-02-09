@@ -43,6 +43,9 @@
       "@dashboard/*": [
         "./app/(dashboard)/*"
       ],
+      "@fixtures/*": [
+        "./e2e/fixtures/*"
+      ],
       "@header/*": [
         "./app/(dashboard)/@header/*"
       ],
@@ -61,13 +64,16 @@
     }
   },
   "include": [
-    "next-env.d.ts",
-    "lib/testing-library/types.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "**/*.mts",
+    "e2e/**/*.ts",
+    "e2e/**/*.tsx",
+    "e2e/**/*.mts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts",
+    "next-env.d.ts",
+    "lib/testing-library/types.d.ts",
     "playwright.config.ts",
     "vitest.setup.ts"
   ],
