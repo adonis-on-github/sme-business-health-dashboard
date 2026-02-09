@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename);
 
 const globalIgnore = [
   '.next/**',
+  '.next-e2e/**',
   '**/.cache/**',
   'out/**',
   'build/**',
