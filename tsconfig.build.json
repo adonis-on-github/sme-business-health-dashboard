@@ -5,7 +5,8 @@
   },
   "exclude": [
     "node_modules",
-    "vitest.setup.ts",
+    "vitest.client.setup.ts",
+    "vitest.server.setup.ts",
     "vitest.config.ts",
     "playwright-ct.config.ts",
     "playwright.config.ts",

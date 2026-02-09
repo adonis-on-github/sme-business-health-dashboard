@@ -75,7 +75,7 @@
     "next-env.d.ts",
     "lib/testing-library/types.d.ts",
     "playwright.config.ts",
-    "vitest.setup.ts"
+    "vitest.client.setup.ts"
   ],
   "exclude": [
     "node_modules",
