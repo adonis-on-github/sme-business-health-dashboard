@@ -1,6 +1,6 @@
+import prisma from '@/lib/prisma/client'
 
 import type { BusinessFormValues } from '@dashboard/business/_lib/schema'
-import prisma from '@/lib/prisma/client'
 
 export const generateBusiness = async (userId: string, values: BusinessFormValues) => {
   const { customBusinessType, customSalesRange, ...data } = values
@@ -25,4 +25,34 @@ export type GenerateBusiness = BusinessFormValues & { businessId: string }
 
 export const deleteBusiness = async (userId: string) => {
   await prisma.business.deleteMany({ where: { userId } })
+}
+
+export const businessInspector = async (userId: string) => {
+  const business = await prisma.business.findUnique({
+    where: { userId },
+  })
+
+  return business
+}
+
+export const deleteBusinessMetrics = async (businessId: string) => {
+  await prisma.metric.deleteMany({
+    where: {
+      businessId,
+    },
+  })
+}
+
+export const metricInspector = async (businessId: string) => {
+  const metrics = await prisma.metric.findMany({
+    where: {
+      businessId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+    take: 1,
+  })
+
+  return metrics[0]
 }

@@ -33,6 +33,63 @@ export class BusinessPage extends BasePage {
     super(page, route, testId)
   }
 
+  async expectInputs() {
+    await expect(this.nameInput).toBeVisible()
+    await expect(this.typeInput).toBeVisible()
+    await expect(this.cityInput).toBeVisible()
+    await expect(this.currencyInput).toBeVisible()
+    await expect(this.salesRangeInput).toBeVisible()
+    await expect(this.submitButton).toBeVisible()
+  }
+
+  async expectCustomInputsWhenOtherIsSelected() {
+    await this.selectOption(this.typeInput, 'Other')
+    await expect(this.customTypeInput).toBeVisible()
+
+    await this.selectOption(this.salesRangeInput, 'Other')
+    await expect(this.customSalesRangeInput).toBeVisible()
+
+    await this.selectOption(this.typeInput, BUSINESS_TYPES[0])
+    await expect(this.customTypeInput).not.toBeVisible()
+
+    await  this.selectOption(this.salesRangeInput, SALES_RANGES[0])
+    await expect(this.customSalesRangeInput).not.toBeVisible()
+  }
+
+  async expectErrorMessages() {
+    await expect(this.nameError).toHaveText('Business name must be at least 2 characters')
+    await expect(this.cityError).toHaveText('City is required')
+
+    await expect(this.customTypeError).not.toBeVisible()
+    await expect(this.customSalesRangeError).not.toBeVisible()
+
+    await this.nameInput.fill('Test Business')
+    await expect(this.nameError).not.toBeVisible()
+
+    await this.cityInput.fill('Test City')
+    await expect(this.cityError).not.toBeVisible()
+
+    await this.selectOption(this.typeInput, 'Other')
+    await this.submit()
+
+    await expect(this.customTypeError).toHaveText('Please enter a custom business type')
+
+    await this.setBusinessType('Demo')
+    await expect(this.customTypeError).not.toBeVisible()
+
+    await this.selectOption(this.salesRangeInput, 'Other')
+    await this.submit()
+
+    await expect(this.customSalesRangeError).toHaveText('Please enter a custom sales range')
+
+    await this.setBusinessSalesRange('1000000-5000000')
+    await expect(this.customSalesRangeError).not.toBeVisible()
+  }
+
+  async submit() {
+    await this.submitButton.click()
+  }
+
   async fillForm(values: BusinessFormValues) {
     await this.setInputValue(this.nameInput, values.name)
 

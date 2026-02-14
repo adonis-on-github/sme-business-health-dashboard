@@ -126,7 +126,7 @@ describe('createMetric', () => {
       }
     })
 
-    expect(revalidatePath).toHaveBeenCalledWith(routes.metricScore)
+    expect(revalidatePath).toHaveBeenCalledWith(routes.createMetric)
     expect(redirect).toHaveBeenCalledWith(routes.metricScore)
   })
 })

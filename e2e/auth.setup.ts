@@ -1,12 +1,13 @@
 import { test as setup } from '@playwright/test'
-import { ensureUser } from '@e2e/lib/generators/user.generator'
+
 import { routes } from '@/lib/routes'
 import { AuthFormIds } from '@auth/login/_lib/test.ids'
 import { STORAGE_STATE_PATH } from '@e2e/lib/constants'
 import { createUserMetadata } from '@e2e/lib/userUtils'
+import { createUser } from '@e2e/lib/db.supabase'
 
 setup('login', async ({ page }) => {
-  const credentials = await ensureUser()
+  const credentials = await createUser()
 
   await createUserMetadata(credentials.user.id)
 

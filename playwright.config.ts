@@ -13,7 +13,7 @@ export default defineConfig({
   testMatch: ['**/*.spec.ts'],
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 1,
   reporter: 'list',
   use: {
     baseURL: `http://localhost:${process.env.TEST_PORT}`,
@@ -37,14 +37,15 @@ export default defineConfig({
         storageState: STORAGE_STATE_PATH,
       },
       dependencies: ['setup'],
-      testMatch: ['**/private/**/*.spec.ts'],
+      testMatch: ['**/*.spec.ts'],
+      testIgnore: ['**/*.public.spec.ts'],
     },
     {
       name: 'e2e-public',
       use: {
         ...devices['Desktop Chrome'],
       },
-      testMatch: ['**/public/**/*.spec.ts', '**/login.spec.ts'],
+      testMatch: ['**/*.public.spec.ts'],
     }
   ],
   webServer: [

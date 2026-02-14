@@ -1,4 +1,5 @@
 import type { Page, Locator } from '@playwright/test'
+import { expect } from '@playwright/test'
 
 import { PageHeaderTestID } from '@/components/custom/page-header/test.ids'
 import type { Route } from '@/lib/routes'
@@ -17,8 +18,8 @@ export class BasePage {
     await this.page.goto(this.route)
   }
 
-  async setInputValue(input: Locator, value: string) {
-    await input.fill(value)
+  async setInputValue(input: Locator, value: string | number) {
+    await input.fill(value.toString())
   }
 
   async selectOption(input: Locator, name: string) {
@@ -28,5 +29,13 @@ export class BasePage {
 
   async isCurrent() {
     return this.page.url().endsWith(this.route)
+  }
+
+  async expectHeader(title: string, description?: string) {
+    await expect(this.title).toHaveText(title)
+
+    if (description) {
+      await expect(this.description).toHaveText(description)
+    }
   }
 }

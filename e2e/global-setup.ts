@@ -8,7 +8,15 @@ const globalSetup = async () => {
   }
 
   console.log('Resetting database...')
-  execSync('npx prisma migrate reset --force')
+
+  execSync('npx prisma migrate reset --force', {
+    env: {
+      ...process.env,
+      APP_ENV: env.APP_ENV,
+      DATABASE_URL: env.DATABASE_URL
+    },
+    // stdio: 'inherit' // Note: Uncomment to display the output of the command
+  })
 }
 
 export default globalSetup

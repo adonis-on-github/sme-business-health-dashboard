@@ -1,21 +1,21 @@
 import { expect } from '@playwright/test'
 
 import type { BusinessFormValues } from '@dashboard/business/_lib/schema'
+
 import { routes } from '@/lib/routes'
 
 import { businessMock } from '@/lib/prisma/prisma.mocks'
 
-import { BusinessPage } from '@/e2e/pages/business.page'
-
-import {
-  deleteBusiness,
-  generateBusiness,
-  type GenerateBusiness
-} from '@e2e/lib/generators/business.generator'
-
-import { businessInspector } from '@e2e/lib/inspectors/business.inspector'
+import { BusinessPage } from '@e2e/pages/business.page'
 
 import { authenticationTest } from './authentication.fixture'
+
+import type { GenerateBusiness } from '@e2e/lib/db.prisma'
+import {
+  generateBusiness,
+  deleteBusiness,
+  businessInspector
+} from '@e2e/lib/db.prisma'
 
 type BusinessFixtures = {
     mockBusiness: BusinessFormValues

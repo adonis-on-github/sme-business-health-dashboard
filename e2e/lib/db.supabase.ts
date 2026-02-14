@@ -1,10 +1,8 @@
 import { env } from '@/lib/env'
 import { createClient } from '@/lib/supabase/client'
+import { EMAIL, PASSWORD } from './constants'
 
-const EMAIL = 'test@example.com'
-const PASSWORD = 'test1234'
-
-export const ensureUser = async (email: string = EMAIL, password: string = PASSWORD) => {
+export const createUser = async (email: string = EMAIL, password: string = PASSWORD) => {
   const supabase = createClient(
     env.NEXT_PUBLIC_SUPABASE_URL,
     env.SUPABASE_SERVICE_ROLE_KEY,

@@ -73,7 +73,7 @@ export const createMetric: CreateMetric = async (businessId: string, metricData:
       return { success: false, message: errorMessage }
   }
 
-  revalidatePath(routes.metricScore)
+  revalidatePath(routes.createMetric)
 
   redirect(routes.metricScore)
 }
