@@ -1,12 +1,15 @@
 import { cache } from 'react'
+import { redirect } from 'next/navigation'
+
 import prisma from '@/lib/prisma/client'
 import { getUser } from '@/lib/supabase/server'
+import { routes } from '@/lib/routes'
 
 export const getLatestMetric = cache(async () => {
   const user = await getUser()
 
   if (user === null) {
-    return null
+    return redirect(routes.login)
   }
 
   const business = await prisma.business.findUnique({
@@ -39,7 +42,11 @@ export const getLatestMetric = cache(async () => {
   })
 
   if (business === null) {
-    return null
+    return redirect(routes.business)
+  }
+
+  if (business.monthlyMetrics.length === 0) {
+    return redirect(routes.createMetric)
   }
 
   const { name, currency, monthlyMetrics, type, city } = business
