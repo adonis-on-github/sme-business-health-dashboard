@@ -7,12 +7,8 @@ export type BusinessSchemaInput = Pick<Business, 'name' | 'type' | 'city' | 'sal
 }
 
 export type ActionResponse = {
-  success: boolean;
   message: string;
 
   errors?: Partial<Record<keyof BusinessFormValues, string[]>>;
 }
 
-export interface IBusinessService {
-  getBusiness(): Promise<BusinessFormValues | null>;
-}

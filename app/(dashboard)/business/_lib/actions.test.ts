@@ -1,3 +1,7 @@
+
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+
 import type { Business } from '@prisma/client'
 import prisma from '@/lib/prisma/client'
 import { getUser } from '@/lib/supabase/server'
@@ -6,6 +10,15 @@ import { userMock } from '@/lib/supabase/supabase.mocks'
 import { createBusiness } from './actions'
 
 import { businessValuesMock, businessOtherValuesMock } from './schema.mocks'
+import { routes } from '@/lib/routes'
+
+vi.mock('next/navigation', () => ({
+  redirect: vi.fn(),
+}))
+
+vi.mock('next/cache', () => ({
+  revalidatePath: vi.fn(),
+}))
 
 vi.mock('@/lib/prisma/client', () => ({
   default: {
@@ -31,7 +44,6 @@ describe('createBusiness', () => {
       const result = await createBusiness(businessValuesMock)
 
       expect(result).toEqual({
-        success: false,
         message: 'User must be authenticated',
       })
 
@@ -47,7 +59,6 @@ describe('createBusiness', () => {
 
       const result = await createBusiness(invalidValues)
 
-      expect(result.success).toBe(false)
       expect(result.message).toBe('Please check the highlighted fields')
       expect(result.errors).toBeDefined()
       expect(prisma.business.upsert).not.toHaveBeenCalled()
@@ -55,9 +66,9 @@ describe('createBusiness', () => {
   })
 
   it('successfully creates a business and redirects', async () => {
-      vi.mocked(getUser).mockResolvedValue(userMock)
+    vi.mocked(getUser).mockResolvedValue(userMock)
 
-      vi.mocked(prisma.business.upsert).mockResolvedValue({} as Business)
+    vi.mocked(prisma.business.upsert).mockResolvedValue({} as Business)
 
     await createBusiness(businessValuesMock)
 
@@ -80,6 +91,8 @@ describe('createBusiness', () => {
       },
     })
 
+    expect(redirect).toHaveBeenCalledWith(routes.createMetric)
+    expect(revalidatePath).toHaveBeenCalledWith(routes.business)
   })
 
   describe('when business type or sales range is "Other"', () => {
@@ -110,7 +123,6 @@ describe('createBusiness', () => {
       const result = await createBusiness(businessValuesMock)
 
       expect(result).toEqual({
-        success: false,
         message: error,
       })
 

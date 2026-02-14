@@ -6,7 +6,7 @@ export const businessMock: Business = {
   userId: '1',
   name: 'Test Business',
   city: 'Test City',
-  currency: 'Test Currency',
+  currency: 'USD',
   type: 'Retail',
   salesRange: '100k-500k',
   createdAt: new Date('2026-01-01'),

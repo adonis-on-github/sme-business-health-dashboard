@@ -1,7 +1,6 @@
 'use client'
 
 import { useTransition } from 'react'
-import { useRouter } from 'next/navigation'
 
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -11,7 +10,6 @@ import { SALES_RANGES, CURRENCIES, BUSINESS_TYPES } from '@dashboard/business/_l
 
 import { BusinessFormTestID } from '@dashboard/business/_lib/test.ids'
 import { createBusiness } from '@dashboard/business/_lib/actions'
-import { routes } from '@/lib/routes'
 import { setServerErrors } from '@/lib/zod/error-utils'
 
 import { Form } from '@/components/ui/form'
@@ -37,7 +35,6 @@ const DEFAULT_FORM_VALUES: BusinessFormValues = {
 }
 
 const BusinessForm = ({ initialData }: BusinessFormProps) => {
-  const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<BusinessFormValues>({
@@ -49,12 +46,7 @@ const BusinessForm = ({ initialData }: BusinessFormProps) => {
     startTransition(async () => {
       const result = await createBusiness(values)
 
-      if (result.success) {
-        toast.success(result.message)
-
-        router.push(routes.createMetric)
-
-      } else if (result.errors) {
+      if (result.errors) {
         setServerErrors(result.errors, form.setError)
 
       } else {

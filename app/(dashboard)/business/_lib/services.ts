@@ -6,7 +6,6 @@ import { getUserBusiness } from '@/lib/prisma/services'
 
 import  type { BusinessFormValues } from './schema'
 import { BUSINESS_TYPES, SALES_RANGES } from './constants'
-import type { IBusinessService } from './types'
 
 const normalizeBusinessType = (businessType: string) => {
   const type = BUSINESS_TYPES.includes(businessType) ? businessType : 'Other'
@@ -24,9 +23,8 @@ const normalizeSalesRange = (inputSalesRange: string) => {
   return { salesRange, customSalesRange }
 }
 
-export class PrismaBusinessService implements IBusinessService {
-  getBusiness = cache(async (): Promise<BusinessFormValues | null> => {
-    let userBusiness: Business | null = null
+export const getBusiness = cache(async (): Promise<BusinessFormValues | null> => {
+      let userBusiness: Business | null = null
 
     try {
       userBusiness = await getUserBusiness()
@@ -53,5 +51,4 @@ export class PrismaBusinessService implements IBusinessService {
       customSalesRange,
       currency
     } satisfies BusinessFormValues
-  })
-}
+})

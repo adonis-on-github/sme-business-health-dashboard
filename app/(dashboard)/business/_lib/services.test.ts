@@ -4,11 +4,9 @@ import { getUser } from '@/lib/supabase/server'
 import { businessMock } from '@/lib/prisma/prisma.mocks'
 import { userMock } from '@/lib/supabase/supabase.mocks'
 
-import { PrismaBusinessService } from './services'
-
 import { businessOtherValuesMock, businessValuesMock } from './schema.mocks'
 import { BUSINESS_TYPES, SALES_RANGES } from './constants'
-import type { IBusinessService } from './types'
+import { getBusiness } from './services'
 
 vi.mock('next/navigation', () => ({
   redirect: vi.fn(),
@@ -26,19 +24,16 @@ vi.mock('@/lib/supabase/server', () => ({
   getUser: vi.fn(),
 }))
 
-let businessService: IBusinessService
-
 describe('getBusiness', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    businessService = new PrismaBusinessService()
   })
 
   describe('when user is not authenticated', () => {
     it('returns null', async () => {
       vi.mocked(getUser).mockResolvedValue(null)
 
-      const result = await businessService.getBusiness()
+      const result = await getBusiness()
 
       expect(result).toBeNull()
     })
@@ -50,7 +45,7 @@ describe('getBusiness', () => {
 
       vi.mocked(prisma.business.findUnique).mockResolvedValue(null)
 
-      const result = await businessService.getBusiness()
+      const result = await getBusiness()
 
       expect(result).toBeNull()
     })
@@ -68,7 +63,7 @@ describe('getBusiness', () => {
         salesRange: businessSalesRange,
       })
 
-      const result = await businessService.getBusiness()
+      const result = await getBusiness()
 
       expect(result).toEqual({
         ...businessValuesMock,
@@ -90,7 +85,7 @@ describe('getBusiness', () => {
         type: customBusinessType,
       })
 
-      const result = await businessService.getBusiness()
+      const result = await getBusiness()
 
       expect(result).toEqual({
         ...businessOtherValuesMock,

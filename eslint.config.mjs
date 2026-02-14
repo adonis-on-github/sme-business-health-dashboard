@@ -136,6 +136,13 @@ const eslintConfig = defineConfig([
       'no-var': 'off',
       'vars-on-top': 'off',
     }
+  },
+  {
+    files: ['e2e/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+      'react-hooks/rules-of-hooks': 'off',
+    }
   }
 ]);
 

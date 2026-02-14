@@ -1,17 +1,21 @@
 'use server'
+
+import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
+
 import { getErrorMessage, getFieldErrors } from '@/lib/zod/error-utils'
 import prisma from '@/lib/prisma/client'
 
 import { businessSchema, type BusinessFormValues } from './schema'
 import { getUser } from '@/lib/supabase/server'
 import type { ActionResponse } from './types'
+import { routes } from '@/lib/routes'
 
 export const createBusiness = async (values: BusinessFormValues): Promise<ActionResponse> => {
   const user = await getUser()
 
   if (!user) {
     return {
-      success: false,
       message: 'User must be authenticated'
     }
   }
@@ -20,7 +24,6 @@ export const createBusiness = async (values: BusinessFormValues): Promise<Action
 
   if (!validatedFields.success) {
     return {
-      success: false,
       message: 'Please check the highlighted fields',
       errors: getFieldErrors(validatedFields.error)
     }
@@ -46,12 +49,15 @@ export const createBusiness = async (values: BusinessFormValues): Promise<Action
       },
     })
 
-    return { success: true, message: 'Business created successfully' }
   } catch (error: unknown) {
     const errorMessage = getErrorMessage(error)
 
     console.error(errorMessage)
 
-    return { success: false, message: errorMessage }
+    return { message: errorMessage }
   }
+
+  revalidatePath(routes.business)
+
+  redirect(routes.createMetric)
 }

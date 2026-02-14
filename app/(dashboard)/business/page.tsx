@@ -2,8 +2,7 @@ import type { Metadata } from 'next'
 
 import PageHeader from '@/components/custom/page-header'
 import BusinessForm from './_components/business-form/business-form'
-import TestBridgeWrapper from './_components/test-bridge-wrapper'
-import { getBusinessService } from './_lib/registry'
+import { getBusiness } from './_lib/services'
 
 export const metadata: Metadata = {
   title: 'Business Health - Onboarding',
@@ -11,8 +10,7 @@ export const metadata: Metadata = {
 }
 
 const BusinessPage = async () => {
-  const businessService = getBusinessService()
-  const business = await businessService.getBusiness()
+  const business = await getBusiness()
 
   return (
     <>
@@ -22,8 +20,6 @@ const BusinessPage = async () => {
       />
 
       <BusinessForm initialData={business} />
-
-      {process.env.NEXT_PUBLIC_API_MOCKING === 'enabled' && <TestBridgeWrapper />}
     </>
   )
 }

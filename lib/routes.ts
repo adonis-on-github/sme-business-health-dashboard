@@ -7,3 +7,4 @@ export const routes = {
   explanations: '/explanations',
 } as const
 
+export type Route = typeof routes[keyof typeof routes]

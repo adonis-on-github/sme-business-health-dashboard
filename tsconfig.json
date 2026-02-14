@@ -27,7 +27,8 @@
     "types": [
       "vitest/globals",
       "@testing-library/dom",
-      "@playwright/test"
+      "@playwright/test",
+      "node"
     ],
     "baseUrl": ".",
     "paths": {
@@ -43,8 +44,8 @@
       "@dashboard/*": [
         "./app/(dashboard)/*"
       ],
-      "@fixtures/*": [
-        "./e2e/fixtures/*"
+      "@e2e/*": [
+        "./e2e/*"
       ],
       "@header/*": [
         "./app/(dashboard)/@header/*"

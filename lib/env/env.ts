@@ -1,6 +1,9 @@
 import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
+// Note: use relative paths to enable prisma to find the file
+import { getFieldErrors } from '../zod/error-utils'
+
 const envValue = z.enum(['development', 'test', 'production']).default('development')
 
 const dynamicURL = (key: string) => z.url({
@@ -56,7 +59,7 @@ export const env = createEnv({
   },
   onValidationError: error => {
     if (error instanceof z.ZodError) {
-      console.error('❌ Invalid environment variables:', error.flatten().fieldErrors)
+      console.error('❌ Invalid environment variables:', getFieldErrors(error))
     } else {
       console.error('❌ Invalid environment variables:', error)
     }
