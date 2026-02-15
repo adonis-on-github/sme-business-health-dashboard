@@ -3,6 +3,7 @@ import { expect } from '@playwright/test'
 
 import { PageHeaderTestID } from '@/components/custom/page-header/test.ids'
 import type { Route } from '@/lib/routes'
+import { formatDate, formatNumber } from '@/lib/formatting'
 
 export class BasePage {
   constructor(
@@ -37,5 +38,22 @@ export class BasePage {
     if (description) {
       await expect(this.description).toHaveText(description)
     }
+  }
+  protected async expecNumber(locator: Locator, value: number) {
+    await expect(locator).toContainText(value.toString())
+  }
+
+  protected async expectFormattedNumber(locator: Locator, value: number, currency?: string) {
+    const options = currency ? { currency } : undefined
+
+    const formattedNumber = formatNumber(value, options)
+
+    await expect(locator).toContainText(formattedNumber)
+  }
+
+  protected async expectTimestamp(locator: Locator, timestamp: Date) {
+    const formattedTimestamp = formatDate(timestamp)
+
+    await expect(locator).toContainText(formattedTimestamp)
   }
 }

@@ -3,6 +3,7 @@ import type { LatestMetric } from '@/app/(dashboard)/_lib/service'
 import { ScoreDetails } from './score-sections'
 import { ScoreSummary } from './score-sections'
 import { ActionButtons } from './action-buttons'
+import { ScoreTestID } from '@dashboard/score/_lib/test.ids'
 
 type MetricScoreProps = {
   metric: LatestMetric
@@ -15,11 +16,11 @@ const MetricScore = ({ metric }: MetricScoreProps) => {
 
   return (
     <section className='flex flex-col gap-4'>
-      <h2 className='text-xl font-bold text-slate-900'>{metric.businessName}</h2>
+      <h2 className='text-xl font-bold text-slate-900' data-testid={ScoreTestID.title}>{metric.businessName}</h2>
 
       <ScoreDetails {...metric} />
 
-      <hr />
+      <hr data-testid={ScoreTestID.separator} />
 
       <ScoreSummary {...metric} />
 

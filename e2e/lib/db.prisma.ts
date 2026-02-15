@@ -1,6 +1,8 @@
+import type { MetricInput } from '@dashboard/create-metric/_lib/schema'
 import prisma from '@/lib/prisma/client'
 
 import type { BusinessFormValues } from '@dashboard/business/_lib/schema'
+import type { ScoreStatus } from '@prisma/client'
 
 export const generateBusiness = async (userId: string, values: BusinessFormValues) => {
   const { customBusinessType, customSalesRange, ...data } = values
@@ -55,4 +57,20 @@ export const metricInspector = async (businessId: string) => {
   })
 
   return metrics[0]
+}
+
+export const createMetric = async (
+  businessId: string,
+  metric: MetricInput,
+  score: number,
+  scoreStatus: ScoreStatus
+) => {
+  return await prisma.metric.create({
+    data: {
+      ...metric,
+      score,
+      scoreStatus,
+      businessId,
+    },
+  })
 }
