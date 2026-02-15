@@ -6,6 +6,8 @@ import { redirect } from 'next/navigation'
 import { routes } from '@/lib/routes'
 import { Logo } from '@/components/custom/logo'
 
+export const dynamic = 'force-dynamic'
+
 const Home = async () => {
   const user = await getUser()
 

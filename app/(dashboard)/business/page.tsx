@@ -4,6 +4,8 @@ import PageHeader from '@/components/custom/page-header'
 import BusinessForm from './_components/business-form/business-form'
 import { getBusiness } from './_lib/services'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Business Health - Onboarding',
   description: 'Business Health - Business Details',

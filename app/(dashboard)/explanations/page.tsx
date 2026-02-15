@@ -4,6 +4,8 @@ import PageHeader from '@/components/custom/page-header'
 import ExplanationsDetails from './_components/explanations-details'
 import { getInitialAnalysis } from './_lib/actions'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Business Health - Explanations & Actions',
   description: 'Business Health - AI explanations and Actions'

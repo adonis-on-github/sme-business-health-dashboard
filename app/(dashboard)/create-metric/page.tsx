@@ -11,6 +11,8 @@ import { createMetric } from './_lib/actions'
 import CreateMetricForm from './_components/create-metric-form'
 import PageHeader from '@/components/custom/page-header'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Business Health - Create Metric',
   description: 'Business Health - Create Metric For Business'
