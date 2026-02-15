@@ -32,8 +32,6 @@ export const env = createEnv({
     DATABASE_URL: dynamicURL(dbUrlKey),
     DIRECT_URL: dynamicURL(directUrlKey),
 
-    TEST_AUTH_BYPASS_KEY: z.string(),
-
     OPENROUTER_API_KEY: z.string(),
     SUPABASE_SSL_CERT: z.string(),
 
@@ -47,8 +45,6 @@ export const env = createEnv({
     APP_ENV: appEnv.APP_ENV,
     DATABASE_URL: process.env[dbUrlKey],
     DIRECT_URL: process.env[directUrlKey],
-
-    TEST_AUTH_BYPASS_KEY: process.env.TEST_AUTH_BYPASS_KEY,
 
     NEXT_PUBLIC_SUPABASE_URL: process.env[nextPublicSupabaseUrlKey],
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env[nextPublicSupabaseAnonKey],

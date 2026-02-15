@@ -21,7 +21,6 @@ export const setEnv = (env: Environment) => {
   process.env[nextPublicSupabaseAnonKey] = `${env}-anon-key`
   process.env[supabaseServiceRoleKey] = `${env}-service-role-key`
 
-  process.env.TEST_AUTH_BYPASS_KEY = 'test-auth-bypass-key'
   process.env.OPENROUTER_API_KEY = 'api-key'
   process.env.SUPABASE_SSL_CERT = 'cert'
 }

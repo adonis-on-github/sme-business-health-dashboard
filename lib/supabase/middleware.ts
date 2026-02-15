@@ -4,15 +4,6 @@ import { routes } from '@/lib/routes'
 import { env } from '@/lib/env'
 
 export const updateSession = async (request: NextRequest) => {
-  const bypassKey = env.TEST_AUTH_BYPASS_KEY
-  const clientKey = request.headers.get('x-test-bypass-key')
-
-  if (bypassKey && clientKey === bypassKey) {
-    console.log('✅ Auth Bypassed for Playwright Test')
-
-    return NextResponse.next()
-  }
-
   let supabaseResponse = NextResponse.next({
     request,
   })

@@ -21,7 +21,6 @@ describe.only('env client validation', () => {
     delete process.env.APP_ENV
     delete process.env.OPENROUTER_API_KEY
     delete process.env.SUPABASE_SSL_CERT
-    delete process.env.TEST_AUTH_BYPASS_KEY
   })
 
   afterEach(() => {
