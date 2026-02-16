@@ -23,7 +23,7 @@ describe('ExplanationsDetails', () => {
       it('renders explanation correctly', () => {
         render(<ExplanationsDetails initialAnalysis={mockInitialAnalysis} />)
 
-        expect(screen.getByTestId(ExplanationIds.content)).toHaveTextContent(mockInitialAnalysis.data)
+        expect(screen.getByTestId(ExplanationIds.explanationContent)).toHaveTextContent(mockInitialAnalysis.data)
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
 
@@ -43,7 +43,7 @@ describe('ExplanationsDetails', () => {
 
         render(<ExplanationsDetails initialAnalysis={mockErrorAnalysis} />)
 
-        expect(screen.queryByTestId(ExplanationIds.explanation)).not.toBeInTheDocument()
+        expect(screen.queryByTestId(ExplanationIds.explanationContent)).not.toBeInTheDocument()
 
         expect(screen.getByTestId(ExplanationIds.explanationError)).toHaveTextContent(mockErrorAnalysis.data)
 
@@ -63,7 +63,7 @@ describe('ExplanationsDetails', () => {
 
         expect(screen.getByTestId(ExplanationIds.noExplanation)).toHaveTextContent('No explanations available')
 
-        expect(screen.queryByTestId(ExplanationIds.explanation)).not.toBeInTheDocument()
+        expect(screen.queryByTestId(ExplanationIds.explanationContent)).not.toBeInTheDocument()
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
 
@@ -114,7 +114,7 @@ describe('ExplanationsDetails', () => {
 
         await user.click(screen.getByTestId(ExplanationIds.generateButton))
 
-        expect(screen.getByTestId(ExplanationIds.explanation)).toHaveTextContent(mockGeneratedAnalysis.data)
+        expect(screen.getByTestId(ExplanationIds.explanationContent)).toHaveTextContent(mockGeneratedAnalysis.data)
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
 
@@ -144,7 +144,7 @@ describe('ExplanationsDetails', () => {
 
         await user.click(screen.getByTestId(ExplanationIds.generateButton))
 
-        expect(screen.queryByTestId(ExplanationIds.explanation)).not.toBeInTheDocument()
+        expect(screen.queryByTestId(ExplanationIds.explanationContent)).not.toBeInTheDocument()
 
         expect(screen.getByTestId(ExplanationIds.explanationError)).toHaveTextContent(mockErrorAnalysis.data)
 
@@ -176,7 +176,7 @@ describe('ExplanationsDetails', () => {
 
         await user.click(screen.getByTestId(ExplanationIds.generateButton))
 
-        expect(screen.getByTestId(ExplanationIds.explanation)).toHaveTextContent(mockGeneratedAnalysis.data)
+        expect(screen.getByTestId(ExplanationIds.explanationContent)).toHaveTextContent(mockGeneratedAnalysis.data)
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
 
@@ -208,7 +208,7 @@ describe('ExplanationsDetails', () => {
 
         await user.click(screen.getByTestId(ExplanationIds.generateButton))
 
-        expect(screen.getByTestId(ExplanationIds.explanation)).toHaveTextContent(mockGeneratedAnalysis.data)
+        expect(screen.getByTestId(ExplanationIds.explanationContent)).toHaveTextContent(mockGeneratedAnalysis.data)
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
 

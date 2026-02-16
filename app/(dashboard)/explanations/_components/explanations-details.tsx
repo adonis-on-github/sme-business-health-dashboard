@@ -33,7 +33,7 @@ const ExplanationsDetails = ({ initialAnalysis }: Props) => {
   }
 
   return (
-    <div className='explanation-content flex flex-col gap-4 mt-4 mx-auto text-slate-600' data-testid={ExplanationIds.content}>
+    <div className='explanation-content flex flex-col gap-4 mt-4 mx-auto text-slate-600'>
       {analysis.type === 'NO_EXPLANATION' && (
         <p data-testid={ExplanationIds.noExplanation}>No explanations available</p>
       )}
@@ -70,7 +70,7 @@ const ErrorContent = ({ error }: { error: string }) => (
 )
 
 const ExplanationContent = ({ explanation }: { explanation: string }) => (
-  <div data-testid={ExplanationIds.explanation}>
+  <div data-testid={ExplanationIds.explanationContent}>
     <ReactMarkdown
       skipHtml={true}
       remarkPlugins={[remarkGfm]}

@@ -27,10 +27,11 @@ type ScoreEntryProps = {
   label: string
   value: number
   currency?: string
+  'data-testid': string
 }
 
-export const ScoreEntry = ({ label, value, currency }: ScoreEntryProps) => (
-  <div className='flex gap-2 justify-between'>
+export const ScoreEntry = ({ label, value, currency, 'data-testid': dataTestId }: ScoreEntryProps) => (
+  <div className='flex gap-2 justify-between' data-testid={dataTestId}>
     <span className='font-semibold'>{label}</span>
     <span>{formatNumber(value, { currency })}</span>
   </div>
