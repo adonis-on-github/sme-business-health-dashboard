@@ -1,10 +1,12 @@
-import { defineConfig, devices } from '@playwright/test'
+// import { defineConfig, devices } from '@playwright/test'
+// import { devices } from '@playwright/test'
 
 import dotenv from 'dotenv'
 import { STORAGE_STATE_PATH } from '@e2e/lib/constants'
 
+import { defineConfig, devices } from 'next/experimental/testmode/playwright'
 // Load .env.test file for test environment variables
-dotenv.config({ path: '.env.test' })
+dotenv.config({ path: '.env.test' , quiet: true })
 
 export default defineConfig({
   testDir: './e2e',
@@ -14,7 +16,15 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : 1,
-  reporter: 'list',
+  fullyParallel: false,
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+    ['json', { outputFile: 'test-results/results.json' }]
+  ],
+  metadata: {
+    testmde: true,
+  },
   use: {
     baseURL: `http://localhost:${process.env.TEST_PORT}`,
     trace: 'on-first-retry',
@@ -22,10 +32,16 @@ export default defineConfig({
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
       'Expires': '0',
-      'x-supabase-e2e': 'true',
     },
   },
   projects: [
+    {
+      name: 'e2e-public',
+      use: {
+        ...devices['Desktop Chrome'],
+      },
+      testMatch: ['**/*.public.spec.ts'],
+    },
     {
       name: 'setup',
       testMatch: ['**/auth.setup.ts'],
@@ -41,12 +57,9 @@ export default defineConfig({
       testIgnore: ['**/*.public.spec.ts'],
     },
     {
-      name: 'e2e-public',
-      use: {
-        ...devices['Desktop Chrome'],
-      },
-      testMatch: ['**/*.public.spec.ts'],
-    }
+      name: 'cleanup',
+      testMatch: ['**/global-teardown\.ts']
+    },
   ],
   webServer: [
     {
@@ -55,11 +68,11 @@ export default defineConfig({
       // it should be a separate process from the dev server
       reuseExistingServer: false, // !process.env.CI,
       env: {
-        NEXT_PUBLIC_API_MOCKING: 'enabled',
         NEXT_DIST_DIR: '.next-e2e',
         TEST_PORT: process.env.TEST_PORT ?? '3001',
         APP_ENV: 'test',
       },
+      // Note: uncoment these lines to display MSW messages
       stdout: 'pipe',
       stderr: 'pipe',
     }

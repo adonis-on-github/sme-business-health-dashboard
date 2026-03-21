@@ -8,3 +8,7 @@ export const createClient = (
     supabaseUrl,
     supabaseKey
   )
+
+export const logout = async (supabaseClient: ReturnType<typeof createBrowserClient>) => {
+  await supabaseClient.auth.signOut()
+}

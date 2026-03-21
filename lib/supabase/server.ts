@@ -38,3 +38,9 @@ export const getUser = cache(async () => {
     return null
   }
 })
+
+export const isAuthenticated = cache(async () => {
+  const user = await getUser()
+
+  return user !== null
+})

@@ -1,28 +1,20 @@
-import { test as setup } from '@playwright/test'
+import {
+  test as setup,
+} from 'next/experimental/testmode/playwright'
 
-import { routes } from '@/lib/routes'
-import { AuthFormIds } from '@auth/login/_lib/test.ids'
 import { STORAGE_STATE_PATH } from '@e2e/lib/constants'
 import { createUserMetadata } from '@e2e/lib/userUtils'
-import { createUser } from '@e2e/lib/db.supabase'
+import { createUser, purgeUser } from '@e2e/lib/db.supabase'
+import { performLogin } from './lib/login'
 
 setup('login', async ({ page }) => {
+  await purgeUser()
+
   const credentials = await createUser()
 
   await createUserMetadata(credentials.user.id)
 
-  await page.goto(routes.login)
-  await page.waitForLoadState('networkidle')
-
-  await page.getByTestId(AuthFormIds.email).waitFor({ state: 'visible' })
-
-  await page.getByTestId(AuthFormIds.email).fill(credentials.email)
-  await page.getByTestId(AuthFormIds.password).fill(credentials.password)
-
-  await Promise.all([
-    page.getByTestId(AuthFormIds.login).click(),
-    page.waitForURL(routes.business)
-  ])
+  await performLogin(page)
 
   await page.context().storageState({ path: STORAGE_STATE_PATH })
 })

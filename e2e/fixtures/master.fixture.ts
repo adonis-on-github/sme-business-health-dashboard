@@ -1,4 +1,4 @@
-import { mergeTests } from '@playwright/test'
+import { mergeTests } from 'next/experimental/testmode/playwright'
 import { businessTest } from './business.fixture'
 import { createMetricTest } from './create-metric.fixture'
 import { scoreTest } from './score.fixture'

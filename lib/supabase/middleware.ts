@@ -34,18 +34,13 @@ export const updateSession = async (request: NextRequest) => {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (
-    !user &&
-    request.nextUrl.pathname !== routes.home &&
-    !request.nextUrl.pathname.startsWith(routes.login)
-  ) {
-    const url = request.nextUrl.clone()
-    const next = request.nextUrl.pathname + request.nextUrl.search
-
-    url.pathname = routes.login
-    url.searchParams.set('next', next)
-
-    return NextResponse.redirect(url)
+  if (!user) {
+    if (
+      request.nextUrl.pathname !== routes.home &&
+      !request.nextUrl.pathname.startsWith(routes.login)
+    ) {
+      return NextResponse.redirect(new URL(routes.login, request.url))
+    }
   }
 
   if (
