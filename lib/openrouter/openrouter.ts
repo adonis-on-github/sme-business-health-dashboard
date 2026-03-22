@@ -2,7 +2,7 @@ import { OpenRouter } from '@openrouter/sdk'
 import type { ChatGenerationParams } from '@openrouter/sdk/models'
 import { getErrorMessage } from '../zod/error-utils'
 
-// URL = https://openrouter.ai/api/v1/chat/completions
+export const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
 const MODEL_NAME =  'openrouter/free'
 // const MODEL_NAME =  'meta-llama/llama-3.3-70b-instruct:free'
@@ -25,10 +25,7 @@ export const getAvailableCredits = async () => {
 }
 
 export const runLLM = async (messages: ChatGenerationParams['messages']) => {
-  console.log('API KEY:', process.env.OPENROUTER_API_KEY)
-  console.log('MODEL NAME:', MODEL_NAME)
-  console.log('MESSAGES:', messages)
-  console.log('--------------------------------')
+
   try {
     const response = await openrouter.chat.send({
       model: MODEL_NAME,

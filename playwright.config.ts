@@ -1,6 +1,3 @@
-// import { defineConfig, devices } from '@playwright/test'
-// import { devices } from '@playwright/test'
-
 import dotenv from 'dotenv'
 import { STORAGE_STATE_PATH } from '@e2e/lib/constants'
 
@@ -74,7 +71,7 @@ export default defineConfig({
         APP_ENV: 'test',
       },
       // Note: uncomment these lines to display MSW messages
-      stdout: 'pipe',
+      // stdout: 'pipe',
       stderr: 'pipe',
     }
   ],
