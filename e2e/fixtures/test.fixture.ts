@@ -5,11 +5,13 @@ import { routes } from '@/lib/routes'
 import { DataContextService } from '@e2e/lib/DataContextService'
 import { getUserMetadata } from '@e2e/lib/userUtils'
 import { BusinessPage } from '@e2e/pages/business.page'
+import { CreateMetricPage } from '@e2e/pages/createMetric.page'
 
 type TestFixture = {
   userId: string
   dataContextService: DataContextService
   businessPage: BusinessPage
+  createMetricPage: CreateMetricPage
 }
 
 const test = base.extend<TestFixture>({
@@ -33,10 +35,13 @@ const test = base.extend<TestFixture>({
   },
 
   businessPage: async ({ page, userId, dataContextService: _ }, use) => {
-    await use(new BusinessPage(page, routes.business, userId))
-    
+    await use(new BusinessPage(page, routes.business, userId))    
   },
   
+  createMetricPage: async ({ page, userId, dataContextService: _ }, use) => {
+    await use(new CreateMetricPage(page, routes.createMetric, userId))
+  },
+
 })
 
 export { test, expect }

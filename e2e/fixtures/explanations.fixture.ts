@@ -1,7 +1,7 @@
 import { routes } from '@/lib/routes'
 import { scoreTest } from './score.fixture'
 import { ExplanationsPage } from '@e2e/pages/explanations.page'
-import { routes } from '@/lib/routes'
+
 const baseTest =  scoreTest //mergeTests(scoreTest, mswTest)
 
 type ExplanationsFixture = {

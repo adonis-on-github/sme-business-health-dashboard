@@ -6,7 +6,8 @@ import {
   generateBusiness,
   createMetric,
   deleteBusinessMetrics,
-  businessInspector
+  businessInspector,
+  metricInspector
 } from './db.prisma'
 
 import type { BusinessFormValues } from '@dashboard/business/_lib/schema'
@@ -31,6 +32,8 @@ export class DataContextService {
     private businessInspected: boolean = false,
 
     private metric: MetricInput | null = null,
+    private metricInspected: boolean = false,
+
     private score: number = 70,
     private scoreStatus: ScoreStatus = 'YELLOW',
   ) {}
@@ -67,6 +70,18 @@ export class DataContextService {
     this.businessInspected = true
   }
 
+  async expectMetric(expected: MetricInput) {
+    const metric = await metricInspector(this.business!.businessId)
+
+    expect(metric).not.toBeNull()
+    expect(metric!.revenue).toEqual(expected.revenue)
+    expect(metric!.expenses).toEqual(expected.expenses)
+    expect(metric!.cashInBank).toEqual(expected.cashInBank)
+    expect(metric!.topCustomerPct).toEqual(expected.topCustomerPct)
+
+    this.metricInspected = true
+  }
+
   async build() {
     if (this.businessValues) {
       this.business = await generateBusiness(this.userId, this.businessValues)      
@@ -90,7 +105,7 @@ export class DataContextService {
   }
 
   async cleanup() {
-    if (this.metric && this.business) {
+    if ((this.metric || this.metricInspected) && this.business) {
       if (!this.business) {
         throw new Error('Business not found')
       }
@@ -105,6 +120,10 @@ export class DataContextService {
 
   get BusinessValues() {
     return this.businessValues
+  }
+
+  get MetricValues() {
+    return this.metricValues
   }
 }
 
