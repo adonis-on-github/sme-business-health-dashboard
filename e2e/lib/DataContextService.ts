@@ -1,5 +1,7 @@
 import { expect } from 'next/experimental/testmode/playwright'
 
+import type { LatestMetric } from '@dashboard/_lib/service'
+
 import { businessMock } from '@/lib/prisma/prisma.mocks'
 import { 
   deleteBusiness, 
@@ -36,6 +38,7 @@ export class DataContextService {
 
     private score: number = 70,
     private scoreStatus: ScoreStatus = 'YELLOW',
+
   ) {}
   
   withBusiness(businessValues: BusinessFormValues = businessMock) {
@@ -46,7 +49,7 @@ export class DataContextService {
 
   withMetric(metricValues: MetricInput = metricMock, score: number = 70, scoreStatus: ScoreStatus = 'YELLOW') {
     if (!this.business) {
-      throw new Error('Business not found')
+      this.withBusiness()
     }
 
     this.score = score
@@ -118,12 +121,38 @@ export class DataContextService {
     }
   }
 
-  get BusinessValues() {
+  get BusinessValues(): BusinessFormValues {
+    if (!this.businessValues) {
+      throw new Error('Business values not found')
+    }
+
     return this.businessValues
   }
 
-  get MetricValues() {
+  get MetricValues(): MetricInput {
+    if (!this.metricValues) {
+      throw new Error('Metric values not found')
+    }
+
     return this.metricValues
+  }
+
+  get LatestMetric(): LatestMetric {
+    if (!this.business) {
+      throw new Error('Business not found')
+    }
+
+    if (!this.metric) {
+      throw new Error('Metric not found')
+    }
+
+     return {
+      ...this.metric,
+      businessName: this.business!.name,
+      type: this.business!.type,
+      city: this.business!.city,
+      currency: this.business!.currency,
+     } as LatestMetric
   }
 }
 
