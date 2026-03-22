@@ -30,7 +30,6 @@
       "@playwright/test",
       "node"
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"

@@ -52,16 +52,6 @@ export class BasePage {
   }
 
   protected async expectTimestamp(locator: Locator, timestamp: Date) {
-  //   formatDate(timestamp)
-
-  //   const options: Intl.DateTimeFormatOptions = {
-  //     day: 'numeric',
-  //     month: 'short',
-  //     year: 'numeric',
-  //     hour: '2-digit',
-  //     minute: '2-digit',
-  //   }
-
     const formatted = formatDate(timestamp)
 
     await expect(locator).toContainText(formatted)

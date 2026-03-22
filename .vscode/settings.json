@@ -7,5 +7,14 @@
   "editor.insertSpaces": true,
   "cSpell.words": [
     "supabase"
-  ]
+  ],
+  "playwright.reuseBrowser": false,
+  "playwright.runGlobalSetupOnEachRun": true,
+  "playwright.showTrace": true,
+  "playwright.updateSnapshots": "all",
+  "playwright.pickLocatorCopyToClipboard": true,
+  "playwright.env": {
+    "APP_ENV": "test",
+    "TEST_PORT": "4000"
+  }
 }
