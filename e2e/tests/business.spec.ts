@@ -3,7 +3,7 @@ import { test, expect } from '@e2e/fixtures'
 
 import { businessValuesMock } from '@dashboard/business/_lib/schema.mocks'
 
-test.describe('business page', () => {
+test.describe('Business page', () => {
   test('renders empty business page', async ({ businessPage }) => {
     await businessPage.goto()
 

@@ -1,7 +1,7 @@
 import { routes } from '@/lib/routes'
 import { test, expect } from '@e2e/fixtures'
 
-test.describe('Score', () => {
+test.describe('Score Page', () => {
   test('redirect to the business page when the user has no business', async ({ scorePage }) => {
     await scorePage.goto()
 

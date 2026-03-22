@@ -3,7 +3,7 @@ import { routes } from '@/lib/routes'
 
 import { test, expect } from '@e2e/fixtures'
 
-test.describe('Explanations', () => {
+test.describe('Explanations page', () => {
 
   //Note: It is necesary to mock response before the test to avoid interferences with the authentication process.
   test.beforeEach(async ({ next  }) => {

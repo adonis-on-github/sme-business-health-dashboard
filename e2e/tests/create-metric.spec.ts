@@ -4,7 +4,7 @@ import { test, expect } from '@e2e/fixtures'
 
 import { metricInputMock } from '@dashboard/create-metric/_lib/schema.mocks'
 
-test.describe('create metric page', () => {
+test.describe('Create Metric page', () => {
   test('redirects to the business page when business is not created', async ({ createMetricPage }) => {
     await createMetricPage.goto()
 
