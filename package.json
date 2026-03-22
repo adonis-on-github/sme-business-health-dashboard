@@ -26,7 +26,7 @@
     "db:studio": "prisma studio",
     "playwright:deps": "npx playwright install-deps",
     "shadcn:add": "npx shadcn@latest add",
-    "setup":"npm run playwright:install && npm run supabase:start",
+    "setup":"bash setup/setup-shell.sh && npm run playwright:deps && npm run supabase:start",
     "supabase:dev": "npx supabase",
     "supabase:e2e": "npx supabase --workdir e2e",
     "supabase:e2e:stop": "npx supabase --no-backup --workdir e2e stop",

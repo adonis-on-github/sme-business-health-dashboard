@@ -56,10 +56,10 @@
         "./lib/*"
       ],
       "@testing-library/react": [
-        "lib/testing-library/test-utils.ts"
+        "./lib/testing-library/test-utils.ts"
       ],
       "rtl-original": [
-        "node_modules/@testing-library/react"
+        "./node_modules/@testing-library/react"
       ]
     }
   },
