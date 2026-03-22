@@ -27,4 +27,16 @@ test.describe('Explanations', () => {
     await explanationsPage.expectNoExplanation()
   })
 
+  test('renders the explanations page when there are previous explanations', async ({ explanationsPage, dataContextService }) => {
+    const explanationsMarkdown = 'This is a test explanation'
+
+    await dataContextService.withMetric().withExplanations(explanationsMarkdown).build()
+
+    await explanationsPage.goto()
+
+    await expect(explanationsPage.page).toHaveURL(routes.explanations)
+
+    await explanationsPage.expectExplanation(explanationsMarkdown)
+  })
+
 })

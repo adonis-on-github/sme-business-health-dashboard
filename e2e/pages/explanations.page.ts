@@ -33,10 +33,10 @@ export class ExplanationsPage extends BasePage {
     await expect(this.generateButton).toBeVisible()
   }
 
-  async expectExplanation() {
+  async expectExplanation(explanationsMarkdown: string) {
     await this.expectHeader('Explanations', 'AI explanations and actions')
 
-    await expect(this.explanationContent).toBeVisible()
+    await expect(this.explanationContent).toHaveText(explanationsMarkdown)
     await expect(this.explanationError).not.toBeVisible()
     await expect(this.noExplanation).not.toBeVisible()
 

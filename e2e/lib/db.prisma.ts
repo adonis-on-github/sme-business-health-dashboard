@@ -2,7 +2,7 @@ import type { MetricInput } from '@dashboard/create-metric/_lib/schema'
 import prisma from '@/lib/prisma/client'
 
 import type { BusinessFormValues } from '@dashboard/business/_lib/schema'
-import type { ScoreStatus } from '@prisma/client'
+import type { LLMStatus, ScoreStatus } from '@prisma/client'
 
 export const generateBusiness = async (userId: string, values: BusinessFormValues) => {
   const { customBusinessType, customSalesRange, ...data } = values
@@ -73,4 +73,32 @@ export const createMetric = async (
       businessId,
     },
   })
+}
+
+export const createExplanations = async (metricId: string, explanationMarkdown: string, llmStatus: LLMStatus = 'GENERATED') => {
+  return await prisma.lLMExplanation.create({
+    data: {
+      explanationMarkdown,      
+      llmStatus,
+      metricId,
+    },
+  })
+}
+
+export const deleteExplanations = async (metricId: string) => {
+  await prisma.lLMExplanation.deleteMany({
+    where: {
+      metricId,
+    },
+  })
+}
+
+export const getExplanations = async (metricId: string) => {
+  const explanations = await prisma.lLMExplanation.findFirst({
+    where: {
+      metricId,
+    },
+  })
+
+  return explanations
 }

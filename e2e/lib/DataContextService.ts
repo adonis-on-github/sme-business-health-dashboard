@@ -9,12 +9,15 @@ import {
   createMetric,
   deleteBusinessMetrics,
   businessInspector,
-  metricInspector
+  metricInspector,
+  createExplanations,
+  deleteExplanations,
+  getExplanations
 } from './db.prisma'
 
 import type { BusinessFormValues } from '@dashboard/business/_lib/schema'
 import type { MetricInput } from '@dashboard/create-metric/_lib/schema'
-import type { ScoreStatus } from '@prisma/client'
+import type { LLMExplanation, ScoreStatus } from '@prisma/client'
 
 const metricMock: MetricInput = {
   revenue: 2000,
@@ -33,11 +36,15 @@ export class DataContextService {
     private business: BusinessFormValues & { businessId: string } | null = null,
     private businessInspected: boolean = false,
 
-    private metric: MetricInput | null = null,
+    private metric: MetricInput & { id: string } | null = null,
     private metricInspected: boolean = false,
 
     private score: number = 70,
     private scoreStatus: ScoreStatus = 'YELLOW',
+
+    private explanationsMarkdown: string | null = null,
+    private explanations: LLMExplanation | null = null,
+    private explanationsInspected: boolean = false,
 
   ) {}
   
@@ -55,6 +62,20 @@ export class DataContextService {
     this.score = score
     this.scoreStatus = scoreStatus
     this.metricValues = metricValues
+
+    return this
+  }
+
+  withExplanations(explanationsMarkdown: string) {
+    if (!this.business) {
+      this.withBusiness()
+    }
+
+    if (!this.metric) {
+      this.withMetric()
+    }
+
+    this.explanationsMarkdown = explanationsMarkdown
 
     return this
   }
@@ -85,6 +106,13 @@ export class DataContextService {
     this.metricInspected = true
   }
 
+  async expectExplanations(expected: string) {
+    const explanations = await getExplanations(this.metric!.id)
+
+    expect(explanations).not.toBeNull()
+    expect(explanations!.explanationMarkdown).toEqual(expected)
+  }
+
   async build() {
     if (this.businessValues) {
       this.business = await generateBusiness(this.userId, this.businessValues)      
@@ -94,11 +122,19 @@ export class DataContextService {
 
       if (!this.business) {
         throw new Error('Business not found')
-      }
+      }      
 
       this.metric = await createMetric(this.business.businessId, this.metricValues, this.score, this.scoreStatus)
     }
-    
+
+    if (this.explanationsMarkdown) {
+      if (!this.metric) {
+        throw new Error('Metric not found')
+      }
+
+      this.explanations = await createExplanations(this.metric.id, this.explanationsMarkdown)
+    }
+
     return {
       business: this.business,
       metric: this.metric,
@@ -108,6 +144,15 @@ export class DataContextService {
   }
 
   async cleanup() {
+    if (this.explanations || this.explanationsInspected) {
+
+      if (!this.explanations?.metricId) {
+        throw new Error('Explanations metricId not found')
+      }
+
+      await deleteExplanations(this.explanations.metricId)
+    }
+
     if ((this.metric || this.metricInspected) && this.business) {
       if (!this.business) {
         throw new Error('Business not found')
