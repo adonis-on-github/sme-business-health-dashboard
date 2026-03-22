@@ -23,11 +23,12 @@ export default defineConfig({
     ['json', { outputFile: 'test-results/results.json' }]
   ],
   metadata: {
-    testmde: true,
+    testmode: true,
   },
   use: {
     baseURL: `http://localhost:${process.env.TEST_PORT}`,
     trace: 'on-first-retry',
+    locale: 'en-US',
     extraHTTPHeaders: {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
@@ -72,7 +73,7 @@ export default defineConfig({
         TEST_PORT: process.env.TEST_PORT ?? '3001',
         APP_ENV: 'test',
       },
-      // Note: uncoment these lines to display MSW messages
+      // Note: uncomment these lines to display MSW messages
       stdout: 'pipe',
       stderr: 'pipe',
     }

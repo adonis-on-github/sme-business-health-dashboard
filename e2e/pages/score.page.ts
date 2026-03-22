@@ -58,7 +58,7 @@ export class ScorePage extends BasePage {
     await this.expectFormattedNumber(this.cashInBank, latestMetric.cashInBank, currency)
     await this.expectFormattedNumber(this.topCustomerPct, latestMetric.topCustomerPct)
 
-    await this.expecNumber(this.score, latestMetric.score)
+    await this.expectNumber(this.score, latestMetric.score)
     await expect(this.scoreStatus).toContainText(latestMetric.scoreStatus)
 
     await this.expectTimestamp(this.timestamp, latestMetric.updatedAt)

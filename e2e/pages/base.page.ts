@@ -39,7 +39,7 @@ export class BasePage {
       await expect(this.description).toHaveText(description)
     }
   }
-  protected async expecNumber(locator: Locator, value: number) {
+  protected async expectNumber(locator: Locator, value: number) {
     await expect(locator).toContainText(value.toString())
   }
 
@@ -52,8 +52,18 @@ export class BasePage {
   }
 
   protected async expectTimestamp(locator: Locator, timestamp: Date) {
-    const formattedTimestamp = formatDate(timestamp)
+  //   formatDate(timestamp)
 
-    await expect(locator).toContainText(formattedTimestamp)
+  //   const options: Intl.DateTimeFormatOptions = {
+  //     day: 'numeric',
+  //     month: 'short',
+  //     year: 'numeric',
+  //     hour: '2-digit',
+  //     minute: '2-digit',
+  //   }
+
+    const formatted = formatDate(timestamp)
+
+    await expect(locator).toContainText(formatted)
   }
 }

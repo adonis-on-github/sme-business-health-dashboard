@@ -69,4 +69,3 @@ export const test = base.extend<{}, UserWorkerFixture>({
     { scope: 'worker', auto: true }
   ]
 })
-

@@ -16,7 +16,7 @@ export class BusinessPage extends BasePage {
   constructor(
     page: Page,
     route: Route,
-    testId: string,
+    userId: string,
     readonly nameInput: Locator = page.getByTestId(BusinessFormTestID.name),
     readonly nameError: Locator = page.getByTestId(BusinessFormTestID.nameError),
     readonly typeInput: Locator = page.getByTestId(BusinessFormTestID.type),
@@ -30,7 +30,7 @@ export class BusinessPage extends BasePage {
     readonly customSalesRangeError: Locator = page.getByTestId(BusinessFormTestID.customSalesRangeError),
     readonly submitButton: Locator = page.getByTestId(BusinessFormTestID.button)
   ) {
-    super(page, route, testId)
+    super(page, route, userId)
   }
 
   async expectInputs() {

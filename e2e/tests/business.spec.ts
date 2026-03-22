@@ -1,7 +1,7 @@
 import { routes } from '@/lib/routes'
 import { test, expect } from '@e2e/fixtures'
 
-import { businessMock } from '@/lib/prisma/prisma.mocks'
+import { businessValuesMock } from '@dashboard/business/_lib/schema.mocks'
 
 test.describe('business page', () => {
   test('renders empty business page', async ({ businessPage }) => {
@@ -25,22 +25,22 @@ test.describe('business page', () => {
   test('submits the form successfully', async ({ businessPage, dataContextService }) => {    
     await businessPage.goto()
 
-    await businessPage.fillForm(businessMock)
+    await businessPage.fillForm(businessValuesMock)
 
     await businessPage.submitButton.click()
     
     await expect(businessPage.page).toHaveURL(routes.createMetric)
 
     // Note: this should be after url changed to allow backend to create the business
-    await dataContextService.expectBusiness(businessMock)
+    await dataContextService.expectBusiness(businessValuesMock)
   })
   
   test('pre-populates the form with the business data', async ({ businessPage, dataContextService }) => {
-    await dataContextService.withBusiness(businessMock).build()
+    await dataContextService.configureBusiness(businessValuesMock).build()
 
     await businessPage.goto()
 
-    await businessPage.expectFormToMatch(dataContextService.BusinessValues!)
+    await businessPage.expectFormToMatch(dataContextService.BusinessValues)
   })
   
 })

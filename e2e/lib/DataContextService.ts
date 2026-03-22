@@ -2,7 +2,9 @@ import { expect } from 'next/experimental/testmode/playwright'
 
 import type { LatestMetric } from '@dashboard/_lib/service'
 
-import { businessMock } from '@/lib/prisma/prisma.mocks'
+import { businessValuesMock } from '@dashboard/business/_lib/schema.mocks'
+import { metricInputMock } from '@dashboard/create-metric/_lib/schema.mocks'
+
 import { 
   deleteBusiness, 
   generateBusiness,
@@ -18,13 +20,6 @@ import {
 import type { BusinessFormValues } from '@dashboard/business/_lib/schema'
 import type { MetricInput } from '@dashboard/create-metric/_lib/schema'
 import type { LLMExplanation, ScoreStatus } from '@prisma/client'
-
-const metricMock: MetricInput = {
-  revenue: 2000,
-  expenses: 1000,
-  cashInBank: 500,
-  topCustomerPct: 50
-}
 
 export class DataContextService {
   constructor(
@@ -48,15 +43,15 @@ export class DataContextService {
 
   ) {}
   
-  withBusiness(businessValues: BusinessFormValues = businessMock) {
+  configureBusiness(businessValues: BusinessFormValues = businessValuesMock) {
     this.businessValues = businessValues
 
     return this
   }
 
-  withMetric(metricValues: MetricInput = metricMock, score: number = 70, scoreStatus: ScoreStatus = 'YELLOW') {
+  configureMetric(metricValues: MetricInput = metricInputMock, score: number = 70, scoreStatus: ScoreStatus = 'YELLOW') {
     if (!this.business) {
-      this.withBusiness()
+      this.configureBusiness()
     }
 
     this.score = score
@@ -66,13 +61,13 @@ export class DataContextService {
     return this
   }
 
-  withExplanations(explanationsMarkdown: string) {
+  configureExplanations(explanationsMarkdown: string) {
     if (!this.business) {
-      this.withBusiness()
+      this.configureBusiness()
     }
 
     if (!this.metric) {
-      this.withMetric()
+      this.configureMetric()
     }
 
     this.explanationsMarkdown = explanationsMarkdown
@@ -111,6 +106,8 @@ export class DataContextService {
 
     expect(explanations).not.toBeNull()
     expect(explanations!.explanationMarkdown).toEqual(expected)
+
+    this.explanationsInspected = true
   }
 
   async build() {
@@ -145,15 +142,16 @@ export class DataContextService {
 
   async cleanup() {
     if (this.explanations || this.explanationsInspected) {
+      const metricId = this.explanations?.metricId ?? this.metric?.id
 
-      if (!this.explanations?.metricId) {
+      if (!metricId) {
         throw new Error('Explanations metricId not found')
       }
 
-      await deleteExplanations(this.explanations.metricId)
+      await deleteExplanations(metricId)
     }
 
-    if ((this.metric || this.metricInspected) && this.business) {
+    if ((this.metric || this.metricInspected)) {
       if (!this.business) {
         throw new Error('Business not found')
       }

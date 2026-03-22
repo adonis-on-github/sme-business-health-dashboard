@@ -9,7 +9,7 @@ test.describe('Score', () => {
   })
   
   test('redirect to the create metric page when the user has no metric', async ({ scorePage, dataContextService }) => {
-    await dataContextService.withBusiness().build()
+    await dataContextService.configureBusiness().build()
 
     await scorePage.goto()
 
@@ -17,7 +17,7 @@ test.describe('Score', () => {
   })
   
   test('renders the score page when the user has a business and a metric', async ({ scorePage, dataContextService }) => {
-    await dataContextService.withMetric().build()
+    await dataContextService.configureMetric().build()
 
     await scorePage.goto()
 
@@ -27,7 +27,7 @@ test.describe('Score', () => {
   })
   
   test('navigates to the explanations page when the user clicks on the "Explanations & Actions" button', async ({ scorePage, dataContextService }) => {
-    await dataContextService.withMetric().build()
+    await dataContextService.configureMetric().build()
 
     await scorePage.goto()
 
