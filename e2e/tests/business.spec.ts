@@ -1,9 +1,9 @@
 import { routes } from '@/lib/routes'
-import { test, expect } from '@e2e/fixtures/test.fixture'
+import { test, expect } from '@e2e/fixtures'
 
 import { businessMock } from '@/lib/prisma/prisma.mocks'
 
-test.describe.only('business page', () => {
+test.describe('business page', () => {
   test('renders empty business page', async ({ businessPage }) => {
     await businessPage.goto()
 

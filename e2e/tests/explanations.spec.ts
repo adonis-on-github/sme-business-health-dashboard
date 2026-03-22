@@ -9,13 +9,17 @@ test.describe('Explanations', () => {
     await expect(explanationsPage.page).toHaveURL(routes.business)
   })
 
-  test('redirect to create metric when there is no metric', async ({ explanationsPage, preCreatedBusiness: _ }) => {
+  test('redirect to create metric when there is no metric', async ({ explanationsPage, dataContextService }) => {
+    await dataContextService.withBusiness().build()
+
     await explanationsPage.goto()
 
     await expect(explanationsPage.page).toHaveURL(routes.createMetric)
   })
 
-  test('renders no epxpalations page when there are no previous explanations', async ({ explanationsPage, latestMetric: _ }) => {
+  test('renders no epxpalations page when there are no previous explanations', async ({ explanationsPage, dataContextService }) => {
+    await dataContextService.withMetric().build()
+
     await explanationsPage.goto()
 
     await expect(explanationsPage.page).toHaveURL(routes.explanations)

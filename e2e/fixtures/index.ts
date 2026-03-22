@@ -1,1 +1,1 @@
-export * from './master.fixture'
+export * from './test.fixture'

@@ -6,6 +6,7 @@ import { DataContextService } from '@e2e/lib/DataContextService'
 import { getUserMetadata } from '@e2e/lib/userUtils'
 import { BusinessPage } from '@e2e/pages/business.page'
 import { CreateMetricPage } from '@e2e/pages/createMetric.page'
+import { ExplanationsPage } from '@e2e/pages/explanations.page'
 import { ScorePage } from '@e2e/pages/score.page'
 
 type TestFixture = {
@@ -14,6 +15,7 @@ type TestFixture = {
   businessPage: BusinessPage
   createMetricPage: CreateMetricPage
   scorePage: ScorePage
+  explanationsPage: ExplanationsPage
 }
 
 const test = base.extend<TestFixture>({
@@ -46,6 +48,10 @@ const test = base.extend<TestFixture>({
 
   scorePage: async ({ page, userId, dataContextService: _ }, use) => {
     await use(new ScorePage(page, routes.metricScore, userId))
+  },
+
+  explanationsPage: async ({ page, userId }, use) => {
+    await use(new ExplanationsPage(page, routes.explanations, userId))
   },
 })
 

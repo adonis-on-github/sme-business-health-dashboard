@@ -1,6 +1,6 @@
 import { metricMock } from '@/lib/prisma/prisma.mocks'
 import { routes } from '@/lib/routes'
-import { test, expect } from '@e2e/fixtures/test.fixture'
+import { test, expect } from '@e2e/fixtures'
 
 test.describe('create metric page', () => {
   test('redirects to the business page when business is not created', async ({ createMetricPage }) => {

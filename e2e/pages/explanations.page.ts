@@ -4,6 +4,7 @@ import { expect } from 'playwright/test'
 import { ExplanationIds } from '@dashboard/explanations/_lib/test.ids'
 
 import { BasePage } from './base.page'
+
 import type { Route } from '@/lib/routes'
 
 export class ExplanationsPage extends BasePage {
