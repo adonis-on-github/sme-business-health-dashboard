@@ -23,7 +23,7 @@ export const UserMenu = async () => {
 
   return (
     <DropdownMenu data-testid={UserMenuID.root}>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger>
         <Avatar className='cursor-pointer' data-testid={UserMenuID.avatar}>
           <AvatarFallback className='font-semibold' data-testid={UserMenuID.avatarFallback}>
             {fallback}

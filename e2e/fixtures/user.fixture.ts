@@ -1,6 +1,7 @@
 import  { test as base, expect, type Page } from '@playwright/test'
 // import { v4 as uuid } from 'uuid'
 
+// Node: This is an alternative for authentication of the user, it provided as reference only
 import { EMAIL, PASSWORD, USER_METADATA_PATH } from '@e2e/lib/constants'
 import { createUser, purgeUser } from '@e2e/lib/db.supabase'
 import { createUserMetadata, purgeUserMetadata } from '@e2e/lib/userUtils'
@@ -15,7 +16,6 @@ type UserWorkerFixture = {
   managedUser: TestUser
 }
 
-// TODO: Move to lib folder and update login part
 export async function performLogin(page: Page, email: string, password: string) {
   await page.goto('/login')
   await page.fill('input[name="email"]', email)

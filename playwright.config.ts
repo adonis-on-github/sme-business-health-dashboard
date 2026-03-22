@@ -1,8 +1,8 @@
+import { defineConfig, devices } from 'next/experimental/testmode/playwright'
 import dotenv from 'dotenv'
 import { STORAGE_STATE_PATH } from '@e2e/lib/constants'
 import { env } from '@/lib/env'
 
-import { defineConfig, devices } from 'next/experimental/testmode/playwright'
 // Load .env.test file for test environment variables
 dotenv.config({ path: '.env.test' , quiet: true })
 
