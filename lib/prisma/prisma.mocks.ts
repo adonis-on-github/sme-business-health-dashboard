@@ -1,8 +1,7 @@
 import type { Business, LLMExplanation } from '@prisma/client'
 import type { ExtendedMetric } from './types'
 
-export const businessMock: Business = {
-  id: '1',
+export const businessMock: Omit<Business, 'id'> = {  
   userId: '1',
   name: 'Test Business',
   city: 'Test City',
