@@ -31,6 +31,7 @@ export const env = createEnv({
     APP_ENV: envValue,
     DATABASE_URL: dynamicURL(dbUrlKey),
     DIRECT_URL: dynamicURL(directUrlKey),
+    TEST_PORT: z.string(),
 
     OPENROUTER_API_KEY: z.string(),
     SUPABASE_SSL_CERT: z.string(),
@@ -52,6 +53,8 @@ export const env = createEnv({
 
     OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY,
     SUPABASE_SSL_CERT: process.env.SUPABASE_SSL_CERT,
+
+    TEST_PORT: process.env.TEST_PORT ?? '4000',
   },
   onValidationError: error => {
     if (error instanceof z.ZodError) {

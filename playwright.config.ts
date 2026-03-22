@@ -1,9 +1,12 @@
 import dotenv from 'dotenv'
 import { STORAGE_STATE_PATH } from '@e2e/lib/constants'
+import { env } from '@/lib/env'
 
 import { defineConfig, devices } from 'next/experimental/testmode/playwright'
 // Load .env.test file for test environment variables
 dotenv.config({ path: '.env.test' , quiet: true })
+
+const URL = `http://localhost:${env.TEST_PORT}`
 
 export default defineConfig({
   testDir: './e2e',
@@ -23,7 +26,7 @@ export default defineConfig({
     testmode: true,
   },
   use: {
-    baseURL: `http://localhost:${process.env.TEST_PORT}`,
+    baseURL: URL,
     trace: 'on-first-retry',
     locale: 'en-US',
     extraHTTPHeaders: {
@@ -61,18 +64,18 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: `npm run dev:e2e -- --port ${process.env.TEST_PORT}`,
-      url: `http://localhost:${process.env.TEST_PORT}`,
-      // it should be a separate process from the dev server
-      reuseExistingServer: false, // !process.env.CI,
+      command: `npm run dev:e2e -- --port ${env.TEST_PORT}`,
+      timeout: 120 * 1000,
+      url: URL,
+      reuseExistingServer: !process.env.CI,
       env: {
         NEXT_DIST_DIR: '.next-e2e',
-        TEST_PORT: process.env.TEST_PORT ?? '3001',
+        TEST_PORT: env.TEST_PORT,
         APP_ENV: 'test',
       },
       // Note: uncomment these lines to display MSW messages
       // stdout: 'pipe',
-      stderr: 'pipe',
+      // stderr: 'pipe',
     }
   ],
 })

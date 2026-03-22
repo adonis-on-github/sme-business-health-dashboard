@@ -50,6 +50,7 @@ describe('env server validation', () => {
     const { env } = await import('./env')
 
     expect(env.APP_ENV).toBe('test')
+    expect(env.TEST_PORT).toBe('4000')
     expect(env.DATABASE_URL).toBe(`postgresql://localhost:${port.test}`)
     expect(env.DIRECT_URL).toBe(`postgresql://localhost:${port.test}`)
     expect(env.NEXT_PUBLIC_SUPABASE_URL).toBe(`http://localhost:${port.test}`)
