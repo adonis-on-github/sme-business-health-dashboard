@@ -55,4 +55,6 @@ const test = base.extend<TestFixture>({
   },
 })
 
+test.use({ nextOptions: { fetchLoopback: true } })
+
 export { test, expect }
