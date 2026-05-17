@@ -2,10 +2,12 @@
 
 ## Prerequisites
 
-- **Node.js** (v20+ recommended)
+- **Node.js** v22.22.2
 - **npm**
 - **Docker** — for local PostgreSQL (or use Supabase cloud)
 - **Supabase** — cloud project or local Supabase CLI
+- **direnv** — loads [`.envrc`](../.envrc) when you enter the project directory
+- **bash** — shell setup ([`setup/setup-shell.sh`](../setup/setup-shell.sh)) only runs on Ubuntu/Debian (including default WSL distros). Fedora and other distros skip `~/.bashrc` changes; configure direnv manually if needed.
 
 ## Environment Variables
 
@@ -56,28 +58,94 @@ For the Playwright VS Code extension, add to [.vscode/settings.json](../.vscode/
 }
 ```
 
-## Local Database
+## Project setup
 
-Start PostgreSQL with Docker:
+### Environemnt files
+
+Install `direnv` in the os
+
+`sudo apt install direnv   # Ubuntu/Debian/WSL example`
+
+The project uses three environment files
+
+- `.env` - for production
+- `.env.local` - for local development
+- `.env.test`  - for local e2e testing
+
+These files are loaded from
+[`.envrc`](../.envrc) loads environment files when you `cd` into the repo (with direnv installed and allowed):
 
 ```bash
-npm run dk:up
+dotenv_if_exists .env
+dotenv_if_exists .env.local
+dotenv_if_exists .env.test
 ```
 
-This uses [docker/docker-compose.yml](../docker/docker-compose.yml) and requires `DB_USER`, `DB_PASSWORD`, `DB_NAME`, and `DB_PORT` in `.env.local`. Stop with:
+#### On Ubuntu/Debian, `setup-shell.sh` adds to
+For some older versions it is necessary to install helper `dotenv_if_exists`
+
+`~/.bashrc`:
+- `dotenv_if_exists` — helper for manual env loading in bash
+- `eval "$(direnv hook bash)"` — enables direnv in new bash sessions
+
+After `npm run setup:shell`, run `source ~/.bashrc` in your terminal (sourcing inside `npm run` only affects the script subshell). Then `cd` into the project; direnv should load `.envrc` automatically.
 
 ```bash
-npm run dk:down
+npm run setup
+source ~/.bashrc          # required in your own terminal after setup
 ```
 
-## Supabase
+## Create `.env` files and declare specified variables
+
+## Install packages
+
+`npm install` already runs `prisma generate`
+
+To re-run only the shell step: `bash setup/setup-shell.sh` (or `npm run setup:shell` for the full chain).
+
+## Playwright configuration
+
+**Note:**
+Ubuntu 26.04 might not have native support for playwright chromium
+It is necessary use the following workaround:
+
+```bash
+echo 'export PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64' >> ~/.bashrc
+source ~/.bashrc
+```
+
+**Note:**
+For running e2e tests use command line, the vscode playwright is not able to run tests
+
+**Install chromium for e2e testing**
+
+`npm run setup:chromium`
+
+If the operating system require dependencies run
+
+`npm run setup:chromium:deps`
+
+## Supabase configuration
+
+For development and e2e testing are used two sets of supabase local containers
+
+To setup these containers run the follwing command
+
+`npm run setup:supabase`
 
 - **Cloud**: Create a project at [supabase.com](https://supabase.com) and fill in the Supabase env vars.
+
 - **Local**: Use `npm run supabase:dev` or `npm run supabase:e2e` for E2E. See [README](../README.md) for SSL certificate handling with Supabase cloud.
+- **`npm run setup`**: Starts both dev and E2E local stacks via `supabase:start` (`supabase:dev start` then `supabase:e2e start`).
+
+**Note:**
+- Before running this commant check if WSL integration is enabled in `Docker Desktop/Settings/Resources/WSL Integration`
+
+- Also check if the wsl container have `docker` group and the current user is in this group
 
 ## Database Setup
 
-1. Install dependencies (runs `prisma generate` via postinstall):
+1. Install dependencies (runs `prisma generate` via postinstall). See [Project setup](#project-setup-npm-run-setup) for optional `npm run setup` bootstrap:
 
    ```bash
    npm install
@@ -124,6 +192,9 @@ App runs at [http://localhost:3000](http://localhost:3000).
    ```bash
    npm run test:e2e:ui
    ```
+
+   When running with ui it is necessary to select tests from the interface available values are
+   `setup`, `e2e-public` and `e2e-private`
 
    Or with HTML report:
 

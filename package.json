@@ -25,7 +25,12 @@
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
     "shadcn:add": "npx shadcn@latest add",
+    "setup:shell":"bash setup/setup-shell.sh",
+    "setup:chromium":"npx playwright install chromium",
+    "setup:chromium:deps":"npx playwright install chromium --with-deps",
+    "setup:supabase":"npm run supabase:dev start && npm run supabase:e2e start",
     "supabase:dev": "npx supabase",
+    "supabase:dev:stop": "npx supabase stop",
     "supabase:e2e": "npx supabase --workdir e2e",
     "supabase:e2e:stop": "npx supabase --no-backup --workdir e2e stop"
   },

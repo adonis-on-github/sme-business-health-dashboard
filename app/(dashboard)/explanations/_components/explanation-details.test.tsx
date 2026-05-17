@@ -6,17 +6,34 @@ import { ExplanationIds } from '@dashboard/explanations/_lib/test.ids'
 import type { GetInitialAnalysisResponse } from '@dashboard/explanations/_lib/actions'
 import { generateAnalysis } from '@dashboard/explanations/_lib/actions'
 
+import { formatDate } from '@lib/formatting'
+
+vi.mock('@lib/formatting', () => {
+  const actual = vi.importActual('@lib/formatting')
+
+  return {
+    ...actual,
+    formatDate: vi.fn()
+  }
+})
+
 vi.mock('@dashboard/explanations/_lib/actions', () => ({
   generateAnalysis: vi.fn()
 }))
 
+const MOCK_SYSTEM_DATE = new Date('2026-01-31T14:14:44.000Z')
+const MOCK_TIMESTAMP = 'Jan 31, 2026, 04:14 PM'
+
 const mockInitialAnalysis: GetInitialAnalysisResponse = {
   type: 'GENERATED',
   data: 'mock explanation',
-  timestamp: new Date('2026-01-31T14:14:44.000Z')
+  timestamp: MOCK_SYSTEM_DATE
 }
 
 describe('ExplanationsDetails', () => {
+  beforeEach(() => {
+    vi.mocked(formatDate).mockReturnValue(MOCK_TIMESTAMP)
+  })
 
   describe('render', () => {
     describe('when initial analysis type is "GENERATED"', () => {
@@ -27,7 +44,7 @@ describe('ExplanationsDetails', () => {
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
 
-        expect(screen.getByTestId(ExplanationIds.generatedAt)).toHaveTextContent('Generated at: Jan 31, 2026, 04:14 PM')
+        expect(screen.getByTestId(ExplanationIds.generatedAt)).toHaveTextContent(MOCK_TIMESTAMP)
 
         expect(screen.getByTestId(ExplanationIds.generateButton)).toHaveTextContent('Regenerate')
       })
@@ -38,7 +55,7 @@ describe('ExplanationsDetails', () => {
         const mockErrorAnalysis: GetInitialAnalysisResponse = {
           type: 'ERROR',
           data: 'mock error',
-          timestamp: new Date('2026-01-31T14:14:44.000Z')
+          timestamp: MOCK_SYSTEM_DATE
         }
 
         render(<ExplanationsDetails initialAnalysis={mockErrorAnalysis} />)
@@ -79,11 +96,7 @@ describe('ExplanationsDetails', () => {
     it('calls generateAnalysis when generate button is clicked', async () => {
       const user = userEvent.setup()
 
-      vi.mocked(generateAnalysis).mockResolvedValue({
-        type: 'GENERATED',
-        data: 'mock explanation',
-        timestamp: new Date('2026-01-31T14:14:44.000Z')
-      })
+      vi.mocked(generateAnalysis).mockResolvedValue(mockInitialAnalysis)
 
       render(<ExplanationsDetails initialAnalysis={mockInitialAnalysis} />)
 
@@ -102,11 +115,7 @@ describe('ExplanationsDetails', () => {
           type: 'NO_EXPLANATION',
         }
 
-        const mockGeneratedAnalysis: GetInitialAnalysisResponse = {
-          type: 'GENERATED',
-          data: 'mock explanation',
-          timestamp: new Date('2026-01-31T14:14:44.000Z')
-        }
+        const mockGeneratedAnalysis: GetInitialAnalysisResponse = mockInitialAnalysis
 
         vi.mocked(generateAnalysis).mockResolvedValue(mockGeneratedAnalysis)
 
@@ -118,7 +127,7 @@ describe('ExplanationsDetails', () => {
 
         expect(screen.queryByTestId(ExplanationIds.explanationError)).not.toBeInTheDocument()
 
-        expect(screen.getByTestId(ExplanationIds.generatedAt)).toHaveTextContent('Generated at: Jan 31, 2026, 04:14 PM')
+        expect(screen.getByTestId(ExplanationIds.generatedAt)).toHaveTextContent(MOCK_TIMESTAMP)
 
         expect(screen.getByTestId(ExplanationIds.generateButton)).toHaveTextContent('Regenerate')
       })
@@ -135,7 +144,7 @@ describe('ExplanationsDetails', () => {
         const mockErrorAnalysis: GetInitialAnalysisResponse = {
           type: 'ERROR',
           data: 'mock error',
-          timestamp: new Date('2026-01-31T14:14:44.000Z')
+          timestamp: MOCK_SYSTEM_DATE
         }
 
         vi.mocked(generateAnalysis).mockResolvedValue(mockErrorAnalysis)
@@ -158,17 +167,9 @@ describe('ExplanationsDetails', () => {
       it('renders explanation correctly', async () => {
         const user = userEvent.setup()
 
-        const mockInitialState: GetInitialAnalysisResponse = {
-          type: 'ERROR',
-          data: 'mock error',
-          timestamp: new Date('2026-01-31T14:14:44.000Z')
-        }
+        const mockInitialState: GetInitialAnalysisResponse = mockInitialAnalysis
 
-        const mockGeneratedAnalysis: GetInitialAnalysisResponse = {
-          type: 'GENERATED',
-          data: 'mock explanation',
-          timestamp: new Date('2026-01-31T14:14:44.000Z')
-        }
+        const mockGeneratedAnalysis: GetInitialAnalysisResponse = mockInitialAnalysis
 
         vi.mocked(generateAnalysis).mockResolvedValue(mockGeneratedAnalysis)
 
@@ -190,11 +191,7 @@ describe('ExplanationsDetails', () => {
       it('renders explanation correctly', async () => {
         const user = userEvent.setup()
 
-        const mockInitialState: GetInitialAnalysisResponse = {
-          type: 'GENERATED',
-          data: 'mock explanation',
-          timestamp: new Date('2026-01-31T14:14:44.000Z')
-        }
+        const mockInitialState: GetInitialAnalysisResponse = mockInitialAnalysis
 
         const mockGeneratedAnalysis: GetInitialAnalysisResponse = {
           type: 'GENERATED',
@@ -203,6 +200,7 @@ describe('ExplanationsDetails', () => {
         }
 
         vi.mocked(generateAnalysis).mockResolvedValue(mockGeneratedAnalysis)
+        vi.mocked(formatDate).mockReturnValue('Jan 31, 2026, 04:15 PM')
 
         render(<ExplanationsDetails initialAnalysis={mockInitialState} />)
 
