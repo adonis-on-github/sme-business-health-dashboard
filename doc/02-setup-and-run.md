@@ -58,28 +58,21 @@ For the Playwright VS Code extension, add to [.vscode/settings.json](../.vscode/
 }
 ```
 
-## Project setup (`npm run setup`)
+## Project setup
 
-Optional one-shot bootstrap. Heavier than `npm install` alone — use when you want shell/direnv, Playwright OS libraries, and local Supabase stacks in one go.
+### Environemnt files
 
-`npm install` already runs `prisma generate` and installs Playwright Chromium via `postinstall`. `npm run setup` adds:
+Install `direnv` in the os
 
-| Step | Command | Purpose |
-|------|---------|---------|
-| 1 | `bash setup/setup-shell.sh` | Ubuntu/Debian: `dotenv_if_exists` + direnv hook in `~/.bashrc`, `direnv allow` |
-| 2 | `npm run playwright:deps` | OS libraries for Playwright |
-| 3 | `npm run supabase:start` | Local Supabase dev + E2E stacks |
+`sudo apt install direnv   # Ubuntu/Debian/WSL example`
 
-```bash
-sudo apt install direnv   # Ubuntu/Debian/WSL example
-npm run setup
-source ~/.bashrc          # required in your own terminal after setup
-```
+The project uses three environment files
 
-To re-run only the shell step: `bash setup/setup-shell.sh` (or `npm run setup` for the full chain).
+- `.env` - for production
+- `.env.local` - for local development
+- `.env.test`  - for local e2e testing
 
-## Shell environment and direnv
-
+These files are loaded from
 [`.envrc`](../.envrc) loads environment files when you `cd` into the repo (with direnv installed and allowed):
 
 ```bash
@@ -88,52 +81,59 @@ dotenv_if_exists .env.local
 dotenv_if_exists .env.test
 ```
 
-On Ubuntu/Debian, `setup-shell.sh` adds to `~/.bashrc`:
+#### On Ubuntu/Debian, `setup-shell.sh` adds to
 
+`~/.bashrc`:
 - `dotenv_if_exists` — helper for manual env loading in bash
 - `eval "$(direnv hook bash)"` — enables direnv in new bash sessions
 
-After `npm run setup`, run `source ~/.bashrc` in your terminal (sourcing inside `npm run` only affects the script subshell). Then `cd` into the project; direnv should load `.envrc` automatically.
-
-## WSL (Ubuntu/Debian)
-
-1. Clone the repo on the **Linux filesystem** (e.g. `~/projects/...`), not under `/mnt/c/...`, for better npm and Docker performance.
-2. Ensure **Docker** is available in WSL (Docker Desktop WSL integration or a local `docker` service).
-3. Copy and fill env files (`.env.local`, and `.env.test` if running E2E).
-4. Recommended sequence:
-
-   ```bash
-   npm install
-   npm run setup              # shell + playwright deps + supabase (bashrc changes on Ubuntu WSL only)
-   source ~/.bashrc
-   npm run dk:up              # if using docker-compose Postgres
-   npm run db:migrate
-   npm run dev
-   ```
-
-5. **Minimal dev path** (without full `setup`): `npm install` → configure `.env.local` → `npm run dk:up` or cloud Supabase → `npm run db:migrate` → `npm run dev`.
-
-6. **Fedora WSL** (if used): `setup-shell.sh` no-ops on `~/.bashrc`. Run `npm run playwright:deps` and `npm run supabase:start` manually if needed.
-
-## Local Database
-
-Start PostgreSQL with Docker:
+After `npm run setup:shell`, run `source ~/.bashrc` in your terminal (sourcing inside `npm run` only affects the script subshell). Then `cd` into the project; direnv should load `.envrc` automatically.
 
 ```bash
-npm run dk:up
+npm run setup
+source ~/.bashrc          # required in your own terminal after setup
 ```
 
-This uses [docker/docker-compose.yml](../docker/docker-compose.yml) and requires `DB_USER`, `DB_PASSWORD`, `DB_NAME`, and `DB_PORT` in `.env.local`. Stop with:
+## Create `.env` files and declare specified variables
+
+## Install packages
+
+`npm install` already runs `prisma generate`
+
+To re-run only the shell step: `bash setup/setup-shell.sh` (or `npm run setup:shell` for the full chain).
+
+## Playwright configuration
+
+**Note:**
+Ubuntu 26.04 might not have native support for playwright chromium
+It is necessary use the following workaround:
 
 ```bash
-npm run dk:down
+echo 'export PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64' >> ~/.bashrc
+source ~/.bashrc
 ```
 
-## Supabase
+**Install chromium for e2e testing**
+
+`npm run setup:chromium`
+
+If the operating system require dependencies run
+
+`npm run setup:chromiumL:deps`
+
+## supabase configuration
+
+For development and e2e testing are used two sets of supabase local containers
+
+To setup these containers run the follwing command
+
+`npm run setup:supabase`
 
 - **Cloud**: Create a project at [supabase.com](https://supabase.com) and fill in the Supabase env vars.
+
 - **Local**: Use `npm run supabase:dev` or `npm run supabase:e2e` for E2E. See [README](../README.md) for SSL certificate handling with Supabase cloud.
 - **`npm run setup`**: Starts both dev and E2E local stacks via `supabase:start` (`supabase:dev start` then `supabase:e2e start`).
+
 
 ## Database Setup
 
