@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:e2e": "NEXT_DIST_DIR=.next-e2e next dev --port ${TEST_PORT}",
-    "postinstall": "prisma generate && npx playwright install chromium",
+    "postinstall": "prisma generate",
     "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "eslint",
@@ -24,13 +24,15 @@
     "db:reset": "prisma migrate reset",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
-    "playwright:deps": "npx playwright install-deps",
     "shadcn:add": "npx shadcn@latest add",
-    "setup":"bash setup/setup-shell.sh && npm run playwright:deps && npm run supabase:start",
+    "setup:shell":"bash setup/setup-shell.sh",
+    "setup:chromium":"npx playwright install chromium",
+    "setup:chromium:deps":"npx playwright install chromium --with-deps",
+    "setup:supabase":"npm run supabase:dev start && npm run supabase:e2e start",
     "supabase:dev": "npx supabase",
+    "supabase:dev:stop": "npx supabase stop",
     "supabase:e2e": "npx supabase --workdir e2e",
-    "supabase:e2e:stop": "npx supabase --no-backup --workdir e2e stop",
-    "supabase:start": "npm run supabase:dev start && npm run supabase:e2e start"
+    "supabase:e2e:stop": "npx supabase --no-backup --workdir e2e stop"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
