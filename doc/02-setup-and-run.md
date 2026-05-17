@@ -6,7 +6,7 @@
 - **npm**
 - **Docker** — for local PostgreSQL (or use Supabase cloud)
 - **Supabase** — cloud project or local Supabase CLI
-- **direnv** (recommended on Ubuntu/Debian/WSL) — loads [`.envrc`](../.envrc) when you enter the project directory
+- **direnv** — loads [`.envrc`](../.envrc) when you enter the project directory
 - **bash** — shell setup ([`setup/setup-shell.sh`](../setup/setup-shell.sh)) only runs on Ubuntu/Debian (including default WSL distros). Fedora and other distros skip `~/.bashrc` changes; configure direnv manually if needed.
 
 ## Environment Variables
@@ -82,6 +82,7 @@ dotenv_if_exists .env.test
 ```
 
 #### On Ubuntu/Debian, `setup-shell.sh` adds to
+For some older versions it is necessary to install helper `dotenv_if_exists`
 
 `~/.bashrc`:
 - `dotenv_if_exists` — helper for manual env loading in bash
@@ -113,15 +114,18 @@ echo 'export PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64' >> ~/.bashrc
 source ~/.bashrc
 ```
 
+**Note:**
+For running e2e tests use command line, the vscode playwright is not able to run tests
+
 **Install chromium for e2e testing**
 
 `npm run setup:chromium`
 
 If the operating system require dependencies run
 
-`npm run setup:chromiumL:deps`
+`npm run setup:chromium:deps`
 
-## supabase configuration
+## Supabase configuration
 
 For development and e2e testing are used two sets of supabase local containers
 
@@ -134,6 +138,10 @@ To setup these containers run the follwing command
 - **Local**: Use `npm run supabase:dev` or `npm run supabase:e2e` for E2E. See [README](../README.md) for SSL certificate handling with Supabase cloud.
 - **`npm run setup`**: Starts both dev and E2E local stacks via `supabase:start` (`supabase:dev start` then `supabase:e2e start`).
 
+**Note:**
+- Before running this commant check if WSL integration is enabled in `Docker Desktop/Settings/Resources/WSL Integration`
+
+- Also check if the wsl container have `docker` group and the current user is in this group
 
 ## Database Setup
 
@@ -184,6 +192,9 @@ App runs at [http://localhost:3000](http://localhost:3000).
    ```bash
    npm run test:e2e:ui
    ```
+
+   When running with ui it is necessary to select tests from the interface available values are
+   `setup`, `e2e-public` and `e2e-private`
 
    Or with HTML report:
 
